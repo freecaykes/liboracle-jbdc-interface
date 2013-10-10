@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class JBDCSQLConnection {
 
 	private final static String USER_NAME = "i2c8";
-	private final static String USER_PASSWORD = "";
+	private final static String USER_PASSWORD = "Iam91121";
 	private final static String CONNECTION_URL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1521:ug";
 	
 	public void connectOracle()
@@ -26,26 +26,19 @@ public class JBDCSQLConnection {
 		}
 		System.out.println("Oracle driver is found");
 		
-		Connection con = makeConnection();
-		while(con == null && retry > 0)
-		{
-			makeConnection();
-			retry--;
-		}
+		makeConnection();
 	}
 	
-	private Connection makeConnection()
+	private void makeConnection()
 	{
 		try {
-			Connection connection = DriverManager.getConnection(
-					  CONNECTION_URL, USER_NAME, USER_PASSWORD);
-			return connection;
+			Connection connection = DriverManager.getConnection(CONNECTION_URL, USER_NAME, USER_PASSWORD);
 		} catch (SQLException e) {
 			System.out.println("Connection failed");
 			e.printStackTrace();
 		}
-		return null;
 	}
+	
 	
 	/**
 	 * @param args
