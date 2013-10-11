@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class JBDCSQLConnection {
 
-	private final static String USER_NAME = "i2c8";
-	private final static String USER_PASSWORD = "Iam91121";
+	private final static String USER_NAME = "ora_i2c8";
+	private final static String USER_PASSWORD = "a30758114";
 	private final static String CONNECTION_URL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1521:ug";
 	
 	public void connectOracle()
@@ -22,7 +22,6 @@ public class JBDCSQLConnection {
 		{
 			e.printStackTrace();
 			/* will continue on even if class is not found*/
-			return;
 		}
 		System.out.println("Oracle driver is found");
 		
@@ -32,7 +31,8 @@ public class JBDCSQLConnection {
 	private void makeConnection()
 	{
 		try {
-			Connection connection = DriverManager.getConnection(CONNECTION_URL, USER_NAME, USER_PASSWORD);
+			Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1521:ug", "ora_i2c8", "a30758114");
+			System.out.println("Successfully Connected");
 		} catch (SQLException e) {
 			System.out.println("Connection failed");
 			e.printStackTrace();
@@ -44,8 +44,8 @@ public class JBDCSQLConnection {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
+		JBDCSQLConnection sqlcon = new JBDCSQLConnection();
+		sqlcon.connectOracle();
 	}
 
 }
