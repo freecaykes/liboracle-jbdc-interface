@@ -14,7 +14,7 @@ public class OracleConnectionTest {
 	@Test
 	public void test() {
 		JBDCSQLConnection sqlcon = new JBDCSQLConnection();
-		sqlcon.connectOracle();
+		sqlcon.setOracleConnection();
 	}
 	
 }

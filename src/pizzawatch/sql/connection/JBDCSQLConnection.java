@@ -10,7 +10,9 @@ public class JBDCSQLConnection {
 	private final static String USER_PASSWORD = "a30758114"; /*a<Student Number> this like how we connected to SQL_Plus in lab*/ 
 	private final static String CONNECTION_URL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1521:ug";
 	
-	public void connectOracle()
+	private Connection connection;
+	
+	public void setOracleConnection()
 	{
 		int retry = 5;
 		
@@ -30,6 +32,13 @@ public class JBDCSQLConnection {
 			con = makeConnection();
 			retry--;
 		}
+		
+		this.connection = con;
+	}
+	
+	public Connection getConnection()
+	{
+		return this.connection;
 	}
 	
 	private Connection makeConnection()
@@ -50,7 +59,7 @@ public class JBDCSQLConnection {
 	 */
 	public static void main(String[] args) {
 		JBDCSQLConnection sqlcon = new JBDCSQLConnection();
-		sqlcon.connectOracle();
+		sqlcon.setOracleConnection();
 	}
 
 }
