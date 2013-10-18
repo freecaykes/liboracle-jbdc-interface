@@ -1,7 +1,7 @@
 package pizzawatch.sql.connection;
 
-import java.sql.DriverManager;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JBDCSQLConnection {
@@ -11,11 +11,11 @@ public class JBDCSQLConnection {
 	private final static String CONNECTION_URL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug"; /*port 1521 has problems*/
 	
 	private Connection connection;
-	
+
 	public void setOracleConnection()
 	{
 		int retry = 5;
-		
+
 		System.out.println("--------------------- Starting Oracle connection ---------------------");
 		try
 		{
@@ -32,29 +32,29 @@ public class JBDCSQLConnection {
 			con = makeConnection();
 			retry--;
 		}
-		
+
 		this.connection = con;
 	}
-	
+
 	public Connection getConnection()
 	{
 		return this.connection;
 	}
-	
+
 	private Connection makeConnection()
 	{
 		try {
-			Connection connection = DriverManager.getConnection(CONNECTION_URL, USER_NAME, USER_PASSWORD);
+			Connection con = DriverManager.getConnection(CONNECTION_URL, USER_NAME, USER_PASSWORD);
 			System.out.println("Successfully Connected");
-			return connection;
+			return con;
 		} catch (SQLException e) {
 			System.out.println("Connection failed \n");
 			e.printStackTrace();
 		}
-		return null;
+		return null;//test
 	}
-	
-	/**
+
+        /**
 	 * @param args
 	 */
 	public static void main(String[] args) {
