@@ -8,7 +8,7 @@ public class JBDCSQLConnection {
 
 	private final static String USER_NAME = "ora_i2c8"; /*ora_<cs_id>*/
 	private final static String USER_PASSWORD = "a30758114"; /*a<Student Number> this like how we connected to SQL_Plus in lab*/ 
-	private final static String CONNECTION_URL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1521:ug";
+	private final static String CONNECTION_URL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug";
 	
 	private Connection connection;
 	
