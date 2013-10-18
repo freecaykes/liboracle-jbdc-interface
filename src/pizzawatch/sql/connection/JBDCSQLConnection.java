@@ -51,7 +51,7 @@ public class JBDCSQLConnection {
 			System.out.println("Connection failed \n");
 			e.printStackTrace();
 		}
-		return null;
+		return null;//test
 	}
 	
 	/**
