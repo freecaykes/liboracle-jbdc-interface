@@ -20,7 +20,7 @@ public class SqlScriptReader {
 	 * 
 	 * @param fileName
 	 */
-	public PreparedStatement runScript(String source)
+	private PreparedStatement runScript(String source)
 	{
 		PreparedStatement currStatement = null;
 		Scanner scanner = new Scanner(source).useDelimiter(DELIMITER);
