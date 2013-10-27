@@ -1,6 +1,8 @@
 package pizzawatch.sql.sqlreader;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
@@ -13,23 +15,19 @@ public class SqlScriptReader {
 	
 	private Connection connection;
 	
-	private void setConnection()
-	{
-		JBDCSQLConnection sqlConnector = new JBDCSQLConnection();
-		sqlConnector.setOracleConnection();
-		this.connection = sqlConnector.getConnection();
-	}
-	
 	/**
 	 * reads in an .sql file and runs the query/script in the SQL file  
 	 * 
 	 * @param fileName
 	 */
-	public void runScript(String source) throws SQLException
+	public PreparedStatement runScript(String source)
 	{
-		Statement currStatement = null;
+		PreparedStatement currStatement = null;
 		Scanner scanner = new Scanner(source).useDelimiter(DELIMITER);
-		setConnection();
+		if(connection == null)
+		{
+			setConnection();
+		}
 		while(scanner.hasNext())
 		{
 			String query = scanner.next() + DELIMITER;
@@ -37,20 +35,35 @@ public class SqlScriptReader {
 			{
 				if(connection != null)
 				{
-					currStatement = connection.createStatement();
-					currStatement.execute(query);
+					currStatement = connection.prepareStatement(query);
+					currStatement.executeUpdate();
+					
+					if(currStatement != null)
+						currStatement.close();
 				}	
 			}catch(SQLException e)
 			{
 				e.printStackTrace();
-			}finally
-			{
-				if(currStatement != null)
-				{
-					currStatement.close();
-				}
 			}
 		}
+		
+		return currStatement;
 	}
 	
+	public void insertUpdateCreateDelete(String source) throws SQLException
+	{
+		runScript(source);
+	}
+	
+	public ResultSet selectQueryFromTable(String source) throws SQLException
+	{
+		return runScript(source).executeQuery();
+	}
+	
+	private void setConnection()
+	{
+		JBDCSQLConnection sqlConnector = new JBDCSQLConnection();
+		sqlConnector.setOracleConnection();
+		this.connection = sqlConnector.getConnection();
+	}
 }

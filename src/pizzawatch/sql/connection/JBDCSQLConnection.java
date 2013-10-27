@@ -11,7 +11,10 @@ public class JBDCSQLConnection {
 	private final static String CONNECTION_URL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug"; /*port 1521 has problems*/
 	
 	private Connection connection;
-
+	
+	/**
+	 * called
+	 */
 	public void setOracleConnection()
 	{
 		int retry = 5;
@@ -23,7 +26,6 @@ public class JBDCSQLConnection {
 		}catch(ClassNotFoundException e)
 		{
 			e.printStackTrace();
-			/* will continue on even if class is not found*/
 		}
 		System.out.println("Oracle driver is found");
 		Connection con = makeConnection();
