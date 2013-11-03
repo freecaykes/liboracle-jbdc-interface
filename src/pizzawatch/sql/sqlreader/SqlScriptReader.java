@@ -41,8 +41,6 @@ public class SqlScriptReader {
 				{
 					query = query.substring(0,query.length() - 1);
 					currStatement = connection.prepareStatement(query);
-					if(currStatement != null)
-						currStatement.close();
 				}	
 			}
 			
@@ -60,7 +58,8 @@ public class SqlScriptReader {
 		try{
 			PreparedStatement currStatement = runScript(source);
 			currStatement.executeUpdate();
-			connection.close();
+			if(currStatement != null)
+				currStatement.close();
 		}catch(SQLException e){
 			if(e.getMessage().contains("is already used by an existing object"))
 			{
@@ -74,10 +73,8 @@ public class SqlScriptReader {
 	{
 		ResultSet results = null;
 		try {
-			PreparedStatement statementFrom_runscript = runScript(source);
-			statementFrom_runscript.setInt(1, 1001);
-			results = statementFrom_runscript.executeQuery();
-			connection.close();
+			PreparedStatement currStatement = runScript(source);
+			results = currStatement.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
