@@ -1,10 +1,11 @@
 package pizzawatch.sql.sqlreader;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 
 import pizzawatch.sql.connection.JBDCSQLConnection;
@@ -19,45 +20,70 @@ public class SqlScriptReader {
 	 * reads in an .sql file and runs the query/script in the SQL file  
 	 * 
 	 * @param fileName
+	 * @throws SQLException 
 	 */
-	private PreparedStatement runScript(String source)
+	private PreparedStatement runScript(String source) throws SQLException
 	{
-		PreparedStatement currStatement = null;
-		Scanner scanner = new Scanner(source).useDelimiter(DELIMITER);
-		if(connection == null)
-		{
-			setConnection();
-		}
-		while(scanner.hasNext())
-		{
-			String query = scanner.next() + DELIMITER;
-			try
+		try{
+			PreparedStatement currStatement = null;
+			Scanner scanner = new Scanner(new File(source)).useDelimiter(DELIMITER);
+			if(connection == null)
 			{
+				setConnection();
+			}
+			while(scanner.hasNext())
+			{
+				String query = scanner.next() + DELIMITER;
+				
+				//QA queries
+				System.out.print("query: \n" + query + "\n\n");
 				if(connection != null)
 				{
+					query = query.substring(0,query.length() - 1);
 					currStatement = connection.prepareStatement(query);
-					currStatement.executeUpdate();
-					
 					if(currStatement != null)
 						currStatement.close();
 				}	
-			}catch(SQLException e)
+			}
+			
+			return currStatement;
+		}catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public void insertUpdateCreateDelete(String source)
+	{
+		try{
+			PreparedStatement currStatement = runScript(source);
+			currStatement.executeUpdate();
+			connection.close();
+		}catch(SQLException e){
+			if(e.getMessage().contains("is already used by an existing object"))
 			{
-				e.printStackTrace();
+				System.out.println("ORA-00955: Table name is already in use");
 			}
 		}
 		
-		return currStatement;
 	}
 	
-	public void insertUpdateCreateDelete(String source) throws SQLException
+	public ResultSet query(String source) 
 	{
-		runScript(source);
-	}
-	
-	public ResultSet selectQueryFromTable(String source) throws SQLException
-	{
-		return runScript(source).executeQuery();
+		ResultSet results = null;
+		try {
+			PreparedStatement statementFrom_runscript = runScript(source);
+			statementFrom_runscript.setInt(1, 1001);
+			results = statementFrom_runscript.executeQuery();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return results;
 	}
 	
 	private void setConnection()
