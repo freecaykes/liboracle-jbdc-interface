@@ -11,9 +11,6 @@ import pizzawatch.sql.connection.JBDCSQLConnection;
 @SuppressWarnings("serial")
 public class MainFrame extends javax.swing.JFrame
 {
-    /**
-     * Creates new form MainFrame
-     */
     public MainFrame()
     {
         initComponents();
