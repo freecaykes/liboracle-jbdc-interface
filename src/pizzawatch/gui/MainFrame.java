@@ -58,10 +58,24 @@ public class MainFrame extends javax.swing.JFrame
         });
 
         btViewPendingOrders.setText("View Pending Orders");
+        btViewPendingOrders.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btViewPendingOrdersActionPerformed(evt);
+            }
+        });
 
         btViewPastOrders.setText("View Past Orders");
 
         btRequestCancel.setText("Request Order Cancellation");
+        btRequestCancel.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btRequestCancelActionPerformed(evt);
+            }
+        });
 
         cbUserID.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
         cbUserID.addActionListener(new java.awt.event.ActionListener()
@@ -172,7 +186,8 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btManageCancellationReqsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btManageCancellationReqsActionPerformed
     {//GEN-HEADEREND:event_btManageCancellationReqsActionPerformed
-        // TODO add your handling code here:
+        ManageCancellationReqsFrame mcrf = new ManageCancellationReqsFrame();
+        mcrf.setVisible(true);
     }//GEN-LAST:event_btManageCancellationReqsActionPerformed
 
     private void cbUserIDActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbUserIDActionPerformed
@@ -185,6 +200,16 @@ public class MainFrame extends javax.swing.JFrame
         AddOrderFrame aof = new AddOrderFrame();
         aof.setVisible(true);
     }//GEN-LAST:event_btAddOrderActionPerformed
+
+    private void btViewPendingOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPendingOrdersActionPerformed
+    {//GEN-HEADEREND:event_btViewPendingOrdersActionPerformed
+        //TODO
+    }//GEN-LAST:event_btViewPendingOrdersActionPerformed
+
+    private void btRequestCancelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRequestCancelActionPerformed
+    {//GEN-HEADEREND:event_btRequestCancelActionPerformed
+        //TODO
+    }//GEN-LAST:event_btRequestCancelActionPerformed
 
     /**
      * @param args the command line arguments

@@ -122,6 +122,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="View Pending Orders"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btViewPendingOrdersActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btViewPastOrders">
               <Properties>
@@ -132,6 +135,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Request Order Cancellation"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btRequestCancelActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbUserID">
               <Properties>
