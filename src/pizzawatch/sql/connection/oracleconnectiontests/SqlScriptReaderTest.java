@@ -12,8 +12,8 @@ public class SqlScriptReaderTest {
 	@Test
 	public void test() {
 		SqlScriptReader sqlreader = new SqlScriptReader();
-		//sqlreader.insertUpdateCreateDelete("SQL_scripts/projectDefs.sql");
-		//sqlreader.insertUpdateCreateDelete("SQL_scripts/dataInserts.sql");
+		sqlreader.insertUpdateCreateDelete("SQL_scripts/projectDefs.sql");
+		sqlreader.insertUpdateCreateDelete("SQL_scripts/dataInserts.sql");
 		
 		ResultSet testResult = sqlreader.query("SQL_scripts/testQueries.sql");
 		
@@ -26,8 +26,6 @@ public class SqlScriptReaderTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		
 	}
 	

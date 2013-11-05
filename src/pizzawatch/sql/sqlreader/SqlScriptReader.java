@@ -35,7 +35,6 @@ public class SqlScriptReader {
 			{
 				String query = scanner.next() + DELIMITER;
 				
-				//QA queries
 				System.out.print("query: \n" + query + "\n\n");
 				if(connection != null)
 				{

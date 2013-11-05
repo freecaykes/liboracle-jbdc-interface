@@ -56,12 +56,4 @@ public class JBDCSQLConnection {
 		return null;//test
 	}
 
-        /**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		JBDCSQLConnection sqlcon = new JBDCSQLConnection();
-		sqlcon.setOracleConnection();
-	}
-
 }
