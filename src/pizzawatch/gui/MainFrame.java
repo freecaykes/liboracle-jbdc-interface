@@ -203,9 +203,7 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btViewPendingOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPendingOrdersActionPerformed
     {//GEN-HEADEREND:event_btViewPendingOrdersActionPerformed
-        //TODO
-    	
-    	PendingOrdersFrame frame = new PendingOrdersFrame();
+        PendingOrdersFrame frame = new PendingOrdersFrame();
     	frame.setVisible(true);
     }//GEN-LAST:event_btViewPendingOrdersActionPerformed
 
