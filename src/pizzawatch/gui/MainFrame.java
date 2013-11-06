@@ -67,7 +67,15 @@ public class MainFrame extends javax.swing.JFrame
         });
 
         btViewPastOrders.setText("View Past Orders");
-
+        
+        btViewPastOrders.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+            	btViewPastOrdersPerformed(evt);
+            }
+        });
+        
         btRequestCancel.setText("Request Order Cancellation");
         btRequestCancel.addActionListener(new java.awt.event.ActionListener()
         {
@@ -211,6 +219,12 @@ public class MainFrame extends javax.swing.JFrame
     {//GEN-HEADEREND:event_btRequestCancelActionPerformed
         //TODO
     }//GEN-LAST:event_btRequestCancelActionPerformed
+    
+    private void btViewPastOrdersPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPendingOrdersActionPerformed
+    {//GEN-HEADEREND:event_btViewPendingOrdersActionPerformed
+        PastOrdersFrame frame = new PastOrdersFrame();
+    	frame.setVisible(true);
+    }//GEN-LAST:event_btViewPendingOrdersActionPerformed
 
     /**
      * @param args the command line arguments
