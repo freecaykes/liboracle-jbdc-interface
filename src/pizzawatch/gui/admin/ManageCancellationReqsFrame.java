@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package pizzawatch.gui;
+package pizzawatch.gui.admin;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;

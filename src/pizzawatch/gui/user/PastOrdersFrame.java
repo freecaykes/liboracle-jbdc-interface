@@ -1,4 +1,4 @@
-package pizzawatch.gui;
+package pizzawatch.gui.user;
 
 @SuppressWarnings("serial")
 public class PastOrdersFrame extends javax.swing.JFrame{

@@ -6,6 +6,11 @@
 
 package pizzawatch.gui;
 
+import pizzawatch.gui.admin.ManageCancellationReqsFrame;
+import pizzawatch.gui.user.AddOrderFrame;
+import pizzawatch.gui.user.PastOrdersFrame;
+import pizzawatch.gui.user.PendingOrdersFrame;
+import pizzawatch.gui.user.RequestCancellationFrame;
 import pizzawatch.sql.connection.JBDCSQLConnection;
 
 @SuppressWarnings("serial")
@@ -209,17 +214,18 @@ public class MainFrame extends javax.swing.JFrame
         aof.setVisible(true);
     }//GEN-LAST:event_btAddOrderActionPerformed
 
-    private void btViewPendingOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPendingOrdersActionPerformed
-    {//GEN-HEADEREND:event_btViewPendingOrdersActionPerformed
+    private void btViewPendingOrdersActionPerformed(java.awt.event.ActionEvent evt)                                                    
+    {                                                        
         PendingOrdersFrame frame = new PendingOrdersFrame();
     	frame.setVisible(true);
-    }//GEN-LAST:event_btViewPendingOrdersActionPerformed
+    }                                                   
 
     private void btRequestCancelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRequestCancelActionPerformed
     {//GEN-HEADEREND:event_btRequestCancelActionPerformed
-        //TODO
+        RequestCancellationFrame rcf = new RequestCancellationFrame();
+        rcf.setVisible(true);
     }//GEN-LAST:event_btRequestCancelActionPerformed
-    
+
     private void btViewPastOrdersPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPendingOrdersActionPerformed
     {//GEN-HEADEREND:event_btViewPendingOrdersActionPerformed
         PastOrdersFrame frame = new PastOrdersFrame();

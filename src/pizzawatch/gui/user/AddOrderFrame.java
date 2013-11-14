@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package pizzawatch.gui;
+package pizzawatch.gui.user;
 
 @SuppressWarnings("serial")
 public class AddOrderFrame extends javax.swing.JFrame
