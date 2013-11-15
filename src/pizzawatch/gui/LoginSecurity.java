@@ -25,6 +25,11 @@ public class LoginSecurity {
 		return "-1";
 	}
 	
+	/**
+	 * check if user admin
+	 * @param userID
+	 * @return true when an admin user
+	 */
 	public boolean checkAdmin(String userID)
 	{
 		SqlScriptReader sqlreader = new SqlScriptReader();
@@ -40,6 +45,11 @@ public class LoginSecurity {
 		return false;
 	}
 	
+	/**
+	 * hash secure pass
+	 * @param userID
+	 * @param userPass
+	 */
 	public void hashPassword(String userID, String userPass)
 	{
 		if(!usersPasswords.contains(userID))
