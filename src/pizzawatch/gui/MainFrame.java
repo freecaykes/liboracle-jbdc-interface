@@ -16,12 +16,17 @@ import pizzawatch.sql.connection.JBDCSQLConnection;
 @SuppressWarnings("serial")
 public class MainFrame extends javax.swing.JFrame
 {
-    public MainFrame()
+    public MainFrame(boolean userIsAdmin)
     {
         initComponents();
 
         JBDCSQLConnection sqlcon = new JBDCSQLConnection(); //TODO Make async
         sqlcon.setOracleConnection();
+
+        if(userIsAdmin == false)
+        {
+            mainTabbedPane.setEnabledAt(1, false);
+        }
     }
 
     /**
@@ -42,13 +47,11 @@ public class MainFrame extends javax.swing.JFrame
         btViewPendingOrders = new javax.swing.JButton();
         btViewPastOrders = new javax.swing.JButton();
         btRequestCancel = new javax.swing.JButton();
-        cbUserID = new javax.swing.JComboBox();
-        lbUserID = new javax.swing.JLabel();
         AdminPanel = new javax.swing.JPanel();
         btManageCancellationReqs = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbTitle.setText("TMNT Pizza Watch");
@@ -72,15 +75,7 @@ public class MainFrame extends javax.swing.JFrame
         });
 
         btViewPastOrders.setText("View Past Orders");
-        
-        btViewPastOrders.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-            	btViewPastOrdersPerformed(evt);
-            }
-        });
-        
+
         btRequestCancel.setText("Request Order Cancellation");
         btRequestCancel.addActionListener(new java.awt.event.ActionListener()
         {
@@ -89,17 +84,6 @@ public class MainFrame extends javax.swing.JFrame
                 btRequestCancelActionPerformed(evt);
             }
         });
-
-        cbUserID.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
-        cbUserID.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                cbUserIDActionPerformed(evt);
-            }
-        });
-
-        lbUserID.setText("User ID");
 
         javax.swing.GroupLayout UserPanelLayout = new javax.swing.GroupLayout(UserPanel);
         UserPanel.setLayout(UserPanelLayout);
@@ -112,20 +96,13 @@ public class MainFrame extends javax.swing.JFrame
                     .addComponent(btViewPendingOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btViewPastOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btRequestCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbUserID)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         UserPanelLayout.setVerticalGroup(
             UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UserPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btAddOrder)
-                    .addComponent(cbUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbUserID))
+                .addComponent(btAddOrder)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btViewPendingOrders)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -203,11 +180,6 @@ public class MainFrame extends javax.swing.JFrame
         mcrf.setVisible(true);
     }//GEN-LAST:event_btManageCancellationReqsActionPerformed
 
-    private void cbUserIDActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbUserIDActionPerformed
-    {//GEN-HEADEREND:event_cbUserIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbUserIDActionPerformed
-
     private void btAddOrderActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btAddOrderActionPerformed
     {//GEN-HEADEREND:event_btAddOrderActionPerformed
         AddOrderFrame aof = new AddOrderFrame();
@@ -232,44 +204,6 @@ public class MainFrame extends javax.swing.JFrame
     	frame.setVisible(true);
     }//GEN-LAST:event_btViewPendingOrdersActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
-    {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                new MainFrame().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AdminPanel;
     private javax.swing.JPanel UserPanel;
@@ -278,10 +212,8 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JButton btRequestCancel;
     private javax.swing.JButton btViewPastOrders;
     private javax.swing.JButton btViewPendingOrders;
-    private javax.swing.JComboBox cbUserID;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel lbTitle;
-    private javax.swing.JLabel lbUserID;
     private javax.swing.JTabbedPane mainTabbedPane;
     // End of variables declaration//GEN-END:variables
 }
