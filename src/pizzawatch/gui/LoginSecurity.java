@@ -22,7 +22,7 @@ public class LoginSecurity {
 			return usersPasswords.get(userID);
 		}
 		
-		return "-1";
+		return null;
 	}
 	
 	/**

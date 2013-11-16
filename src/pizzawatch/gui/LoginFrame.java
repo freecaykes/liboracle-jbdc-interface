@@ -132,8 +132,23 @@ public class LoginFrame extends javax.swing.JFrame
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btLoginActionPerformed
     {//GEN-HEADEREND:event_btLoginActionPerformed
+    	String userID = tfUserID.getText();
+    	String userPass = jpPassword.getSelectedText();
+    	boolean admin = false;
+    	LoginSecurity loginCheck = new LoginSecurity();
+    	String verifyPassword = loginCheck.loginUser(userID, userPass);
+    	
+    	if(verifyPassword == null)
+    	{
+    		loginCheck.hashPassword(userID, userPass);
+    	}else //because a new user cannot be an admin
+    	{
+    		admin = loginCheck.checkAdmin(userID);
+    	}
+    	
         MainFrame mf = new MainFrame(tfUserID.getText().equalsIgnoreCase("admin"));
-        mf.setVisible(true);
+        mf.setVisible(admin);
+        
     }//GEN-LAST:event_btLoginActionPerformed
 
     /**
