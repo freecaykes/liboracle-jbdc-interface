@@ -46,7 +46,7 @@ INSERT INTO PizzaPlace VALUES
 
 INSERT INTO PizzaPlace VALUES
 (
-    2
+    '2'
 );
 
 INSERT INTO PizzaPlace VALUES

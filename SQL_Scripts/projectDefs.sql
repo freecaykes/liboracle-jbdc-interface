@@ -22,15 +22,10 @@ CREATE TABLE PizzaPlace
 CREATE TABLE Branch_IsIn
 (
     address varchar(100) NOT NULL,
-    PRIMARY KEY (address),
+    branchID varchar(50),
+    PRIMARY KEY (address,userID,branchID),
     userID INTEGER,
     FOREIGN KEY (userID) REFERENCES Users
-);
-
-ALTER TABLE Branch_IsIn
-(
-    ADD branchID INTEGER,
-    FOREIGN KEY (branchID) REFERENCES PizzaPlace
 );
 
 CREATE TABLE PizzaOrder
