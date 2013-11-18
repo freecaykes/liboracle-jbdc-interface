@@ -15,7 +15,7 @@ CREATE TABLE PrivilegedUser
 
 CREATE TABLE PizzaPlace
 (
-    branchID INTEGER,
+    branchID varchar(50),
     PRIMARY KEY (branchID)
 );
 
@@ -25,6 +25,12 @@ CREATE TABLE Branch_IsIn
     PRIMARY KEY (address),
     userID INTEGER,
     FOREIGN KEY (userID) REFERENCES Users
+);
+
+ALTER TABLE Branch_IsIn
+(
+    ADD branchID INTEGER,
+    FOREIGN KEY (branchID) REFERENCES PizzaPlace
 );
 
 CREATE TABLE PizzaOrder

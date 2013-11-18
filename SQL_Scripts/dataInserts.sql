@@ -1,106 +1,47 @@
 INSERT INTO Users VALUES
 (
-    1,
-    'user1',
-    '1234123412341234'
+    0001,
+    'Leonardo',
+    'TMNT001'
 );
 
 INSERT INTO Users VALUES
 (
-    2,
-    'user2',
-    '1234123412341234'
+    0002,
+    'Raphael',
+    'TMNT002'
 );
 
 INSERT INTO Users VALUES
 (
-    3,
-    'user3',
-    '1234123412341234'
+    0003,
+    'Michaelangelo',
+    'TMNT003'
 );
 
 INSERT INTO Users VALUES
 (
-    4,
-    'user4',
-    '1234123412341234'
+    0004,
+    'Donatello',
+    'TMNT005'
 );
 
 INSERT INTO Users VALUES
 (
-    5,
-    'user5',
-    '1234123412341234'
-);
-
-INSERT INTO Users VALUES
-(
-    6,
-    'adminuser1',
-    '1234123412341234'
-);
-
-INSERT INTO Users VALUES
-(
-    7,
-    'adminuser2',
-    '1234123412341234'
-);
-
-INSERT INTO Users VALUES
-(
-    8,
-    'adminuser3',
-    '1234123412341234'
-);
-
-INSERT INTO Users VALUES
-(
-    9,
-    'adminuser4',
-    '1234123412341234'
-);
-
-INSERT INTO Users VALUES
-(
-    10,
-    'adminuser5',
-    '1234123412341234'
+    0010,
+    'Master Splinter',
+    'HAXORADMINDONTMESS'
 );
 
 INSERT INTO PrivilegedUser VALUES
 (
     1,
-    6
-);
-
-INSERT INTO PrivilegedUser VALUES
-(
-    1,
-    7
-);
-
-INSERT INTO PrivilegedUser VALUES
-(
-    1,
-    8
-);
-
-INSERT INTO PrivilegedUser VALUES
-(
-    1,
-    9
-);
-
-INSERT INTO PrivilegedUser VALUES
-(
-    1,
-    10
+    0010
 );
 
 INSERT INTO PizzaPlace VALUES
 (
-    1
+    'BID001'
 );
 
 INSERT INTO PizzaPlace VALUES
