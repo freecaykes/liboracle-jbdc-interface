@@ -2,7 +2,6 @@ package pizzawatch.gui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -30,7 +29,6 @@ public class LoginSecurity {
 	 */
 	public String loginUser(String userID, String userPass)
 	{
-		String real = usersPasswords.get(userID);
 		if(usersPasswords.get(userID).equals(userPass))
 		{
 			return usersPasswords.get(userID);
@@ -71,7 +69,7 @@ public class LoginSecurity {
 	/**
 	 * hash secure pass
 	 * @param userID
-	 * @param userPass
+	 * @param userPass	
 	 */
 	public void hashPassword(String userID, String userPass)
 	{
