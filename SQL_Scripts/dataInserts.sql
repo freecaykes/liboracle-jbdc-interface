@@ -46,40 +46,37 @@ INSERT INTO PizzaPlace VALUES
 
 INSERT INTO PizzaPlace VALUES
 (
-    '2'
+    'BID002'
 );
 
 INSERT INTO PizzaPlace VALUES
 (
-    3
+    'BID003'
 );
 
 INSERT INTO PizzaPlace VALUES
 (
-    4
-);
-
-INSERT INTO PizzaPlace VALUES
-(
-    5
+    'BID004'
 );
 
 INSERT INTO Branch_IsIn VALUES
 (
-    '123 Some Street, Some Place',
-    1
+    'The Sewer, New York',
+    NULL,
+    0001	
 );
 
 INSERT INTO Branch_IsIn VALUES
 (
-    '234 Some Street, Some Place',
-    2
+    'The Sewer Lair, New York',
+    NULL,
+    0010
 );
 
 INSERT INTO Branch_IsIn VALUES
 (
-    '345 Some Street, Some Place',
-    3
+    'Hideout of Shredder, New York',
+    
 );
 
 INSERT INTO Branch_IsIn VALUES

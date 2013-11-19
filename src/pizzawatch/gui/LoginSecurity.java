@@ -1,13 +1,26 @@
 package pizzawatch.gui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.Map;
 
 import pizzawatch.sql.sqlreader.ResultSetParser;
 import pizzawatch.sql.sqlreader.SqlScriptReader;
 
 public class LoginSecurity {
-	private Hashtable<String, String> usersPasswords = new Hashtable<String, String>();
-	
+	@SuppressWarnings("serial")
+	private static Map<String, String> usersPasswords = new HashMap<String, String>();
+
+	public void initializePasswords()
+	{
+			usersPasswords.put("Leonardo","watern4tur3");
+			usersPasswords.put("Raphael","red");
+			usersPasswords.put("Michaelangelo","purple");
+			usersPasswords.put("Donatello", "kawabanga");
+			usersPasswords.put("Master Splinter","p3aceinm1nd");
+	}
 	/**
 	 * @param userID
 	 * @param userPass
@@ -17,7 +30,8 @@ public class LoginSecurity {
 	 */
 	public String loginUser(String userID, String userPass)
 	{
-		if(usersPasswords.get(userID) == userPass)
+		String real = usersPasswords.get(userID);
+		if(usersPasswords.get(userID).equals(userPass))
 		{
 			return usersPasswords.get(userID);
 		}
@@ -33,15 +47,24 @@ public class LoginSecurity {
 	public boolean checkAdmin(String userID)
 	{
 		SqlScriptReader sqlreader = new SqlScriptReader();
-		String[][] users = ResultSetParser.parseResultSetIntoArray(sqlreader.query("checkAdmin.sql"), "userID");
-		for(int i=0;i<users[0].length;i++)
+		
+		ArrayList<LinkedList<String>> users = ResultSetParser.parseResultSetIntoArray(sqlreader.query("SQL_Scripts/checkAdmin.sql"), "name");
+		
+		if(users.equals(null)){return false;}
+		else
 		{
-			if(users[0][i]== userID)
+			for(int i=0;i<users.get(0).size();i++)
 			{
-				return true;
+				String values = (String) users.get(0).get(i);
+				if(values.equals(null))
+				{
+					return false;
+				}else if(values.equals(userID))
+				{
+					return true;
+				}
 			}
 		}
-		
 		return false;
 	}
 	
@@ -52,7 +75,7 @@ public class LoginSecurity {
 	 */
 	public void hashPassword(String userID, String userPass)
 	{
-		if(!usersPasswords.contains(userID))
+		if(!usersPasswords.containsKey(userID))
 		{
 			usersPasswords.put(userID, userPass);
 		}

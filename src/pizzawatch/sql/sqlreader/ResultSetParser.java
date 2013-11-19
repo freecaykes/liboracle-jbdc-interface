@@ -2,19 +2,25 @@ package pizzawatch.sql.sqlreader;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class ResultSetParser {
 	
-	public static String[][] parseResultSetIntoArray(ResultSet rs, String... attributes)
+	public static ArrayList<LinkedList<String>> parseResultSetIntoArray(ResultSet rs, String attributes)
 	{
-		int counter = 0;
-		String[][] parsedResults = new String[attributes.length -1][];
+		String[] tableAttributes = attributes.split(";");
+		ArrayList<LinkedList<String>> parsedResults = new ArrayList<LinkedList<String>>();
+		for(int i=0; i<tableAttributes.length; i++)
+		{
+			parsedResults.add(new LinkedList<String>());
+		}
 		try {
 			while(rs.next())
 			{
-				for(int i=0; i<attributes.length; i++)
+				for(int i=0; i<tableAttributes.length; i++)
 				{
-					parsedResults[i][counter] = rs.getString(attributes[i]);
+					parsedResults.get(i).add(rs.getString(tableAttributes[i]));
 				}
 			}//
 		} catch (SQLException e) {

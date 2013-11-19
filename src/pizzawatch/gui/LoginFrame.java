@@ -9,6 +9,7 @@ package pizzawatch.gui;
 @SuppressWarnings("serial")
 public class LoginFrame extends javax.swing.JFrame
 {
+	int numUsers = 0;
     public LoginFrame()
     {
         initComponents();
@@ -133,21 +134,22 @@ public class LoginFrame extends javax.swing.JFrame
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btLoginActionPerformed
     {//GEN-HEADEREND:event_btLoginActionPerformed
     	String userID = tfUserID.getText();
-    	String userPass = jpPassword.getSelectedText();
+    	String userPass = jpPassword.getText();
     	boolean admin = false;
     	LoginSecurity loginCheck = new LoginSecurity();
+    	if(numUsers == 0)
+    	{
+    		loginCheck.initializePasswords();
+    	}
     	String verifyPassword = loginCheck.loginUser(userID, userPass);
-    	
     	if(verifyPassword == null)
     	{
     		loginCheck.hashPassword(userID, userPass);
-    	}else //because a new user cannot be an admin
-    	{
-    		admin = loginCheck.checkAdmin(userID);
     	}
-    	
-        MainFrame mf = new MainFrame(tfUserID.getText().equalsIgnoreCase("admin"));
-        mf.setVisible(admin);
+    	admin = loginCheck.checkAdmin(userID);
+    	numUsers++;
+        MainFrame mf = new MainFrame(admin);
+        mf.setVisible(true);
         
     }//GEN-LAST:event_btLoginActionPerformed
 

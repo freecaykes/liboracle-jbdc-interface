@@ -35,11 +35,13 @@ public class SqlScriptReader {
 			{
 				String query = scanner.next() + DELIMITER;
 				
-				System.out.print("query: \n" + query + "\n\n");
-				if(connection != null)
+				if(connection != null && query.contains("E"))
 				{
+					System.out.print("query: \n" + query + "\n\n");
 					query = query.substring(0,query.length() - 1);
 					currStatement = connection.prepareStatement(query);
+					if(!query.contains("SELECT"))
+						currStatement.execute();
 				}	
 			}
 			
@@ -60,10 +62,7 @@ public class SqlScriptReader {
 			if(currStatement != null)
 				currStatement.close();
 		}catch(SQLException e){
-			if(e.getMessage().contains("is already used by an existing object"))
-			{
-				System.out.println("ORA-00955: Table name is already in use");
-			}
+			e.printStackTrace();
 		}
 		
 	}

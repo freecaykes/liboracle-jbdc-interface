@@ -1,3 +1,3 @@
-SELECT u.userID
-FROM Users u, PriviligedUser pu
-WHERE u.userID = pu.userID AND pu.admin = 1;
+SELECT u.name
+FROM Users u, PrivilegedUser pu
+WHERE u.userID = pu.userID AND pu.adminLevel = '1';
