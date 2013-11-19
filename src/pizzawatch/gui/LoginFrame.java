@@ -6,6 +6,8 @@
 
 package pizzawatch.gui;
 
+import javax.swing.JOptionPane;
+
 @SuppressWarnings("serial")
 public class LoginFrame extends javax.swing.JFrame
 {
@@ -135,10 +137,18 @@ public class LoginFrame extends javax.swing.JFrame
     	{
     		loginCheck.initializePasswords();
     	}
+
+        if(userID.isEmpty() || userPass.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "User ID or password empty");
+            return;
+        }
+
     	String verifyPassword = loginCheck.loginUser(userID, userPass);
     	if(verifyPassword == null)
     	{
-    		loginCheck.hashPassword(userID, userPass);
+            JOptionPane.showMessageDialog(this, "User ID and password combination invalid");
+            return;
     	}
     	admin = loginCheck.checkAdmin(userID);
     	numUsers++;
