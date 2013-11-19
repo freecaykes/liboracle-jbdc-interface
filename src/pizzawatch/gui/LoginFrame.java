@@ -6,6 +6,7 @@
 
 package pizzawatch.gui;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
@@ -15,6 +16,35 @@ public class LoginFrame extends javax.swing.JFrame
     public LoginFrame()
     {
         initComponents();
+    }
+
+    private void handleLoginAttempt()
+    {
+        String userID = tfUserID.getText();
+    	String userPass = new String(jpPassword.getPassword());
+    	boolean admin;
+    	LoginSecurity loginCheck = new LoginSecurity();
+    	if(numUsers == 0)
+    	{
+    		loginCheck.initializePasswords();
+    	}
+
+        if(userID.isEmpty() || userPass.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "User ID or password empty");
+            return;
+        }
+
+    	String verifyPassword = loginCheck.loginUser(userID, userPass);
+    	if(verifyPassword == null)
+    	{
+            JOptionPane.showMessageDialog(this, "User ID and password combination invalid");
+            return;
+    	}
+    	admin = loginCheck.checkAdmin(userID);
+    	numUsers++;
+        MainFrame mf = new MainFrame(admin);
+        mf.setVisible(true);
     }
 
     /** This method is called from within the constructor to
@@ -54,6 +84,14 @@ public class LoginFrame extends javax.swing.JFrame
         lbUserID.setText("User ID:");
 
         lbPassword.setText("Password:");
+
+        jpPassword.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                jpPasswordKeyReleased(evt);
+            }
+        });
 
         btLogin.setText("Login");
         btLogin.addActionListener(new java.awt.event.ActionListener()
@@ -129,33 +167,16 @@ public class LoginFrame extends javax.swing.JFrame
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btLoginActionPerformed
     {//GEN-HEADEREND:event_btLoginActionPerformed
-    	String userID = tfUserID.getText();
-    	String userPass = new String(jpPassword.getPassword());
-    	boolean admin = false;
-    	LoginSecurity loginCheck = new LoginSecurity();
-    	if(numUsers == 0)
-    	{
-    		loginCheck.initializePasswords();
-    	}
-
-        if(userID.isEmpty() || userPass.isEmpty())
-        {
-            JOptionPane.showMessageDialog(this, "User ID or password empty");
-            return;
-        }
-
-    	String verifyPassword = loginCheck.loginUser(userID, userPass);
-    	if(verifyPassword == null)
-    	{
-            JOptionPane.showMessageDialog(this, "User ID and password combination invalid");
-            return;
-    	}
-    	admin = loginCheck.checkAdmin(userID);
-    	numUsers++;
-        MainFrame mf = new MainFrame(admin);
-        mf.setVisible(true);
-
+    	handleLoginAttempt();
     }//GEN-LAST:event_btLoginActionPerformed
+
+    private void jpPasswordKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jpPasswordKeyReleased
+    {//GEN-HEADEREND:event_jpPasswordKeyReleased
+        if(evt.getKeyChar() == KeyEvent.VK_ENTER)
+        {
+            handleLoginAttempt();
+        }
+    }//GEN-LAST:event_jpPasswordKeyReleased
 
     /**
      * @param args the command line arguments
