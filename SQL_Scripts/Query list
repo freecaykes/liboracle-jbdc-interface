@@ -1,5 +1,7 @@
 Queries:
-1. LoginCheck for users
+1. LoginCheck for users -> Selection, Projection, Join
+2. View User's order -> Division
+3. Admin delete orders -> delete operation
+4. user makes orders, user -> update operation
 
-user: 0001
-pass: leorules
+need aggregation + nested-aggregation
