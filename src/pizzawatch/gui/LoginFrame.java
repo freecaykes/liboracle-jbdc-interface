@@ -33,7 +33,6 @@ public class LoginFrame extends javax.swing.JFrame
         jpPassword = new javax.swing.JPasswordField();
         btLogin = new javax.swing.JButton();
         btNewUser = new javax.swing.JButton();
-        lbtmpimpladminmsg = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
 
@@ -72,8 +71,6 @@ public class LoginFrame extends javax.swing.JFrame
             }
         });
 
-        lbtmpimpladminmsg.setText("Temp Impl: Type \"admin\" to login as admin");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,9 +90,7 @@ public class LoginFrame extends javax.swing.JFrame
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(btLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btNewUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbtmpimpladminmsg)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(242, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,8 +100,7 @@ public class LoginFrame extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbUserID)
-                    .addComponent(tfUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbtmpimpladminmsg))
+                    .addComponent(tfUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbPassword)
@@ -134,7 +128,7 @@ public class LoginFrame extends javax.swing.JFrame
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btLoginActionPerformed
     {//GEN-HEADEREND:event_btLoginActionPerformed
     	String userID = tfUserID.getText();
-    	String userPass = jpPassword.getText();
+    	String userPass = new String(jpPassword.getPassword());
     	boolean admin = false;
     	LoginSecurity loginCheck = new LoginSecurity();
     	if(numUsers == 0)
@@ -150,7 +144,7 @@ public class LoginFrame extends javax.swing.JFrame
     	numUsers++;
         MainFrame mf = new MainFrame(admin);
         mf.setVisible(true);
-        
+
     }//GEN-LAST:event_btLoginActionPerformed
 
     /**
@@ -198,7 +192,6 @@ public class LoginFrame extends javax.swing.JFrame
     private javax.swing.JLabel lbPassword;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbUserID;
-    private javax.swing.JLabel lbtmpimpladminmsg;
     private javax.swing.JTextField tfUserID;
     // End of variables declaration//GEN-END:variables
 

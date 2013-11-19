@@ -2,16 +2,14 @@ package pizzawatch.gui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Map;
-
 import pizzawatch.sql.sqlreader.ResultSetParser;
 import pizzawatch.sql.sqlreader.SqlScriptReader;
 
 public class LoginSecurity {
 	@SuppressWarnings("serial")
-	private static Map<String, String> usersPasswords = new HashMap<String, String>();
+	private static final Map<String, String> usersPasswords = new HashMap<>(16);
 
 	public void initializePasswords()
 	{
@@ -25,20 +23,20 @@ public class LoginSecurity {
 	 * @param userID
 	 * @param userPass
 	 * @return password of String userID in hashTable if userPass == the corresponding user's
-	 * password in Tables 
-	 * -1 otherwise
+	 * password in Tables
+	 * null otherwise
 	 */
 	public String loginUser(String userID, String userPass)
 	{
 		String real = usersPasswords.get(userID);
-		if(usersPasswords.get(userID).equals(userPass))
+		if(real != null && real.equals(userPass))
 		{
 			return usersPasswords.get(userID);
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * check if user admin
 	 * @param userID
@@ -47,16 +45,16 @@ public class LoginSecurity {
 	public boolean checkAdmin(String userID)
 	{
 		SqlScriptReader sqlreader = new SqlScriptReader();
-		
+
 		ArrayList<LinkedList<String>> users = ResultSetParser.parseResultSetIntoArray(sqlreader.query("SQL_Scripts/checkAdmin.sql"), "name");
-		
-		if(users.equals(null)){return false;}
+
+		if(users == null){return false;}
 		else
 		{
 			for(int i=0;i<users.get(0).size();i++)
 			{
-				String values = (String) users.get(0).get(i);
-				if(values.equals(null))
+				String values = users.get(0).get(i);
+				if(values == null)
 				{
 					return false;
 				}else if(values.equals(userID))
@@ -67,7 +65,7 @@ public class LoginSecurity {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * hash secure pass
 	 * @param userID
@@ -80,5 +78,5 @@ public class LoginSecurity {
 			usersPasswords.put(userID, userPass);
 		}
 	}
-	
+
 }
