@@ -16,8 +16,12 @@ import pizzawatch.sql.connection.JBDCSQLConnection;
 @SuppressWarnings("serial")
 public class MainFrame extends javax.swing.JFrame
 {
-    public MainFrame(boolean userIsAdmin)
+    private final LoginFrame lf;
+
+    public MainFrame(LoginFrame lf, boolean userIsAdmin)
     {
+        this.lf = lf;
+
         initComponents();
 
         JBDCSQLConnection sqlcon = new JBDCSQLConnection(); //TODO Make async
@@ -52,6 +56,13 @@ public class MainFrame extends javax.swing.JFrame
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
+                unhideLoginFrame(evt);
+            }
+        });
 
         lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbTitle.setText("TMNT Pizza Watch");
@@ -186,11 +197,11 @@ public class MainFrame extends javax.swing.JFrame
         aof.setVisible(true);
     }//GEN-LAST:event_btAddOrderActionPerformed
 
-    private void btViewPendingOrdersActionPerformed(java.awt.event.ActionEvent evt)                                                    
-    {                                                        
+    private void btViewPendingOrdersActionPerformed(java.awt.event.ActionEvent evt)
+    {
         PendingOrdersFrame frame = new PendingOrdersFrame();
     	frame.setVisible(true);
-    }                                                   
+    }
 
     private void btRequestCancelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRequestCancelActionPerformed
     {//GEN-HEADEREND:event_btRequestCancelActionPerformed
@@ -203,6 +214,11 @@ public class MainFrame extends javax.swing.JFrame
         PastOrdersFrame frame = new PastOrdersFrame();
     	frame.setVisible(true);
     }//GEN-LAST:event_btViewPendingOrdersActionPerformed
+
+    private void unhideLoginFrame(java.awt.event.WindowEvent evt)//GEN-FIRST:event_unhideLoginFrame
+    {//GEN-HEADEREND:event_unhideLoginFrame
+        lf.setVisible(true);
+    }//GEN-LAST:event_unhideLoginFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AdminPanel;

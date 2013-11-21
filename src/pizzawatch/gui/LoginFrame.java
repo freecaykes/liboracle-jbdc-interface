@@ -35,6 +35,8 @@ public class LoginFrame extends javax.swing.JFrame
             return;
         }
 
+        jpPassword.setText(null);
+
     	String verifyPassword = loginCheck.loginUser(userID, userPass);
     	if(verifyPassword == null)
     	{
@@ -43,8 +45,10 @@ public class LoginFrame extends javax.swing.JFrame
     	}
     	admin = loginCheck.checkAdmin(userID);
     	numUsersLoggedIn++;
-        MainFrame mf = new MainFrame(admin);
+
+        MainFrame mf = new MainFrame(this, admin);
         mf.setVisible(true);
+        this.setVisible(false);
     }
 
     /** This method is called from within the constructor to
@@ -72,14 +76,6 @@ public class LoginFrame extends javax.swing.JFrame
 
         lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbTitle.setText("TMNT Pizza Watch");
-
-        tfUserID.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                tfUserIDActionPerformed(evt);
-            }
-        });
 
         lbUserID.setText("User ID:");
 
@@ -155,11 +151,6 @@ public class LoginFrame extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfUserIDActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_tfUserIDActionPerformed
-    {//GEN-HEADEREND:event_tfUserIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfUserIDActionPerformed
-
     private void btNewUserActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btNewUserActionPerformed
     {//GEN-HEADEREND:event_btNewUserActionPerformed
         // TODO add your handling code here:
@@ -199,15 +190,13 @@ public class LoginFrame extends javax.swing.JFrame
                 }
             }
         }
-        catch(ClassNotFoundException ex) {}
-        catch(InstantiationException ex) {}
-        catch(IllegalAccessException ex) {}
-        catch(javax.swing.UnsupportedLookAndFeelException ex) {}
+        catch(ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {}
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable()
         {
+            @Override
             public void run()
             {
                 new LoginFrame().setVisible(true);
