@@ -44,7 +44,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         firstName = new javax.swing.JTextField();
         lastName = new javax.swing.JTextField();
-        UserID = new javax.swing.JTextField();
+        userID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,9 +84,9 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("CREATE A NEW ACCOUNT");
 
-        UserID.addActionListener(new java.awt.event.ActionListener() {
+        userID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserIDActionPerformed(evt);
+                userIDActionPerformed(evt);
             }
         });
 
@@ -131,7 +131,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
                         .addGap(10, 10, 10))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(UserID, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userID, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(passwordReType, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -149,7 +149,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel6)
                 .addGap(5, 5, 5)
-                .addComponent(UserID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(userID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addGap(5, 5, 5)
@@ -191,9 +191,9 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordReTypeActionPerformed
 
-    private void UserIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserIDActionPerformed
+    private void userIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_UserIDActionPerformed
+    }//GEN-LAST:event_userIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,7 +231,6 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField UserID;
     private javax.swing.JButton cancelButton;
     private javax.swing.JFormattedTextField cardNumber;
     private javax.swing.JTextField firstName;
@@ -248,5 +247,6 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField password;
     private javax.swing.JPasswordField passwordReType;
     private javax.swing.JButton submitButton;
+    private javax.swing.JTextField userID;
     // End of variables declaration//GEN-END:variables
 }
