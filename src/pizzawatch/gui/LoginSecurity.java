@@ -17,9 +17,9 @@ public class LoginSecurity {
 	public void initializePasswords()
 	{
             usersPasswords.put("Leonardo", "5ca888f39d61adfe533b0c08bd9f884ee6ff83d69c1221491ecad366dc56b646"); //watern4tur3
-            usersPasswords.put("Raphael", "b1f51a511f1da0cd348b8f8598db32e61cb963e5fc69e2b41485bf99590ed75a"); //red
+            usersPasswords.put("Raphael", "c207b1b9e510364443db9423b36bc5f16df95de58a544a64b9d80b0feba78065"); //kawabanga
             usersPasswords.put("Michaelangelo", "8e0a1b0ada42172886fd1297e25abf99f14396a9400acbd5f20da20289cff02f"); //purple
-            usersPasswords.put("Donatello", "c207b1b9e510364443db9423b36bc5f16df95de58a544a64b9d80b0feba78065"); //kawabanga
+            usersPasswords.put("Donatello", "b1f51a511f1da0cd348b8f8598db32e61cb963e5fc69e2b41485bf99590ed75a"); //red
             usersPasswords.put("Master Splinter", "6b649d9c83a8e2e01b9b34f442af5a25797efe2187f9528da0c481cdf4a4e1e0"); //p3aceinm1nd
 	}
 	/**
@@ -69,11 +69,11 @@ public class LoginSecurity {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * hash secure pass
 	 * @param userID
-	 * @param userPass	
+	 * @param userPass
 	 */
 
     //From http://stackoverflow.com/questions/9655181/convert-from-byte-array-to-hex-string-in-java
