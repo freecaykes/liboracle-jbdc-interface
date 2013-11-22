@@ -8,7 +8,7 @@ package pizzawatch.gui;
 
 import pizzawatch.gui.admin.ManageCancellationReqsFrame;
 import pizzawatch.gui.user.AddOrderFrame;
-import pizzawatch.gui.user.PastOrderFrame;
+import pizzawatch.gui.user.PastOrdersFrame;
 import pizzawatch.gui.user.PendingOrdersFrame;
 import pizzawatch.gui.user.RequestCancellationFrame;
 import pizzawatch.sql.connection.JBDCSQLConnection;
@@ -218,7 +218,7 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btViewPastOrdersPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPendingOrdersActionPerformed
     {//GEN-HEADEREND:event_btViewPendingOrdersActionPerformed
-        PastOrderFrame frame = new PastOrderFrame();
+        PastOrdersFrame frame = new PastOrdersFrame();
     	frame.setVisible(true);
     }//GEN-LAST:event_btViewPendingOrdersActionPerformed
 
