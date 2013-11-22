@@ -6,12 +6,26 @@
 
 package pizzawatch.gui.user;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 @SuppressWarnings("serial")
 public class RequestCancellationFrame extends javax.swing.JFrame
 {
     public RequestCancellationFrame()
     {
         initComponents();
+    }
+
+    private DefaultListModel getDefaultListModel()
+    {
+        DefaultListModel dlm = new DefaultListModel();
+        dlm.addElement("Item 1");
+        dlm.addElement("Item 2");
+        dlm.addElement("Item 3");
+        dlm.addElement("Item 4");
+
+        return dlm;
     }
 
     /** This method is called from within the constructor to
@@ -33,6 +47,7 @@ public class RequestCancellationFrame extends javax.swing.JFrame
         lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbTitle.setText("Request Cancellation");
 
+        jlPendingOrders.setModel(getDefaultListModel());
         jlPendingOrders.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         btRequest.setText("Request");
@@ -75,7 +90,14 @@ public class RequestCancellationFrame extends javax.swing.JFrame
 
     private void btRequestActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRequestActionPerformed
     {//GEN-HEADEREND:event_btRequestActionPerformed
-
+        Object selectValue = jlPendingOrders.getSelectedValue();
+        if(selectValue != null)
+        {
+            JOptionPane.showMessageDialog(this, "Requesting: " + selectValue);
+            //TODO: fix casting fragility
+            DefaultListModel model = (DefaultListModel)jlPendingOrders.getModel();
+            model.removeElement(selectValue);
+        }
     }//GEN-LAST:event_btRequestActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
