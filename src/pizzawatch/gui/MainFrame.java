@@ -236,8 +236,8 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btEditUserDetailsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btEditUserDetailsActionPerformed
     {//GEN-HEADEREND:event_btEditUserDetailsActionPerformed
-        
-        //frame.setVisible(true);
+        AddOrEditUserFrame frame = new AddOrEditUserFrame();
+        frame.setVisible(true);
     }//GEN-LAST:event_btEditUserDetailsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
