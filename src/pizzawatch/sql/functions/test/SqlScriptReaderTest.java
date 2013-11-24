@@ -1,4 +1,4 @@
-package pizzawatch.sql.connection.oracleconnectiontests;
+package pizzawatch.sql.functions.test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

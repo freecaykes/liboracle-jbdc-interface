@@ -9,6 +9,8 @@ package pizzawatch.gui;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
+import pizzawatch.gui.functions.User;
+
 @SuppressWarnings("serial")
 public class LoginFrame extends javax.swing.JFrame
 {
@@ -23,7 +25,7 @@ public class LoginFrame extends javax.swing.JFrame
         String userID = tfUserID.getText();
     	String userPass = new String(jpPassword.getPassword());
     	boolean admin;
-    	LoginSecurity loginCheck = new LoginSecurity();
+    	User loginCheck = new User();
     	if(numUsersLoggedIn == 0)
     	{
     		loginCheck.initializePasswords();

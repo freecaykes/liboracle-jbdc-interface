@@ -34,7 +34,7 @@ CREATE TABLE PizzaOrder
     oid INTEGER,
     PRIMARY KEY (oid),
     deliveryMethod varchar(20) NOT NULL,
-    branchID INTEGER,
+    pizzaType varchar(20) NOT NULL,
     FOREIGN KEY (branchID) REFERENCES PizzaPlace,
     userID INTEGER,
     FOREIGN KEY (userID) REFERENCES Users,

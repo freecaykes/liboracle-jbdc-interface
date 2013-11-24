@@ -2,10 +2,17 @@ package pizzawatch.sql.sqlreader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 import pizzawatch.sql.connection.JBDCSQLConnection;
@@ -15,6 +22,7 @@ public class SqlScriptReader {
 	private static final String DELIMITER = ";";
 	
 	private Connection connection;
+	private final static Charset ENCODING = StandardCharsets.UTF_8;
 	
 	/**
 	 * reads in an .sql file and runs the query/script in the SQL file  
@@ -54,6 +62,10 @@ public class SqlScriptReader {
 		return null;
 	}
 	
+	/**
+	 * run insert, create or delete operation on 
+	 * @param source
+	 */
 	public void insertUpdateCreateDelete(String source)
 	{
 		try{
@@ -81,10 +93,27 @@ public class SqlScriptReader {
 		return results;
 	}
 	
+	//TODO
+	public ResultSet query_sql(String sql)
+	{
+		return null;
+	}
+	
 	private void setConnection()
 	{
 		JBDCSQLConnection sqlConnector = new JBDCSQLConnection();
 		sqlConnector.setOracleConnection();
 		this.connection = sqlConnector.getConnection();
 	}
+	
+	public List<String> readTextFile(String aFileName) throws IOException {
+	    Path path = Paths.get(aFileName);
+	    return Files.readAllLines(path, ENCODING);
+	  }
+	  
+	public void writeTextFile(List<String> aLines, String aFileName) throws IOException {
+		Path path = Paths.get(aFileName);
+		Files.write(path, aLines, ENCODING);
+	}
+	
 }

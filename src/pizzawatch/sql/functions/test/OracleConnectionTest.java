@@ -1,4 +1,4 @@
-package pizzawatch.sql.connection.oracleconnectiontests;
+package pizzawatch.sql.functions.test;
 
 import org.junit.Test;
 
