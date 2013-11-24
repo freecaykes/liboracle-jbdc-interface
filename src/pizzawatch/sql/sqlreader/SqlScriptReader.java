@@ -61,6 +61,29 @@ public class SqlScriptReader {
 		
 		return null;
 	}
+
+	/**
+	 * return ResultSet from Query String
+	 * @param sqlquery
+	 * @return
+	 */
+	public PreparedStatement runSql(String sqlquery)
+	{			
+		PreparedStatement currStatement = null;
+		try {
+			if(connection == null)
+			{
+				setConnection();
+			}
+			currStatement = connection.prepareStatement(sqlquery);
+			return currStatement;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	
 	/**
 	 * run insert, create or delete operation on 
@@ -68,8 +91,12 @@ public class SqlScriptReader {
 	 */
 	public void insertUpdateCreateDelete(String source)
 	{
+		PreparedStatement currStatement = null;
 		try{
-			PreparedStatement currStatement = runScript(source);
+			if(source.contains("SQL_Scripts/"))
+				currStatement = runScript(source);
+			else
+				currStatement = runSql(source);
 			currStatement.executeUpdate();
 			if(currStatement != null)
 				currStatement.close();
@@ -91,12 +118,6 @@ public class SqlScriptReader {
 		}
 		
 		return results;
-	}
-	
-	//TODO
-	public ResultSet query_sql(String sql)
-	{
-		return null;
 	}
 	
 	private void setConnection()

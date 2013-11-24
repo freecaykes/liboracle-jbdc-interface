@@ -121,11 +121,13 @@ public class User {
 	/**
 	 * TODO
 	 */
-	public void deleteOrders()
+	public void deleteOrders(String uid, String oid)
 	{
 		if(admin)
 		{
 			SqlScriptReader sqlreader = new SqlScriptReader();
+			sqlreader.insertUpdateCreateDelete("DELETE FROM PizzaOrder WHERE uid=" + uid + " AND oid=" + oid + ";");
+			
 		}
 	}
 
