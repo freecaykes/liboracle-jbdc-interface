@@ -71,11 +71,11 @@ public class User {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * hash secure pass
 	 * @param userID
-	 * @param userPass	
+	 * @param userPass
 	 */
 
     //From http://stackoverflow.com/questions/9655181/convert-from-byte-array-to-hex-string-in-java

@@ -51,6 +51,7 @@ public class MainFrame extends javax.swing.JFrame
         btViewPendingOrders = new javax.swing.JButton();
         btViewPastOrders = new javax.swing.JButton();
         btRequestCancel = new javax.swing.JButton();
+        btEditUserDetails = new javax.swing.JButton();
         AdminPanel = new javax.swing.JPanel();
         btManageCancellationReqs = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -86,13 +87,6 @@ public class MainFrame extends javax.swing.JFrame
         });
 
         btViewPastOrders.setText("View Past Orders");
-        btViewPastOrders.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-            	btViewPastOrdersPerformed(evt);
-            }
-        });
 
         btRequestCancel.setText("Request Order Cancellation");
         btRequestCancel.addActionListener(new java.awt.event.ActionListener()
@@ -100,6 +94,15 @@ public class MainFrame extends javax.swing.JFrame
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
                 btRequestCancelActionPerformed(evt);
+            }
+        });
+
+        btEditUserDetails.setText("Edit User Details");
+        btEditUserDetails.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btEditUserDetailsActionPerformed(evt);
             }
         });
 
@@ -114,13 +117,17 @@ public class MainFrame extends javax.swing.JFrame
                     .addComponent(btViewPendingOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btViewPastOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btRequestCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addComponent(btEditUserDetails)
+                .addContainerGap())
         );
         UserPanelLayout.setVerticalGroup(
             UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UserPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btAddOrder)
+                .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btAddOrder)
+                    .addComponent(btEditUserDetails))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btViewPendingOrders)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,10 +234,17 @@ public class MainFrame extends javax.swing.JFrame
         lf.setVisible(true);
     }//GEN-LAST:event_unhideLoginFrame
 
+    private void btEditUserDetailsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btEditUserDetailsActionPerformed
+    {//GEN-HEADEREND:event_btEditUserDetailsActionPerformed
+        AddOrEditUserFrame frame = new AddOrEditUserFrame();
+        frame.setVisible(true);
+    }//GEN-LAST:event_btEditUserDetailsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AdminPanel;
     private javax.swing.JPanel UserPanel;
     private javax.swing.JButton btAddOrder;
+    private javax.swing.JButton btEditUserDetails;
     private javax.swing.JButton btManageCancellationReqs;
     private javax.swing.JButton btRequestCancel;
     private javax.swing.JButton btViewPastOrders;
