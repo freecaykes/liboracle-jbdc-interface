@@ -46,6 +46,7 @@
                   </Group>
                   <Component id="lbConnectionError1" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="lbConnectionError2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="btRetryConnection" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="59" max="32767" attributes="0"/>
           </Group>
@@ -74,7 +75,9 @@
               <Component id="lbConnectionError1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lbConnectionError2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="111" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btRetryConnection" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="82" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -142,6 +145,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Check your internet connection and/or try again later."/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btRetryConnection">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Retry Connection"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btRetryConnectionActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -19,13 +19,22 @@ public class LoginFrame extends javax.swing.JFrame
     {
         initComponents();
 
+        attemptAndHandleConnection();
+    }
+
+    private void attemptAndHandleConnection()
+    {
         JBDCSQLConnection sqlcon = new JBDCSQLConnection();
-        if(sqlcon.setOracleConnection())
-        {
-            //Remove the error text if the connection succeeds
-            lbConnectionError1.setText(null);
-            lbConnectionError2.setText(null);
-        }
+        boolean connectionSucceeded = sqlcon.setOracleConnection();
+
+        lbConnectionError1.setVisible(!connectionSucceeded); //Hide if connection fails
+        lbConnectionError2.setVisible(!connectionSucceeded); //Hide if connection fails
+        btRetryConnection.setVisible(!connectionSucceeded); //Hide if connection fails
+
+        tfUserID.setEnabled(connectionSucceeded); //Show if connection succeeds
+        jpPassword.setEnabled(connectionSucceeded); //Show if connection succeeds
+        btLogin.setEnabled(connectionSucceeded); //Show if connection succeeds
+        btNewUser.setEnabled(connectionSucceeded); //Show if connection succeeds
     }
 
     private void handleLoginAttempt()
@@ -80,6 +89,7 @@ public class LoginFrame extends javax.swing.JFrame
         btNewUser = new javax.swing.JButton();
         lbConnectionError1 = new javax.swing.JLabel();
         lbConnectionError2 = new javax.swing.JLabel();
+        btRetryConnection = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -124,6 +134,15 @@ public class LoginFrame extends javax.swing.JFrame
         lbConnectionError2.setForeground(new java.awt.Color(255, 0, 0));
         lbConnectionError2.setText("Check your internet connection and/or try again later.");
 
+        btRetryConnection.setText("Retry Connection");
+        btRetryConnection.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btRetryConnectionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,7 +164,8 @@ public class LoginFrame extends javax.swing.JFrame
                                     .addComponent(btLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btNewUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addComponent(lbConnectionError1)
-                    .addComponent(lbConnectionError2))
+                    .addComponent(lbConnectionError2)
+                    .addComponent(btRetryConnection))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -169,7 +189,9 @@ public class LoginFrame extends javax.swing.JFrame
                 .addComponent(lbConnectionError1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbConnectionError2)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btRetryConnection)
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         pack();
@@ -193,6 +215,11 @@ public class LoginFrame extends javax.swing.JFrame
             handleLoginAttempt();
         }
     }//GEN-LAST:event_jpPasswordKeyReleased
+
+    private void btRetryConnectionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRetryConnectionActionPerformed
+    {//GEN-HEADEREND:event_btRetryConnectionActionPerformed
+        attemptAndHandleConnection();
+    }//GEN-LAST:event_btRetryConnectionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,6 +259,7 @@ public class LoginFrame extends javax.swing.JFrame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btLogin;
     private javax.swing.JButton btNewUser;
+    private javax.swing.JButton btRetryConnection;
     private javax.swing.JPasswordField jpPassword;
     private javax.swing.JLabel lbConnectionError1;
     private javax.swing.JLabel lbConnectionError2;
