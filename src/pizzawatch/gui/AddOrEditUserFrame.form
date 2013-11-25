@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -55,7 +55,7 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="cardNumberLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="createNewAccountLabel" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
+                                  <Component id="createOrEditAccountLabel" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="firstNameLabel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="274" max="-2" attributes="0"/>
@@ -89,7 +89,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lbTitle" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="createNewAccountLabel" min="-2" pref="35" max="-2" attributes="0"/>
+              <Component id="createOrEditAccountLabel" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Component id="userIDLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
@@ -167,6 +167,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="passwordLabel">
       <Properties>
@@ -187,7 +190,7 @@
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="cardNumber">
     </Component>
-    <Component class="javax.swing.JLabel" name="createNewAccountLabel">
+    <Component class="javax.swing.JLabel" name="createOrEditAccountLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>

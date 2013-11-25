@@ -8,16 +8,33 @@ package pizzawatch.gui;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-
 import pizzawatch.gui.functions.User;
+import pizzawatch.sql.connection.JBDCSQLConnection;
 
 @SuppressWarnings("serial")
 public class LoginFrame extends javax.swing.JFrame
 {
-	int numUsersLoggedIn = 0;
+    int numUsersLoggedIn = 0;
     public LoginFrame()
     {
         initComponents();
+
+        attemptAndHandleConnection();
+    }
+
+    private void attemptAndHandleConnection()
+    {
+        JBDCSQLConnection sqlcon = new JBDCSQLConnection();
+        boolean connectionSucceeded = sqlcon.setOracleConnection();
+
+        lbConnectionError1.setVisible(!connectionSucceeded); //Hide if connection fails
+        lbConnectionError2.setVisible(!connectionSucceeded); //Hide if connection fails
+        btRetryConnection.setVisible(!connectionSucceeded); //Hide if connection fails
+
+        tfUserID.setEnabled(connectionSucceeded); //Show if connection succeeds
+        jpPassword.setEnabled(connectionSucceeded); //Show if connection succeeds
+        btLogin.setEnabled(connectionSucceeded); //Show if connection succeeds
+        btNewUser.setEnabled(connectionSucceeded); //Show if connection succeeds
     }
 
     private void handleLoginAttempt()
@@ -27,8 +44,8 @@ public class LoginFrame extends javax.swing.JFrame
     	boolean admin;
     	User loginCheck = new User(userName);
     	if(numUsersLoggedIn == 0)
-    	{
-    		loginCheck.initializePasswords();
+        {
+            loginCheck.initializePasswords();
     	}
 
         if(userName.isEmpty() || userPass.isEmpty())
@@ -41,7 +58,7 @@ public class LoginFrame extends javax.swing.JFrame
 
     	String verifyPassword = loginCheck.loginUser(userName, userPass);
     	if(verifyPassword == null)
-    	{
+        {
             JOptionPane.showMessageDialog(this, "User ID and password combination invalid");
             return;
     	}
@@ -63,7 +80,6 @@ public class LoginFrame extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jButton1 = new javax.swing.JButton();
         lbTitle = new javax.swing.JLabel();
         tfUserID = new javax.swing.JTextField();
         lbUserID = new javax.swing.JLabel();
@@ -71,8 +87,9 @@ public class LoginFrame extends javax.swing.JFrame
         jpPassword = new javax.swing.JPasswordField();
         btLogin = new javax.swing.JButton();
         btNewUser = new javax.swing.JButton();
-
-        jButton1.setText("jButton1");
+        lbConnectionError1 = new javax.swing.JLabel();
+        lbConnectionError2 = new javax.swing.JLabel();
+        btRetryConnection = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,26 +126,47 @@ public class LoginFrame extends javax.swing.JFrame
             }
         });
 
+        lbConnectionError1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbConnectionError1.setForeground(new java.awt.Color(255, 0, 0));
+        lbConnectionError1.setText("Unable to connect to the database.");
+
+        lbConnectionError2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbConnectionError2.setForeground(new java.awt.Color(255, 0, 0));
+        lbConnectionError2.setText("Check your internet connection and/or try again later.");
+
+        btRetryConnection.setText("Retry Connection");
+        btRetryConnection.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btRetryConnectionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbTitle)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbUserID)
-                            .addComponent(lbPassword))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jpPassword)
-                            .addComponent(tfUserID)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btNewUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(242, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lbTitle)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbUserID)
+                                .addComponent(lbPassword))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jpPassword)
+                                .addComponent(tfUserID)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btNewUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addComponent(lbConnectionError1)
+                    .addComponent(lbConnectionError2)
+                    .addComponent(btRetryConnection))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +185,13 @@ public class LoginFrame extends javax.swing.JFrame
                 .addComponent(btLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btNewUser)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbConnectionError1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbConnectionError2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btRetryConnection)
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         pack();
@@ -155,7 +199,7 @@ public class LoginFrame extends javax.swing.JFrame
 
     private void btNewUserActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btNewUserActionPerformed
     {//GEN-HEADEREND:event_btNewUserActionPerformed
-        AddOrEditUserFrame frame = new AddOrEditUserFrame();
+        AddOrEditUserFrame frame = new AddOrEditUserFrame(/*isEditMode*/ false);
         frame.setVisible(true);
     }//GEN-LAST:event_btNewUserActionPerformed
 
@@ -171,6 +215,11 @@ public class LoginFrame extends javax.swing.JFrame
             handleLoginAttempt();
         }
     }//GEN-LAST:event_jpPasswordKeyReleased
+
+    private void btRetryConnectionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRetryConnectionActionPerformed
+    {//GEN-HEADEREND:event_btRetryConnectionActionPerformed
+        attemptAndHandleConnection();
+    }//GEN-LAST:event_btRetryConnectionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,8 +259,10 @@ public class LoginFrame extends javax.swing.JFrame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btLogin;
     private javax.swing.JButton btNewUser;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btRetryConnection;
     private javax.swing.JPasswordField jpPassword;
+    private javax.swing.JLabel lbConnectionError1;
+    private javax.swing.JLabel lbConnectionError2;
     private javax.swing.JLabel lbPassword;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbUserID;

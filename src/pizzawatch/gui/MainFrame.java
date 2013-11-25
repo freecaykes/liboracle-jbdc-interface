@@ -11,7 +11,6 @@ import pizzawatch.gui.user.AddOrderFrame;
 import pizzawatch.gui.user.PastOrdersFrame;
 import pizzawatch.gui.user.PendingOrdersFrame;
 import pizzawatch.gui.user.RequestCancellationFrame;
-import pizzawatch.sql.connection.JBDCSQLConnection;
 
 @SuppressWarnings("serial")
 public class MainFrame extends javax.swing.JFrame
@@ -23,9 +22,6 @@ public class MainFrame extends javax.swing.JFrame
         this.lf = lf;
 
         initComponents();
-
-        JBDCSQLConnection sqlcon = new JBDCSQLConnection(); //TODO Make async
-        sqlcon.setOracleConnection();
 
         if(userIsAdmin == false)
         {
@@ -54,7 +50,6 @@ public class MainFrame extends javax.swing.JFrame
         btEditUserDetails = new javax.swing.JButton();
         AdminPanel = new javax.swing.JPanel();
         btManageCancellationReqs = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter()
@@ -87,6 +82,13 @@ public class MainFrame extends javax.swing.JFrame
         });
 
         btViewPastOrders.setText("View Past Orders");
+        btViewPastOrders.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btViewPastOrdersActionPerformed(evt);
+            }
+        });
 
         btRequestCancel.setText("Request Order Cancellation");
         btRequestCancel.addActionListener(new java.awt.event.ActionListener()
@@ -148,17 +150,13 @@ public class MainFrame extends javax.swing.JFrame
             }
         });
 
-        jButton2.setText("jButton2");
-
         javax.swing.GroupLayout AdminPanelLayout = new javax.swing.GroupLayout(AdminPanel);
         AdminPanel.setLayout(AdminPanelLayout);
         AdminPanelLayout.setHorizontalGroup(
             AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdminPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btManageCancellationReqs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btManageCancellationReqs)
                 .addContainerGap(186, Short.MAX_VALUE))
         );
         AdminPanelLayout.setVerticalGroup(
@@ -166,9 +164,7 @@ public class MainFrame extends javax.swing.JFrame
             .addGroup(AdminPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btManageCancellationReqs)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("Admin", AdminPanel);
@@ -211,23 +207,11 @@ public class MainFrame extends javax.swing.JFrame
         aof.setVisible(true);
     }//GEN-LAST:event_btAddOrderActionPerformed
 
-    private void btViewPendingOrdersActionPerformed(java.awt.event.ActionEvent evt)
-    {
-        PendingOrdersFrame frame = new PendingOrdersFrame();
-    	frame.setVisible(true);
-    }
-
     private void btRequestCancelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRequestCancelActionPerformed
     {//GEN-HEADEREND:event_btRequestCancelActionPerformed
         RequestCancellationFrame rcf = new RequestCancellationFrame();
         rcf.setVisible(true);
     }//GEN-LAST:event_btRequestCancelActionPerformed
-
-    private void btViewPastOrdersPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPendingOrdersActionPerformed
-    {//GEN-HEADEREND:event_btViewPendingOrdersActionPerformed
-        PastOrdersFrame frame = new PastOrdersFrame();
-    	frame.setVisible(true);
-    }//GEN-LAST:event_btViewPendingOrdersActionPerformed
 
     private void unhideLoginFrame(java.awt.event.WindowEvent evt)//GEN-FIRST:event_unhideLoginFrame
     {//GEN-HEADEREND:event_unhideLoginFrame
@@ -236,9 +220,21 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btEditUserDetailsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btEditUserDetailsActionPerformed
     {//GEN-HEADEREND:event_btEditUserDetailsActionPerformed
-        AddOrEditUserFrame frame = new AddOrEditUserFrame();
+        AddOrEditUserFrame frame = new AddOrEditUserFrame(/*isEditMode*/ true);
         frame.setVisible(true);
     }//GEN-LAST:event_btEditUserDetailsActionPerformed
+
+    private void btViewPastOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPastOrdersActionPerformed
+    {//GEN-HEADEREND:event_btViewPastOrdersActionPerformed
+        PastOrdersFrame frame = new PastOrdersFrame();
+    	frame.setVisible(true);
+    }//GEN-LAST:event_btViewPastOrdersActionPerformed
+
+    private void btViewPendingOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPendingOrdersActionPerformed
+    {//GEN-HEADEREND:event_btViewPendingOrdersActionPerformed
+        PendingOrdersFrame frame = new PendingOrdersFrame();
+    	frame.setVisible(true);
+    }//GEN-LAST:event_btViewPendingOrdersActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AdminPanel;
@@ -249,7 +245,6 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JButton btRequestCancel;
     private javax.swing.JButton btViewPastOrders;
     private javax.swing.JButton btViewPendingOrders;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JTabbedPane mainTabbedPane;
     // End of variables declaration//GEN-END:variables
