@@ -61,8 +61,8 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
     private void loadPrevData()
     {
         userID.setText(currentUser.getUserID());
-        firstName.setText(currentUser.getName());
-        lastName.setText("-");
+        firstName.setText(currentUser.getFirstName());
+        lastName.setText(currentUser.getLastName());
         //The plaintext password isn't stored in the DB
         //But should be ok, just check hash of password field vs prev hash
         cardNumber.setText(currentUser.getCreditCardNumber());
@@ -92,10 +92,11 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
 
         //If in edit mode, check (via hash) if the password in the DB matches the one in the password field
         //If they don't match, ask if the user wanted to change their password
+        //TODO store hash in User.java so that we can avoid calling the DB again?
         if(isEditMode && UserUtils.isPasswordCorrect(currentUser.getUserID(), newPassword) == false) {
             int result = JOptionPane.showConfirmDialog(this,
                                                        "The password you have entered is different from the stored. Do you wish to update your password?");
-            if(result == JOptionPane.NO_OPTION) {
+            if(result != JOptionPane.YES_OPTION) {
                 return;
             }
         }

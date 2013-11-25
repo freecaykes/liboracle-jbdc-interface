@@ -129,6 +129,7 @@ public class AddOrderFrame extends javax.swing.JFrame
 
     private void cbPizzaTypeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbPizzaTypeActionPerformed
     {//GEN-HEADEREND:event_cbPizzaTypeActionPerformed
+        //Set the price text field accordingly whenever the selected pizza type changes
         tfPrice.setText(prices[cbPizzaType.getSelectedIndex()]);
     }//GEN-LAST:event_cbPizzaTypeActionPerformed
 

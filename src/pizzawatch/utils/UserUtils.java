@@ -22,7 +22,11 @@ public class UserUtils
 
     public static User getUserFromDB(String userID)
     {
-        User user = new User(userID, getUserIsAdmin(userID), getUserAttributeFromDB(userID, "name"), getUserAttributeFromDB(userID, "cardNumber"));
+        User user = new User(userID,
+                             getUserIsAdmin(userID),
+                             getUserAttributeFromDB(userID, "firstName"),
+                             getUserAttributeFromDB(userID, "lastName"),
+                             getUserAttributeFromDB(userID, "cardNumber"));
         return user;
     }
 
@@ -181,7 +185,7 @@ public class UserUtils
         {
             queryString += " OR u.userID = '" + userIDs[x] + "'"; //Add any remaining user IDs
         }
-        queryString += ")";
+        queryString += ") AND po.isDelivered = 1";
 
         ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(queryString), ATTRIBUTES_STRING);
         for(int x = 0; x < attributesList.size(); x++)

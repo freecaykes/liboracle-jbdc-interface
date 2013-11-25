@@ -5,14 +5,16 @@ public class User
 {
     private final String userID;
     private final boolean admin;
-    private final String name;
+    private final String firstName;
+    private final String lastName;
     private final String creditCardNumber;
 
-    public User(String userID, boolean admin, String name, String creditCardNumber)
+    public User(String userID, boolean admin, String firstName, String lastName, String creditCardNumber)
     {
         this.userID = userID;
         this.admin = admin;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.creditCardNumber = creditCardNumber;
     }
 
@@ -26,9 +28,14 @@ public class User
         return admin;
     }
 
-    public String getName()
+    public String getFirstName()
     {
-        return name;
+        return firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
     }
 
     public String getCreditCardNumber()
