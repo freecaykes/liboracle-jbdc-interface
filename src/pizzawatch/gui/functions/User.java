@@ -140,7 +140,7 @@ public class User
         //TODO protect against non-admin multiuser queries
         final String ATTRIBUTES_STRING = "userID;oid;deliveryMethod;pizzaType;address"; //Keep in sync with TABLE_TITLES
         final String[] TABLE_TITLES = {"User ID", "Order ID", "Delivery Method", "Pizza Type", "Address"}; //Keep in sync with ATTRIBUTES_STRING
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModelNoEdit tableModel = new DefaultTableModelNoEdit();
 
         String queryString = "SELECT * FROM PizzaOrder po WHERE po.userID IN " +
                              "(SELECT u.userID FROM Users u WHERE u.userID = " + userIDs[0]; //Add the first user ID
@@ -154,10 +154,10 @@ public class User
         for(int x = 0; x < attributesList.size(); x++)
         {
             LinkedList<String> attributesDataList = attributesList.get(x);
-            dtm.addColumn(TABLE_TITLES[x], attributesDataList.toArray());
+            tableModel.addColumn(TABLE_TITLES[x], attributesDataList.toArray());
         }
 
-        return dtm;
+        return tableModel;
     }
 
     /**
