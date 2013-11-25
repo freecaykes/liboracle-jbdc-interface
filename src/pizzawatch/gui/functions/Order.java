@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import pizzawatch.sql.sqlreader.ResultSetParser;
 import pizzawatch.sql.sqlreader.SqlScriptReader;
 
 public class Order {
@@ -15,6 +16,11 @@ public class Order {
 	private String address;
 	private String pizzaType;
 	private String deliveryMethod;
+	
+	public String getOrderID()
+	{
+		return this.orderID;
+	}
 	
 	public Order(String uid, String from, String pizzaType, String deliveryMethod)
 	{
@@ -29,27 +35,9 @@ public class Order {
 	public void addOrder()
 	{
 		SqlScriptReader sqlreader = new pizzawatch.sql.sqlreader.SqlScriptReader();
-		try {
-			List<String> insertSql = sqlreader.readTextFile(sqlFile);
-			for(String line:insertSql)
-			{
-				if (line.contains(replaceChar)){
-					line.replace(replaceChar, "(" + orderID +"," + deliveryMethod + "," + pizzaType + "," + userID + "," + address + ")");
-					sqlreader.writeTextFile(insertSql, sqlFile);
-					sqlreader.insertUpdateCreateDelete(sqlFile);
-					
-					//restore addOrders
-					line.replace("(" + orderID +"," + deliveryMethod + "," + pizzaType + "," + userID + "," + address + ")", replaceChar);
-					sqlreader.writeTextFile(insertSql, sqlFile);
-				}
-				break;
-			}
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		sqlreader.insertUpdateCreateDelete(sqlFile);
+		String query = "INSERT INTO PizzaOrder VALUES <*>";
+		query = query.replace(replaceChar, "(" + "'" +orderID.toString() + "'" +"," + "'" +deliveryMethod + "'" + "," + "'" +pizzaType + "'" + "," + "'" + userID + "'" +"," + "'" + address + "'" +")");
+		sqlreader.insertUpdateCreateDelete(query);
 		System.out.print("Order: from:" + address + " for Pizza Type:" + pizzaType + " is submitted");
 	}
 	

@@ -93,15 +93,15 @@ public class SqlScriptReader {
 	{
 		PreparedStatement currStatement = null;
 		try{
-			if(source.contains("SQL_Scripts/"))
+			if(source.contains("SQL_Scripts/")){
 				currStatement = runScript(source);
-			else
+			}else{
 				currStatement = runSql(source);
+			}
 			currStatement.executeUpdate();
-			if(currStatement != null)
-				currStatement.close();
+			if(currStatement != null){currStatement.close();}
 		}catch(SQLException e){
-			e.printStackTrace();
+			System.out.print(e.getMessage() + "\n");
 		}
 		
 	}

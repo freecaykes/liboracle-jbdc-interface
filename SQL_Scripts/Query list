@@ -5,6 +5,6 @@ Queries:
 4. user makes orders, user -> insert operation ------ done
 5. who to punish-> user with most ordered price -> nested aggregation operation (max(of count))
 6. update user info -> update operation ------ for AddOREditUser form
-7. show order count user -> aggregate operation COUNT 
+7. show TOTAL ORDER user -> aggregate operation sum 
 
 

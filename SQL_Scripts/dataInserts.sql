@@ -30,7 +30,7 @@ INSERT INTO Users VALUES
 (
     0010,
     'Master Splinter',
-    'HAXORADMINDONTMESS'
+    'MASTERCARD0010'
 );
 
 INSERT INTO PrivilegedUser VALUES
@@ -39,195 +39,67 @@ INSERT INTO PrivilegedUser VALUES
     0010
 );
 
-INSERT INTO PizzaPlace VALUES
+INSERT INTO User_IsIn VALUES
 (
-    'BID001'
-);
-
-INSERT INTO PizzaPlace VALUES
-(
-    'BID002'
-);
-
-INSERT INTO PizzaPlace VALUES
-(
-    'BID003'
-);
-
-INSERT INTO PizzaPlace VALUES
-(
-    'BID004'
-);
-
-INSERT INTO Branch_IsIn VALUES
-(
-    'The Sewer, New York',
-    NULL,
-    0001	
-);
-
-INSERT INTO Branch_IsIn VALUES
-(
-    'The Sewer Lair, New York',
-    NULL,
-    0010
-);
-
-INSERT INTO Branch_IsIn VALUES
-(
-    'Hideout of Shredder, New York',
-    
-);
-
-INSERT INTO Branch_IsIn VALUES
-(
-    '456 Some Street, Some Place',
-    4
-);
-
-INSERT INTO Branch_IsIn VALUES
-(
-    '567 Some Street, Some Place',
-    5
-);
-
-INSERT INTO Branch_IsIn VALUES
-(
-    '678 Some Street, Some Place',
-    6
-);
-
-INSERT INTO Branch_IsIn VALUES
-(
-    '789 Some Street, Some Place',
-    7
-);
-
-INSERT INTO Branch_IsIn VALUES
-(
-    '890 Some Street, Some Place',
-    8
-);
-
-INSERT INTO Branch_IsIn VALUES
-(
-    '901 Some Street, Some Place',
-    9
-);
-
-INSERT INTO Branch_IsIn VALUES
-(
-    '012 Some Street, Some Place',
-    10
-);
-
-INSERT INTO PizzaOrder VALUES
-(
-    1,
-    'deliveryMethod1',
-    1,
-    2,
-    '234 Some Street, Some Place'
-);
-
-INSERT INTO PizzaOrder VALUES
-(
-    2,
-    'deliveryMethod2',
-    2,
-    4,
-    '456 Some Street, Some Place'
-);
-
-INSERT INTO PizzaOrder VALUES
-(
-    3,
-    'deliveryMethod3',
-    3,
-    6,
-    '678 Some Street, Some Place'
-);
-
-INSERT INTO PizzaOrder VALUES
-(
-    4,
-    'deliveryMethod4',
-    4,
-    8,
-    '890 Some Street, Some Place'
-);
-
-INSERT INTO PizzaOrder VALUES
-(
-    5,
-    'deliveryMethod5',
-    5,
-    10,
-    '012 Some Street, Some Place'
-);
-
-INSERT INTO Pizza VALUES
-(
-    'pizzaType1',
-    1.1,
-    1
-);
-
-INSERT INTO Pizza VALUES
-(
-    'pizzaType2',
-    2.2,
+    'Dojo, New York',
+    0010,
     2
 );
 
-INSERT INTO Pizza VALUES
+INSERT INTO User_IsIn VALUES
 (
-    'pizzaType3',
-    3.3,
+    'The Sewer Lair, New York',
+    0001,
+    1	
+);
+
+INSERT INTO User_IsIn VALUES
+(
+    'Shredder Hideout, New York',
+    0002,
     3
 );
 
-INSERT INTO Pizza VALUES
+INSERT INTO User_IsIn VALUES
 (
-    'pizzaType4',
-    4.4,
-    4
-);
-
-INSERT INTO Pizza VALUES
-(
-    'pizzaType5',
-    5.5,
+    'Area 51, Nevada',
+    0004,
     5
 );
 
-INSERT INTO PizzaPlaceBranchIsIn VALUES
+INSERT INTO User_IsIn VALUES
 (
-    1,
-    '123 Some Street, Some Place'
+   'The Sewer Lair, New York',
+    0003,
+    1	 
 );
 
-INSERT INTO PizzaPlaceBranchIsIn VALUES
+INSERT INTO Pizza VALUES
 (
-    2,
-    '234 Some Street, Some Place'
+    'Pepperoni',
+    19.99
 );
 
-INSERT INTO PizzaPlaceBranchIsIn VALUES
+INSERT INTO Pizza VALUES
 (
-    3,
-    '345 Some Street, Some Place'
+    'Hawaiian',
+    20.99
 );
 
-INSERT INTO PizzaPlaceBranchIsIn VALUES
+INSERT INTO Pizza VALUES
 (
-    4,
-    '456 Some Street, Some Place'
+    'Vegitarian',
+    17.99
 );
 
-INSERT INTO PizzaPlaceBranchIsIn VALUES
+INSERT INTO Pizza VALUES
 (
-    5,
-    '567 Some Street, Some Place'
+    'Meat Lover',
+    21.99
 );
 
+INSERT INTO Pizza VALUES
+(
+    'Cheese',
+    15.99
+);

@@ -13,20 +13,14 @@ CREATE TABLE PrivilegedUser
     FOREIGN KEY (userID) REFERENCES Users
 );
 
-CREATE TABLE PizzaPlace
-(
-    branchID varchar(50),
-    PRIMARY KEY (branchID)
-);
-
-CREATE TABLE Branch_IsIn
+CREATE TABLE User_IsIn
 (
     address varchar(100) NOT NULL,
-    branchID varchar(50),
-    userID INTEGER,
-    PRIMARY KEY (address,branchID),
+    userID INTEGER NOT NULL,
+    distance INTEGER,
+    PRIMARY KEY (address,userID),
     FOREIGN KEY (userID) REFERENCES Users,
-    FOREIGN KEY (branchID) REFERENCES PizzaPlace
+    CONSTRAINT location_id PRIMARY KEY (address,userID),
 );
 
 CREATE TABLE PizzaOrder
@@ -35,26 +29,15 @@ CREATE TABLE PizzaOrder
     PRIMARY KEY (oid),
     deliveryMethod varchar(20) NOT NULL,
     pizzaType varchar(20) NOT NULL,
-    FOREIGN KEY (branchID) REFERENCES PizzaPlace,
     userID INTEGER,
     FOREIGN KEY (userID) REFERENCES Users,
     address varchar(100) NOT NULL,
-    FOREIGN KEY (address) REFERENCES Branch_IsIn
+    FOREIGN KEY (address,userID) REFERENCES User_IsIn
 );
 
 CREATE TABLE Pizza
 (
     pizzaType varchar(50) NOT NULL,
     PRIMARY KEY (pizzaType),
-    price DOUBLE PRECISION,
-    oid INTEGER,
-    FOREIGN KEY (oid) REFERENCES PizzaOrder
-);
-
-CREATE TABLE PizzaPlaceBranchIsIn
-(
-    branchID INTEGER,
-    FOREIGN KEY (branchID) REFERENCES PizzaPlace,
-    address varchar(100) NOT NULL,
-    FOREIGN KEY (address) REFERENCES Branch_IsIn
+    price DOUBLE PRECISION
 );

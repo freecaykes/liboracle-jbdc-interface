@@ -24,7 +24,7 @@ public class User {
 	
 	public String getUserID()
 	{
-		ArrayList<LinkedList<String>> users = ResultSetParser.parseResultSetIntoArray(sqlreader.query("SELECT u.userID FROM Users u WHERE u.name="+name), "uid");
+		ArrayList<LinkedList<String>> users = ResultSetParser.parseResultSetIntoArray(sqlreader.query("SELECT userID FROM Users WHERE name = '"+name+"'"), "userID");
 		return users.get(0).get(0);
 	}
 	
@@ -141,8 +141,8 @@ public class User {
 	{
 		if(admin)
 		{
-			sqlreader.insertUpdateCreateDelete("DELETE FROM PizzaOrder WHERE uid=" + uid + " AND oid=" + oid + ";");
-			
+			String del_query = "DELETE FROM PizzaOrder WHERE userID = " + "'" +uid +"'" +" AND oid = "+ "'" +oid +"'";
+			sqlreader.insertUpdateCreateDelete(del_query);
 		}
 	}
 
