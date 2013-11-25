@@ -12,11 +12,11 @@ import pizzawatch.sql.sqlreader.SqlScriptReader;
 
 public class UserUtils
 {
-    //"leonardo1", "5ca888f39d61adfe533b0c08bd9f884ee6ff83d69c1221491ecad366dc56b646"); //watern4tur3
-    //"raphael2", "b1f51a511f1da0cd348b8f8598db32e61cb963e5fc69e2b41485bf99590ed75a"); //red
-    //"nichaelangelo3", "c207b1b9e510364443db9423b36bc5f16df95de58a544a64b9d80b0feba78065"); //kawabanga
-    //"donatello4", "8e0a1b0ada42172886fd1297e25abf99f14396a9400acbd5f20da20289cff02f"); //purple
-    //"mastersplinter10", "6b649d9c83a8e2e01b9b34f442af5a25797efe2187f9528da0c481cdf4a4e1e0"); //p3aceinm1nd
+    //leonardo1         watern4tur3  5CA888F39D61ADFE533B0C08BD9F884EE6FF83D69C1221491ECAD366DC56B646
+    //raphael2          red          B1F51A511F1DA0CD348B8F8598DB32E61CB963E5FC69E2B41485BF99590ED75A
+    //michaelangelo3    kawabanga    C207B1B9E510364443DB9423B36BC5F16DF95DE58A544A64B9D80B0FEBA78065
+    //donatello4        purple       8E0A1B0ADA42172886FD1297E25ABF99F14396A9400ACBD5F20DA20289CFF02F
+    //mastersplinter10  p3aceinm1nd  6B649D9C83A8E2E01B9B34F442AF5A25797EFE2187F9528DA0C481CDF4A4E1E0
 
     private static final SqlScriptReader SQL_READER = SqlScriptReader.getInstance();
 
