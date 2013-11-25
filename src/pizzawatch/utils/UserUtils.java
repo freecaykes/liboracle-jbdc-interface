@@ -199,7 +199,7 @@ public class UserUtils
      * @param oid The order ID
      * @param admin
      */
-    public static void deleteOrders(String uid, String oid, boolean admin)
+    public static void deleteOrders(String uid, int oid, boolean admin)
     {
         if(admin)
         {

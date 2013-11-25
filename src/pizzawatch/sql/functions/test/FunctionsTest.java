@@ -11,10 +11,10 @@ public class FunctionsTest {
 	@Test
 	public void test()
 	{
-		User testUser = new User("2", false, "Raphael", "TMNT002");
-		Order order = new Order(UserUtils.getUserIDFromName(testUser.getName()), "Shredder Hideout, New York", "Pepperoni", "boat");
+		User testUser = new User("raphael2", false, "Raphael", "2345234523452345");
+		Order order = new Order(6, testUser.getUserID(), "Shredder Hideout, New York", "Pepperoni", "Boat");
 		OrderUtils.addOrder(order);
-		User adminTestUser = new User("10", true, "Master Splinter", "MASTERCARD0010");
+		User adminTestUser = new User("mastersplinter10", true, "Master Splinter", "5678567856785678");
 		UserUtils.checkAdmin(adminTestUser.getUserID());
 		UserUtils.deleteOrders(testUser.getUserID(), order.getOrderID(), true);
 	}
