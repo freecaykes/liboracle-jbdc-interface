@@ -67,7 +67,7 @@ public class SqlScriptReader {
 	 * @param sqlquery
 	 * @return
 	 */
-	public PreparedStatement runSql(String sqlquery)
+	private PreparedStatement runSql(String sqlquery)
 	{			
 		PreparedStatement currStatement = null;
 		try {
@@ -109,8 +109,12 @@ public class SqlScriptReader {
 	public ResultSet query(String source) 
 	{
 		ResultSet results = null;
+		PreparedStatement currStatement = null;
 		try {
-			PreparedStatement currStatement = runScript(source);
+			if(source.contains("SQL_Scripts/"))
+				currStatement = runScript(source);
+			else
+				currStatement = runSql(source);
 			results = currStatement.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -3,8 +3,8 @@ Queries:
 2. View User's order -> Division 
 3. Admin delete orders -> delete operation ------- done
 4. user makes orders, user -> insert operation ------ done
-5. who to punish-> user with most orders -> nested aggregation operation (max(of count))
-6. update user info -> update operation ------ John
-7.  
+5. who to punish-> user with most ordered price -> nested aggregation operation (max(of count))
+6. update user info -> update operation ------ for AddOREditUser form
+7. show order count user -> aggregate operation COUNT 
 
 

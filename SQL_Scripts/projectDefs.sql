@@ -24,7 +24,7 @@ CREATE TABLE Branch_IsIn
     address varchar(100) NOT NULL,
     branchID varchar(50),
     userID INTEGER,
-    PRIMARY KEY (address,userID,branchID),
+    PRIMARY KEY (address,branchID),
     FOREIGN KEY (userID) REFERENCES Users,
     FOREIGN KEY (branchID) REFERENCES PizzaPlace
 );

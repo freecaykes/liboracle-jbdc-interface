@@ -22,16 +22,16 @@ public class LoginFrame extends javax.swing.JFrame
 
     private void handleLoginAttempt()
     {
-        String userID = tfUserID.getText();
+        String userName = tfUserID.getText();
     	String userPass = new String(jpPassword.getPassword());
     	boolean admin;
-    	User loginCheck = new User();
+    	User loginCheck = new User(userName);
     	if(numUsersLoggedIn == 0)
     	{
     		loginCheck.initializePasswords();
     	}
 
-        if(userID.isEmpty() || userPass.isEmpty())
+        if(userName.isEmpty() || userPass.isEmpty())
         {
             JOptionPane.showMessageDialog(this, "User ID or password empty");
             return;
@@ -39,13 +39,13 @@ public class LoginFrame extends javax.swing.JFrame
 
         jpPassword.setText(null);
 
-    	String verifyPassword = loginCheck.loginUser(userID, userPass);
+    	String verifyPassword = loginCheck.loginUser(userName, userPass);
     	if(verifyPassword == null)
     	{
             JOptionPane.showMessageDialog(this, "User ID and password combination invalid");
             return;
     	}
-    	admin = loginCheck.checkAdmin(userID);
+    	admin = loginCheck.checkAdmin(userName);
     	numUsersLoggedIn++;
 
         MainFrame mf = new MainFrame(this, admin);

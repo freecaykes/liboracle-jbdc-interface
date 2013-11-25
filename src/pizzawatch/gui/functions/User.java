@@ -13,7 +13,20 @@ import pizzawatch.sql.sqlreader.SqlScriptReader;
 public class User {
 	@SuppressWarnings("serial")
 	private static final Map<String, String> usersPasswords = new HashMap<>(16);
+	private String name;
+	private SqlScriptReader sqlreader = new SqlScriptReader();
 	public boolean admin = false;
+	
+	public User(String name)
+	{
+		this.name = name;
+	}
+	
+	public String getUserID()
+	{
+		ArrayList<LinkedList<String>> users = ResultSetParser.parseResultSetIntoArray(sqlreader.query("SELECT u.userID FROM Users u WHERE u.name="+name), "uid");
+		return users.get(0).get(0);
+	}
 	
 	public void initializePasswords()
 	{
@@ -49,8 +62,6 @@ public class User {
 	 */
 	public boolean checkAdmin(String userID)
 	{
-		SqlScriptReader sqlreader = new SqlScriptReader();
-
 		ArrayList<LinkedList<String>> users = ResultSetParser.parseResultSetIntoArray(sqlreader.query("SQL_Scripts/checkAdmin.sql"), "name");
 
 		if(users == null){return false;}
@@ -73,7 +84,7 @@ public class User {
 	}
 
 	/**
-	 * hash secure pass
+	 * conver bytes to HEXbytes for hashing
 	 * @param userID
 	 * @param userPass
 	 */
@@ -113,19 +124,23 @@ public class User {
             }
 	}
 	
-	public String viewOrders()
+	//Please Complete this using division
+	/**
+	 * get all of 1 user's orders
+	 * @return
+	 */
+	public ArrayList<LinkedList<String>> getOrders()
 	{
-		return null;
+		return ResultSetParser.parseResultSetIntoArray(sqlreader.query("   " + getUserID()), "oid;deliveryMethod;pizzaType;address");
 	}
 	
 	/**
-	 * TODO
+	 * an admin  can delete an order
 	 */
 	public void deleteOrders(String uid, String oid)
 	{
 		if(admin)
 		{
-			SqlScriptReader sqlreader = new SqlScriptReader();
 			sqlreader.insertUpdateCreateDelete("DELETE FROM PizzaOrder WHERE uid=" + uid + " AND oid=" + oid + ";");
 			
 		}
