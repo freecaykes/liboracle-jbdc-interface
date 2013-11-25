@@ -194,7 +194,7 @@ public class LoginFrame extends javax.swing.JFrame
 
     private void btNewUserActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btNewUserActionPerformed
     {//GEN-HEADEREND:event_btNewUserActionPerformed
-        AddOrEditUserFrame frame = new AddOrEditUserFrame(/*isEditMode*/ false);
+        AddOrEditUserFrame frame = new AddOrEditUserFrame(null);
         frame.setVisible(true);
     }//GEN-LAST:event_btNewUserActionPerformed
 

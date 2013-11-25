@@ -6,35 +6,83 @@
 
 package pizzawatch.gui;
 
+import java.text.ParseException;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFormattedTextField.AbstractFormatterFactory;
 import javax.swing.JOptionPane;
+import javax.swing.text.MaskFormatter;
+import pizzawatch.datamodels.User;
+import pizzawatch.utils.UserUtils;
 
 /**
  *
  * @author John
  */
 @SuppressWarnings("serial")
-public class AddOrEditUserFrame extends javax.swing.JFrame {
-
+public class AddOrEditUserFrame extends javax.swing.JFrame
+{
+    private final boolean isEditMode;
+    private final User currentUser;
     /**
      * Creates new form NewUserFrame
-     * @param isEditMode Whether the frame should be in edit mode
+     * If user is null, the frame is in add mode, otherwise it is in edit mode
+     * @param user The user that will have their account details edited, or null if adding a new user
      */
-    public AddOrEditUserFrame(boolean isEditMode) {
+    public AddOrEditUserFrame(User user) {
+        this.isEditMode = user != null;
+        this.currentUser = user;
         initComponents();
 
         if(isEditMode) {
             userID.setEnabled(false);
             createOrEditAccountLabel.setText("EDIT ACCOUNT DETAILS");
+            loadPrevData();
         }
     }
 
-    private void handleSubmitAttempt(){
+    private AbstractFormatterFactory getMaskFormatterFactory()
+    {
+        AbstractFormatterFactory dff = new AbstractFormatterFactory() {
+            @Override
+            public JFormattedTextField.AbstractFormatter getFormatter(JFormattedTextField tf) {
+                try {
+                    MaskFormatter mf = new MaskFormatter("################");
+                    mf.setPlaceholderCharacter('0');
+                    return mf;
+                } catch (ParseException ex) {
+                    return new MaskFormatter();
+                }
+            }
+        };
+
+        return dff;
+    }
+
+    private void loadPrevData()
+    {
+        userID.setText(currentUser.getUserID());
+        firstName.setText(currentUser.getName());
+        lastName.setText("-");
+        //The plaintext password isn't stored in the DB
+        //But should be ok, just check hash of password field vs prev hash
+        cardNumber.setText(currentUser.getCreditCardNumber());
+    }
+
+    private void handleSubmitAttempt()
+    {
         String newUserID = userID.getText();
         String newPassword = new String (password.getPassword());
         String newPasswordReType = new String (passwordReType.getPassword());
         String newFirstName = firstName.getText();
         String newLastName = lastName.getText();
-        //String newCardNumber = new JPasswordField();
+        String newCardNumber = cardNumber.getText();
+
+        //Checks if all fields are filled / correct
+        if (newUserID.isEmpty() || newPassword.isEmpty() || newPasswordReType.isEmpty() ||
+            newFirstName.isEmpty() || newLastName.isEmpty() || newCardNumber.equals("0000000000000000")) {
+            JOptionPane.showMessageDialog(this, "Some fields are blank. All fields are required.");
+            return;
+        }
 
         //Checks if the two passwords match
         if (!newPassword.equals(newPasswordReType)){
@@ -42,11 +90,18 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
             return;
         }
 
-        //Checks if all fields are filled
-        if (newUserID.isEmpty() || newPassword.isEmpty() || newPasswordReType.isEmpty()
-                || newFirstName.isEmpty() || newLastName.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Some fields are blank. All fields are required.");
+        //If in edit mode, check (via hash) if the password in the DB matches the one in the password field
+        //If they don't match, ask if the user wanted to change their password
+        if(isEditMode && UserUtils.isPasswordCorrect(currentUser.getUserID(), newPassword) == false) {
+            int result = JOptionPane.showConfirmDialog(this,
+                                                       "The password you have entered is different from the stored. Do you wish to update your password?");
+            if(result == JOptionPane.NO_OPTION) {
+                return;
+            }
         }
+
+        //Do actual updating here
+        String dummy = null;
     }
 
     /**
@@ -65,7 +120,6 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
         cardNumberLabel = new javax.swing.JLabel();
         userIDLabel = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
         passwordLabel = new javax.swing.JLabel();
         reTypePasswordLabel = new javax.swing.JLabel();
         password = new javax.swing.JPasswordField();
@@ -98,37 +152,14 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
             }
         });
 
-        cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                cancelButtonActionPerformed(evt);
-            }
-        });
-
         passwordLabel.setText("Password");
 
         reTypePasswordLabel.setText("Re-type Password");
 
-        passwordReType.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                passwordReTypeActionPerformed(evt);
-            }
-        });
+        cardNumber.setFormatterFactory(getMaskFormatterFactory());
 
         createOrEditAccountLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         createOrEditAccountLabel.setText("CREATE A NEW ACCOUNT");
-
-        userID.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                userIDActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,12 +171,6 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cardNumber)
                         .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(submitButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addGap(161, 161, 161))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbTitle)
@@ -166,7 +191,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
                                         .addComponent(firstNameLabel)
                                         .addGap(274, 274, 274)
                                         .addComponent(lastNameLabel)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 275, Short.MAX_VALUE)))
                         .addGap(10, 10, 10))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -177,6 +202,10 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
                                 .addComponent(userIDLabel)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(299, 299, 299)
+                .addComponent(submitButton)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,11 +238,9 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
                 .addComponent(cardNumberLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(submitButton)
-                    .addComponent(cancelButton))
-                .addGap(24, 24, 24))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(submitButton)
+                .addContainerGap())
         );
 
         pack();
@@ -223,21 +250,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
         handleSubmitAttempt();
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    private void passwordReTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordReTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordReTypeActionPerformed
-
-    private void userIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userIDActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cancelButtonActionPerformed
-    {//GEN-HEADEREND:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cancelButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelButton;
     private javax.swing.JFormattedTextField cardNumber;
     private javax.swing.JLabel cardNumberLabel;
     private javax.swing.JLabel createOrEditAccountLabel;

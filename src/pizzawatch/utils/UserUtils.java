@@ -82,14 +82,15 @@ public class UserUtils
         ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(QUERY_STRING), ATTRIBUTES_STRING);
 
         String hashOfGivenPassword = hashPassword(givenPassword);
-
-        String realPasswordHash = attributesList.get(0).get(0);
-        if(realPasswordHash == null)
+        try
+        {
+            String realPasswordHash = attributesList.get(0).get(0);
+            return realPasswordHash.equals(hashOfGivenPassword); //hashOfGivenPassword can be null, but equals can deal with that
+        }
+        catch(IndexOutOfBoundsException ex)
         {
             return false;
         }
-
-        return realPasswordHash.equals(hashOfGivenPassword); //hashOfGivenPassword can be null, but equals can deal with that
     }
 
     /**

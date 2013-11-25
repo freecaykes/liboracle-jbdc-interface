@@ -8,6 +8,7 @@ package pizzawatch.gui;
 
 import pizzawatch.datamodels.User;
 import pizzawatch.gui.admin.ManageCancellationReqsFrame;
+import pizzawatch.gui.admin.MultipleUserPastOrdersFrame;
 import pizzawatch.gui.user.AddOrderFrame;
 import pizzawatch.gui.user.PastOrdersFrame;
 import pizzawatch.gui.user.PendingOrdersFrame;
@@ -53,6 +54,7 @@ public class MainFrame extends javax.swing.JFrame
         btEditUserDetails = new javax.swing.JButton();
         AdminPanel = new javax.swing.JPanel();
         btManageCancellationReqs = new javax.swing.JButton();
+        btMultiplerUserPastOrders = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter()
@@ -153,21 +155,34 @@ public class MainFrame extends javax.swing.JFrame
             }
         });
 
+        btMultiplerUserPastOrders.setText("View Past Orders (multiple users)");
+        btMultiplerUserPastOrders.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btMultiplerUserPastOrdersActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout AdminPanelLayout = new javax.swing.GroupLayout(AdminPanel);
         AdminPanel.setLayout(AdminPanelLayout);
         AdminPanelLayout.setHorizontalGroup(
             AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdminPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btManageCancellationReqs)
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btManageCancellationReqs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btMultiplerUserPastOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         AdminPanelLayout.setVerticalGroup(
             AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdminPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btManageCancellationReqs)
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btMultiplerUserPastOrders)
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("Admin", AdminPanel);
@@ -223,13 +238,13 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btEditUserDetailsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btEditUserDetailsActionPerformed
     {//GEN-HEADEREND:event_btEditUserDetailsActionPerformed
-        AddOrEditUserFrame frame = new AddOrEditUserFrame(/*isEditMode*/ true);
+        AddOrEditUserFrame frame = new AddOrEditUserFrame(currentUser);
         frame.setVisible(true);
     }//GEN-LAST:event_btEditUserDetailsActionPerformed
 
     private void btViewPastOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPastOrdersActionPerformed
     {//GEN-HEADEREND:event_btViewPastOrdersActionPerformed
-        PastOrdersFrame frame = new PastOrdersFrame(new String[] {"raphael2", "mastersplinter10", "michaelangelo3"}); //TODO disallow non-admin multi user queries
+        PastOrdersFrame frame = new PastOrdersFrame(new String[] {currentUser.getUserID()});
     	frame.setVisible(true);
     }//GEN-LAST:event_btViewPastOrdersActionPerformed
 
@@ -239,12 +254,19 @@ public class MainFrame extends javax.swing.JFrame
     	frame.setVisible(true);
     }//GEN-LAST:event_btViewPendingOrdersActionPerformed
 
+    private void btMultiplerUserPastOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btMultiplerUserPastOrdersActionPerformed
+    {//GEN-HEADEREND:event_btMultiplerUserPastOrdersActionPerformed
+        MultipleUserPastOrdersFrame frame = new MultipleUserPastOrdersFrame();
+        frame.setVisible(true);
+    }//GEN-LAST:event_btMultiplerUserPastOrdersActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AdminPanel;
     private javax.swing.JPanel UserPanel;
     private javax.swing.JButton btAddOrder;
     private javax.swing.JButton btEditUserDetails;
     private javax.swing.JButton btManageCancellationReqs;
+    private javax.swing.JButton btMultiplerUserPastOrders;
     private javax.swing.JButton btRequestCancel;
     private javax.swing.JButton btViewPastOrders;
     private javax.swing.JButton btViewPendingOrders;
