@@ -57,6 +57,7 @@ public class User {
 
 	/**
 	 * check if user admin
+	 * join query
 	 * @param userID
 	 * @return true when an admin user
 	 */
@@ -127,6 +128,7 @@ public class User {
 	//Please Complete this using division
 	/**
 	 * get all of 1 user's orders
+	 * division query
 	 * @return
 	 */
 	public ArrayList<LinkedList<String>> getOrders()
@@ -136,6 +138,7 @@ public class User {
 	
 	/**
 	 * an admin  can delete an order
+	 * our delete query
 	 */
 	public void deleteOrders(String uid, String oid)
 	{
@@ -144,6 +147,42 @@ public class User {
 			String del_query = "DELETE FROM PizzaOrder WHERE userID = " + "'" +uid +"'" +" AND oid = "+ "'" +oid +"'";
 			sqlreader.insertUpdateCreateDelete(del_query);
 		}
+	}
+	
+	/**
+	 * our nested aggregate query
+	 * @return
+	 */
+	public String punish()
+	{
+		if(admin)
+		{
+			String sum_query = "CREATE VIEW [User Total Sum] AS" +
+					   "SELECT SUM(p.price) AS user_sum, u.userID" + 
+					   "FROM Users u, PizzaOrder po, Pizza p" +
+					   "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType" + 
+					   "GROUP BY u.userID";
+			String max_query = "SELECT MAX(user_sum), userID FROM [User Total Sum] GROUP BY userID";
+			sqlreader.query(sum_query);
+			ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(sqlreader.query(max_query), "userID");
+			return total_user_sum.get(0).get(0);
+			
+		}
+			return null;
+	}
+	
+	/**
+	 * our aggregate query
+	 * @return
+	 */
+	public String getTotalSum()
+	{
+		String sum_query = "SELECT SUM(p.price)" + 
+						   "FROM Users u, PizzaOrder po, Pizza p" +
+						   "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType AND u.userID = " + getUserID()+ 
+						   "GROUP BY u.userID";
+		ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(sqlreader.query(sum_query), "price");
+		return total_user_sum.get(0).get(0);
 	}
 
 }

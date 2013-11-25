@@ -1,10 +1,7 @@
 package pizzawatch.gui.functions;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Random;
 
-import pizzawatch.sql.sqlreader.ResultSetParser;
 import pizzawatch.sql.sqlreader.SqlScriptReader;
 
 public class Order {
@@ -32,6 +29,9 @@ public class Order {
 		this.userID = uid;
 	}
 	
+	/**
+	 * Insert Query
+	 */
 	public void addOrder()
 	{
 		SqlScriptReader sqlreader = new pizzawatch.sql.sqlreader.SqlScriptReader();
