@@ -226,7 +226,7 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btViewPastOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPastOrdersActionPerformed
     {//GEN-HEADEREND:event_btViewPastOrdersActionPerformed
-        PastOrdersFrame frame = new PastOrdersFrame();
+        PastOrdersFrame frame = new PastOrdersFrame(new int[] {2, 3, 4}); //TODO disallow non-admin multi user queries
     	frame.setVisible(true);
     }//GEN-LAST:event_btViewPastOrdersActionPerformed
 

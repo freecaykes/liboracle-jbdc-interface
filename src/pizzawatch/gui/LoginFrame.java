@@ -56,7 +56,7 @@ public class LoginFrame extends javax.swing.JFrame
 
         jpPassword.setText(null);
 
-    	String verifyPassword = loginCheck.loginUser(userName, userPass);
+    	String verifyPassword = loginCheck.compareUserPasswordHash(userName, userPass);
     	if(verifyPassword == null)
         {
             JOptionPane.showMessageDialog(this, "User ID and password combination invalid");
