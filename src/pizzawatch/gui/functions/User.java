@@ -22,6 +22,10 @@ public class User {
 		this.name = name;
 	}
 	
+	/**
+	 * selection + projection query
+	 * @return
+	 */
 	public String getUserID()
 	{
 		ArrayList<LinkedList<String>> users = ResultSetParser.parseResultSetIntoArray(sqlreader.query("SELECT userID FROM Users WHERE name = '"+name+"'"), "userID");
@@ -36,6 +40,7 @@ public class User {
             usersPasswords.put("Donatello", "8e0a1b0ada42172886fd1297e25abf99f14396a9400acbd5f20da20289cff02f"); //purple
             usersPasswords.put("Master Splinter", "6b649d9c83a8e2e01b9b34f442af5a25797efe2187f9528da0c481cdf4a4e1e0"); //p3aceinm1nd
 	}
+	
 	/**
 	 * @param userID
 	 * @param userPass
