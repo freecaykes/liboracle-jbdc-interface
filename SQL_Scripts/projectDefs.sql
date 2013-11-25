@@ -1,26 +1,26 @@
 CREATE TABLE Users
 (
-    userID INTEGER,
+    userID varchar(30) NOT NULL,
     PRIMARY KEY (userID),
     name varchar(70) NOT NULL,
-    cardNumber char(16) NOT NULL
+    cardNumber char(16) NOT NULL,
+    passwordHash char(64) NOT NULL
 );
 
 CREATE TABLE PrivilegedUser
 (
     adminLevel INTEGER,
-    userID INTEGER,
+    userID varchar(30) NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users
 );
 
 CREATE TABLE User_IsIn
 (
     address varchar(100) NOT NULL,
-    userID INTEGER NOT NULL,
+    userID varchar(30) NOT NULL,
     distance INTEGER,
-    PRIMARY KEY (address,userID),
     FOREIGN KEY (userID) REFERENCES Users,
-    CONSTRAINT location_id PRIMARY KEY (address,userID),
+    CONSTRAINT location_id PRIMARY KEY (address,userID)
 );
 
 CREATE TABLE PizzaOrder
@@ -29,7 +29,7 @@ CREATE TABLE PizzaOrder
     PRIMARY KEY (oid),
     deliveryMethod varchar(20) NOT NULL,
     pizzaType varchar(20) NOT NULL,
-    userID INTEGER,
+    userID varchar(30) NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users,
     address varchar(100) NOT NULL,
     FOREIGN KEY (address,userID) REFERENCES User_IsIn

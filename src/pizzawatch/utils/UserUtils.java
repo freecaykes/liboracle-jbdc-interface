@@ -4,17 +4,50 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import javax.swing.table.TableModel;
+import pizzawatch.datamodels.User;
 import pizzawatch.sql.sqlreader.ResultSetParser;
 import pizzawatch.sql.sqlreader.SqlScriptReader;
 
 public class UserUtils
 {
-    private static final Map<String, String> usersPasswords = new HashMap<>(16);
+    //"leonardo1", "5ca888f39d61adfe533b0c08bd9f884ee6ff83d69c1221491ecad366dc56b646"); //watern4tur3
+    //"raphael2", "b1f51a511f1da0cd348b8f8598db32e61cb963e5fc69e2b41485bf99590ed75a"); //red
+    //"nichaelangelo3", "c207b1b9e510364443db9423b36bc5f16df95de58a544a64b9d80b0feba78065"); //kawabanga
+    //"donatello4", "8e0a1b0ada42172886fd1297e25abf99f14396a9400acbd5f20da20289cff02f"); //purple
+    //"mastersplinter10", "6b649d9c83a8e2e01b9b34f442af5a25797efe2187f9528da0c481cdf4a4e1e0"); //p3aceinm1nd
+
     private static final SqlScriptReader SQL_READER = SqlScriptReader.getInstance();
+
+    public static User getUserFromDB(String userID)
+    {
+        User user = new User(userID, getUserIsAdmin(userID), getUserAttributeFromDB(userID, "name"), getUserAttributeFromDB(userID, "cardNumber"));
+        return user;
+    }
+
+    private static String getUserAttributeFromDB(String userID, String attribute)
+    {
+        final String QUERY_STRING = "SELECT * FROM Users WHERE userID = '" + userID + "'";
+        ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(QUERY_STRING), attribute);
+
+        return attributesList.get(0).get(0);
+    }
+
+    private static boolean getUserIsAdmin(String userID)
+    {
+        final String QUERY_STRING = "SELECT * FROM PrivilegedUser WHERE userID = '" + userID + "'";
+        ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(QUERY_STRING), "userID");
+
+        try
+        {
+            return attributesList.get(0).get(0) != null;
+        }
+        catch(IndexOutOfBoundsException ex)
+        {
+            return false;
+        }
+    }
 
     /**
      * Returns the user's ID given their name
@@ -35,32 +68,28 @@ public class UserUtils
         }
     }
 
-    public static void initializePasswords()
-    {
-        usersPasswords.put("Leonardo", "5ca888f39d61adfe533b0c08bd9f884ee6ff83d69c1221491ecad366dc56b646"); //watern4tur3
-        usersPasswords.put("Raphael", "b1f51a511f1da0cd348b8f8598db32e61cb963e5fc69e2b41485bf99590ed75a"); //red
-        usersPasswords.put("Michaelangelo", "c207b1b9e510364443db9423b36bc5f16df95de58a544a64b9d80b0feba78065"); //kawabanga
-        usersPasswords.put("Donatello", "8e0a1b0ada42172886fd1297e25abf99f14396a9400acbd5f20da20289cff02f"); //purple
-        usersPasswords.put("Master Splinter", "6b649d9c83a8e2e01b9b34f442af5a25797efe2187f9528da0c481cdf4a4e1e0"); //p3aceinm1nd
-    }
-
     /**
      * Compares a given password hash and the real password hash of the given user
      * @param userID
-     * @param userPass
-     * @return Password of String userID in hashTable if userPass == the corresponding user's
-     * password in Tables, or null otherwise
+     * @param givenPassword
+     * @return If the given password matches the password on the DB
      */
-    public static String compareUserPasswordHash(String userID, String userPass)
+    public static boolean isPasswordCorrect(String userID, String givenPassword)
     {
-        String hashOfGivenPassword = hashPassword(userPass);
-        String real = usersPasswords.get(userID);
-        if(real != null && hashOfGivenPassword != null && real.equalsIgnoreCase(hashOfGivenPassword))
+        final String ATTRIBUTES_STRING = "passwordHash";
+        final String QUERY_STRING = "SELECT * FROM Users WHERE userID = '" + userID + "'";
+
+        ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(QUERY_STRING), ATTRIBUTES_STRING);
+
+        String hashOfGivenPassword = hashPassword(givenPassword);
+
+        String realPasswordHash = attributesList.get(0).get(0);
+        if(realPasswordHash == null)
         {
-            return usersPasswords.get(userID);
+            return false;
         }
 
-        return null;
+        return realPasswordHash.equals(hashOfGivenPassword); //hashOfGivenPassword can be null, but equals can deal with that
     }
 
     /**
@@ -138,7 +167,7 @@ public class UserUtils
      * @param userIDs An array containing the user IDs
      * @return A TableModel for use by the PastOrdersFrame JList
      */
-    public static TableModel getPastOrdersTableModel(int[] userIDs)
+    public static TableModel getPastOrdersTableModel(String[] userIDs)
     {
         //TODO protect against non-admin multiuser queries
         final String ATTRIBUTES_STRING = "userID;oid;deliveryMethod;pizzaType;address"; //Keep in sync with TABLE_TITLES
@@ -146,10 +175,10 @@ public class UserUtils
         DefaultTableModelNoEdit tableModel = new DefaultTableModelNoEdit();
 
         String queryString = "SELECT * FROM PizzaOrder po WHERE po.userID IN " +
-                             "(SELECT u.userID FROM Users u WHERE u.userID = " + userIDs[0]; //Add the first user ID
+                             "(SELECT u.userID FROM Users u WHERE u.userID = '" + userIDs[0] + "'"; //Add the first user ID
         for(int x = 1; x < userIDs.length; x++)
         {
-            queryString += " OR u.userID = " + userIDs[x]; //Add any remaining user IDs
+            queryString += " OR u.userID = '" + userIDs[x] + "'"; //Add any remaining user IDs
         }
         queryString += ")";
 
@@ -174,7 +203,7 @@ public class UserUtils
     {
         if(admin)
         {
-            String del_query = "DELETE FROM PizzaOrder WHERE userID = " + "'" +uid +"'" +" AND oid = "+ "'" +oid +"'";
+            String del_query = "DELETE FROM PizzaOrder WHERE userID = '" + uid + "' AND oid = '" + oid + "'";
             SQL_READER.insertUpdateCreateDelete(del_query);
         }
     }
@@ -184,7 +213,7 @@ public class UserUtils
      * @param admin
      * @return
      */
-    public String punish(boolean admin)
+    public static String punish(boolean admin)
     {
         if(admin)
         {
@@ -210,7 +239,7 @@ public class UserUtils
     {
         String sum_query = "SELECT SUM(p.price)" +
                            "FROM Users u, PizzaOrder po, Pizza p" +
-                           "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType AND u.userID = " + getUserIDFromName(name)+
+                           "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType AND u.userID = '" + getUserIDFromName(name) + "' " +
                            "GROUP BY u.userID";
         ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(sum_query), "price");
         return total_user_sum.get(0).get(0);

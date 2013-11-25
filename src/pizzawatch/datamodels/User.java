@@ -4,14 +4,14 @@ package pizzawatch.datamodels;
 public class User
 {
     private final String userID;
-    private final boolean isAdmin;
+    private final boolean admin;
     private final String name;
     private final String creditCardNumber;
 
-    public User(String userID, boolean isAdmin, String name, String creditCardNumber)
+    public User(String userID, boolean admin, String name, String creditCardNumber)
     {
         this.userID = userID;
-        this.isAdmin = isAdmin;
+        this.admin = admin;
         this.name = name;
         this.creditCardNumber = creditCardNumber;
     }
@@ -21,9 +21,9 @@ public class User
         return userID;
     }
 
-    public boolean isIsAdmin()
+    public boolean isAdmin()
     {
-        return isAdmin;
+        return admin;
     }
 
     public String getName()

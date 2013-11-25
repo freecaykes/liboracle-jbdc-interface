@@ -1,77 +1,82 @@
 INSERT INTO Users VALUES
 (
-    0001,
+    'leonardo1',
     'Leonardo',
-    'TMNT001'
+    '1234123412341234',
+    '5CA888F39D61ADFE533B0C08BD9F884EE6FF83D69C1221491ECAD366DC56B646'
 );
 
 INSERT INTO Users VALUES
 (
-    0002,
+    'raphael2',
     'Raphael',
-    'TMNT002'
+    '2345234523452345',
+    'B1F51A511F1DA0CD348B8F8598DB32E61CB963E5FC69E2B41485BF99590ED75A'
 );
 
 INSERT INTO Users VALUES
 (
-    0003,
+    'michaelangelo3',
     'Michaelangelo',
-    'TMNT003'
+    '3456345634563456',
+    'C207B1B9E510364443DB9423B36BC5F16DF95DE58A544A64B9D80B0FEBA78065'
 );
 
 INSERT INTO Users VALUES
 (
-    0004,
+    'donatello4',
     'Donatello',
-    'TMNT005'
+    '4567456745674567',
+    '8E0A1B0ADA42172886FD1297E25ABF99F14396A9400ACBD5F20DA20289CFF02F'
 );
 
 INSERT INTO Users VALUES
 (
-    0010,
+    'mastersplinter10',
     'Master Splinter',
-    'MASTERCARD0010'
+    '5678567856785678',
+    '6B649D9C83A8E2E01B9B34F442AF5A25797EFE2187F9528DA0C481CDF4A4E1E0'
 );
 
 INSERT INTO PrivilegedUser VALUES
 (
     1,
-    0010
+    'mastersplinter10'
 );
 
 INSERT INTO User_IsIn VALUES
 (
     'Dojo, New York',
-    0010,
+    'mastersplinter10',
     2
 );
 
 INSERT INTO User_IsIn VALUES
 (
     'The Sewer Lair, New York',
-    0001,
-    1	
+    'leonardo1',
+    1
 );
 
 INSERT INTO User_IsIn VALUES
 (
     'Shredder Hideout, New York',
-    0002,
+    'raphael2',
     3
 );
 
 INSERT INTO User_IsIn VALUES
 (
     'Area 51, Nevada',
-    0004,
+    'donatello4',
     5
 );
 
 INSERT INTO User_IsIn VALUES
 (
-   'The Sewer Lair, New York',
-    0003,
-    1	 
+    'The Sewer Lair, New York',
+    'michaelangelo3',
+    1
 );
 
 INSERT INTO Pizza VALUES
@@ -102,4 +107,112 @@ INSERT INTO Pizza VALUES
 (
     'Cheese',
     15.99
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    1,
+    'Boat',
+    'Vegitarian',
+    'michaelangelo3',
+    'The Sewer Lair, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    2,
+    'Boat',
+    'Cheese',
+    'leonardo1',
+    'The Sewer Lair, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    3,
+    'Boat',
+    'Hawaiian',
+    'raphael2',
+    'Shredder Hideout, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    4,
+    'Car',
+    'Pepperoni',
+    'mastersplinter10',
+    'Dojo, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    5,
+    'Boat',
+    'Cheese',
+    'raphael2',
+    'Shredder Hideout, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    6,
+    'Boat',
+    'Pepperoni',
+    'raphael2',
+    'Shredder Hideout, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    7,
+    'Car',
+    'Meat Lover',
+    'raphael2',
+    'Shredder Hideout, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    8,
+    'Boat',
+    'Pepperoni',
+    'raphael2',
+    'Shredder Hideout, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    9,
+    'Car',
+    'Cheese',
+    'raphael2',
+    'Shredder Hideout, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    10,
+    'Boat',
+    'Meat Lover',
+    'raphael2',
+    'Shredder Hideout, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    11,
+    'Car',
+    'Meat Lover',
+    'raphael2',
+    'Shredder Hideout, New York'
+);
+
+INSERT INTO PizzaOrder VALUES
+(
+    12,
+    'Boat',
+    'Pepperoni',
+    'raphael2',
+    'Shredder Hideout, New York'
 );

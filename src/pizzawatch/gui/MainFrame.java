@@ -6,6 +6,7 @@
 
 package pizzawatch.gui;
 
+import pizzawatch.datamodels.User;
 import pizzawatch.gui.admin.ManageCancellationReqsFrame;
 import pizzawatch.gui.user.AddOrderFrame;
 import pizzawatch.gui.user.PastOrdersFrame;
@@ -16,14 +17,16 @@ import pizzawatch.gui.user.RequestCancellationFrame;
 public class MainFrame extends javax.swing.JFrame
 {
     private final LoginFrame lf;
+    private final User currentUser;
 
-    public MainFrame(LoginFrame lf, boolean userIsAdmin)
+    public MainFrame(LoginFrame lf, User user)
     {
         this.lf = lf;
+        this.currentUser = user;
 
         initComponents();
 
-        if(userIsAdmin == false)
+        if(currentUser.isAdmin() == false)
         {
             mainTabbedPane.setEnabledAt(1, false);
         }
@@ -226,7 +229,7 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btViewPastOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPastOrdersActionPerformed
     {//GEN-HEADEREND:event_btViewPastOrdersActionPerformed
-        PastOrdersFrame frame = new PastOrdersFrame(new int[] {2, 3, 4}); //TODO disallow non-admin multi user queries
+        PastOrdersFrame frame = new PastOrdersFrame(new String[] {"raphael2", "mastersplinter10", "michaelangelo3"}); //TODO disallow non-admin multi user queries
     	frame.setVisible(true);
     }//GEN-LAST:event_btViewPastOrdersActionPerformed
 

@@ -14,7 +14,6 @@ import pizzawatch.utils.UserUtils;
 @SuppressWarnings("serial")
 public class LoginFrame extends javax.swing.JFrame
 {
-    int numUsersLoggedIn = 0;
     public LoginFrame()
     {
         initComponents();
@@ -39,15 +38,14 @@ public class LoginFrame extends javax.swing.JFrame
 
     private void handleLoginAttempt()
     {
-        String userName = tfUserID.getText();
+        //SqlScriptReader.getInstance().insertUpdateCreateDelete("SQL_Scripts/dataInserts.sql");
+        //SqlScriptReader.getInstance().insertUpdateCreateDelete("SQL_Scripts/projectDefs.sql");
+        //SqlScriptReader.getInstance().insertUpdateCreateDelete("SQL_Scripts/dropTables.sql");
+        //SqlScriptReader.getInstance().insertUpdateCreateDelete("DROP TABLE Users");
+        String userID = tfUserID.getText();
     	String userPass = new String(jpPassword.getPassword());
-    	boolean admin;
-    	if(numUsersLoggedIn == 0)
-        {
-            UserUtils.initializePasswords();
-    	}
 
-        if(userName.isEmpty() || userPass.isEmpty())
+        if(userID.isEmpty() || userPass.isEmpty())
         {
             JOptionPane.showMessageDialog(this, "User ID or password empty");
             return;
@@ -55,16 +53,14 @@ public class LoginFrame extends javax.swing.JFrame
 
         jpPassword.setText(null);
 
-    	String verifyPassword = UserUtils.compareUserPasswordHash(userName, userPass);
-    	if(verifyPassword == null)
+    	boolean passwordCorrect = UserUtils.isPasswordCorrect(userID, userPass);
+    	if(passwordCorrect == false)
         {
             JOptionPane.showMessageDialog(this, "User ID and password combination invalid");
             return;
     	}
-    	admin = UserUtils.checkAdmin(userName);
-    	numUsersLoggedIn++;
 
-        MainFrame mf = new MainFrame(this, admin);
+    	MainFrame mf = new MainFrame(this, UserUtils.getUserFromDB(userID));
         mf.setVisible(true);
         this.setVisible(false);
     }

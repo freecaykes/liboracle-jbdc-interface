@@ -9,12 +9,12 @@ import pizzawatch.utils.UserUtils;
 @SuppressWarnings("serial")
 public class PastOrdersFrame extends javax.swing.JFrame
 {
-    private final int[] userIDs;
+    private final String[] userIDs;
     /**
      * Creates new form PastOrderFrame
      * @param userIDs The user IDs for which this frame will display orders of
      */
-    public PastOrdersFrame(int[] userIDs) {
+    public PastOrdersFrame(String[] userIDs) {
         this.userIDs = userIDs;
         initComponents();
     }
