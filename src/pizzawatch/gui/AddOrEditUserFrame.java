@@ -6,21 +6,28 @@
 
 package pizzawatch.gui;
 
-import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author John
  */
+@SuppressWarnings("serial")
 public class AddOrEditUserFrame extends javax.swing.JFrame {
+
     /**
      * Creates new form NewUserFrame
+     * @param isEditMode Whether the frame should be in edit mode
      */
-    public AddOrEditUserFrame() {
+    public AddOrEditUserFrame(boolean isEditMode) {
         initComponents();
+
+        if(isEditMode) {
+            userID.setEnabled(false);
+            createOrEditAccountLabel.setText("EDIT ACCOUNT DETAILS");
+        }
     }
-    
+
     private void handleSubmitAttempt(){
         String newUserID = userID.getText();
         String newPassword = new String (password.getPassword());
@@ -28,21 +35,20 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
         String newFirstName = firstName.getText();
         String newLastName = lastName.getText();
         //String newCardNumber = new JPasswordField();
-        
+
         //Checks if the two passwords match
         if (!newPassword.equals(newPasswordReType)){
             JOptionPane.showMessageDialog (this, "Passwords do not match. Please try again.");
             return;
         }
-        
+
         //Checks if all fields are filled
         if (newUserID.isEmpty() || newPassword.isEmpty() || newPasswordReType.isEmpty()
                 || newFirstName.isEmpty() || newLastName.isEmpty()){
             JOptionPane.showMessageDialog(this, "Some fields are blank. All fields are required.");
-            return;
         }
     }
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,7 +56,8 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         firstNameLabel = new javax.swing.JLabel();
         lastNameLabel = new javax.swing.JLabel();
@@ -64,12 +71,12 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
         password = new javax.swing.JPasswordField();
         passwordReType = new javax.swing.JPasswordField();
         cardNumber = new javax.swing.JFormattedTextField();
-        createNewAccountLabel = new javax.swing.JLabel();
+        createOrEditAccountLabel = new javax.swing.JLabel();
         firstName = new javax.swing.JTextField();
         lastName = new javax.swing.JTextField();
         userID = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         firstNameLabel.setText("First Name");
 
@@ -83,29 +90,42 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
         userIDLabel.setText("User ID");
 
         submitButton.setText("Submit");
-        submitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        submitButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 submitButtonActionPerformed(evt);
             }
         });
 
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         passwordLabel.setText("Password");
 
         reTypePasswordLabel.setText("Re-type Password");
 
-        passwordReType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        passwordReType.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 passwordReTypeActionPerformed(evt);
             }
         });
 
-        createNewAccountLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        createNewAccountLabel.setText("CREATE A NEW ACCOUNT");
+        createOrEditAccountLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        createOrEditAccountLabel.setText("CREATE A NEW ACCOUNT");
 
-        userID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        userID.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 userIDActionPerformed(evt);
             }
         });
@@ -141,7 +161,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cardNumberLabel)
-                                    .addComponent(createNewAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(createOrEditAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(firstNameLabel)
                                         .addGap(274, 274, 274)
@@ -164,7 +184,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lbTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(createNewAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(createOrEditAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
                 .addComponent(userIDLabel)
                 .addGap(5, 5, 5)
@@ -202,9 +222,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         handleSubmitAttempt();
     }//GEN-LAST:event_submitButtonActionPerformed
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt){
-        
-    }
+
     private void passwordReTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordReTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordReTypeActionPerformed
@@ -213,46 +231,16 @@ public class AddOrEditUserFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_userIDActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddOrEditUserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddOrEditUserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddOrEditUserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddOrEditUserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddOrEditUserFrame().setVisible(true);
-            }
-        });
-    }
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cancelButtonActionPerformed
+    {//GEN-HEADEREND:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JFormattedTextField cardNumber;
     private javax.swing.JLabel cardNumberLabel;
-    private javax.swing.JLabel createNewAccountLabel;
+    private javax.swing.JLabel createOrEditAccountLabel;
     private javax.swing.JTextField firstName;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JTextField lastName;
