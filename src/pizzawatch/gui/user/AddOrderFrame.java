@@ -6,12 +6,26 @@
 
 package pizzawatch.gui.user;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import pizzawatch.utils.OrderUtils;
+
 @SuppressWarnings("serial")
 public class AddOrderFrame extends javax.swing.JFrame
 {
+    private final String[] prices;
+
+    @SuppressWarnings("unchecked")
     public AddOrderFrame()
     {
         initComponents();
+
+        tfPrice.setEnabled(false);
+
+        ArrayList<LinkedList<String>> pizzaTypeInfo = OrderUtils.getPizzaTypeInfo();
+        prices = OrderUtils.getAttributesFromPizzaTypeInfo(pizzaTypeInfo, 1, "999.99");
+        cbPizzaType.setModel(OrderUtils.getPizzaTypesComboBoxModel(OrderUtils.getAttributesFromPizzaTypeInfo(pizzaTypeInfo, 0, "Pepperoni")));
+        cbPizzaType.setSelectedIndex(0); //Fire off an event to init tfPrice
     }
 
     /**
@@ -26,92 +40,111 @@ public class AddOrderFrame extends javax.swing.JFrame
     {
 
         lbAddOrder = new javax.swing.JLabel();
-        lbFrom = new javax.swing.JLabel();
         lbPizzaType = new javax.swing.JLabel();
         lbDeliveryMethod = new javax.swing.JLabel();
-        cbFrom = new javax.swing.JComboBox();
         cbPizzaType = new javax.swing.JComboBox();
         cbDeliveryMethod = new javax.swing.JComboBox();
         submitButton = new javax.swing.JButton();
+        lbPrice = new javax.swing.JLabel();
+        tfPrice = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lbAddOrder.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbAddOrder.setText("Add Order");
 
-        lbFrom.setText("From:");
-
         lbPizzaType.setText("Pizza Type:");
 
         lbDeliveryMethod.setText("Delivery Method:");
 
-        cbFrom.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbPizzaType.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                cbPizzaTypeActionPerformed(evt);
+            }
+        });
 
-        cbPizzaType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbDeliveryMethod.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbDeliveryMethod.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Car", "Boat", "Delivery Person" }));
 
         submitButton.setText("Submit");
+        submitButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                submitButtonActionPerformed(evt);
+            }
+        });
+
+        lbPrice.setText("Price:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbAddOrder)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbFrom)
-                            .addComponent(lbPizzaType)
-                            .addComponent(lbDeliveryMethod))
+                            .addComponent(lbDeliveryMethod)
+                            .addComponent(lbPizzaType))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbPizzaType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbDeliveryMethod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(lbAddOrder)))
-                .addContainerGap(168, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbPizzaType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbDeliveryMethod, 0, 140, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbPrice)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(134, 134, 134))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(lbAddOrder)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbFrom)
-                    .addComponent(cbFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPizzaType)
                     .addComponent(cbPizzaType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbPizzaType))
+                    .addComponent(lbPrice)
+                    .addComponent(tfPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbDeliveryMethod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbDeliveryMethod))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                    .addComponent(lbDeliveryMethod)
+                    .addComponent(cbDeliveryMethod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(submitButton)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cbPizzaTypeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbPizzaTypeActionPerformed
+    {//GEN-HEADEREND:event_cbPizzaTypeActionPerformed
+        tfPrice.setText(prices[cbPizzaType.getSelectedIndex()]);
+    }//GEN-LAST:event_cbPizzaTypeActionPerformed
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_submitButtonActionPerformed
+    {//GEN-HEADEREND:event_submitButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_submitButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cbDeliveryMethod;
-    private javax.swing.JComboBox cbFrom;
     private javax.swing.JComboBox cbPizzaType;
     private javax.swing.JLabel lbAddOrder;
     private javax.swing.JLabel lbDeliveryMethod;
-    private javax.swing.JLabel lbFrom;
     private javax.swing.JLabel lbPizzaType;
+    private javax.swing.JLabel lbPrice;
     private javax.swing.JButton submitButton;
+    private javax.swing.JTextField tfPrice;
     // End of variables declaration//GEN-END:variables
 }
