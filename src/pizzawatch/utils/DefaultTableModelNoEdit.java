@@ -1,4 +1,4 @@
-package pizzawatch.gui.functions;
+package pizzawatch.utils;
 
 import javax.swing.table.DefaultTableModel;
 

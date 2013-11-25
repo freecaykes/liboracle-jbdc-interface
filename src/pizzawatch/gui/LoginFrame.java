@@ -8,8 +8,8 @@ package pizzawatch.gui;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import pizzawatch.gui.functions.User;
 import pizzawatch.sql.connection.JBDCSQLConnection;
+import pizzawatch.utils.UserUtils;
 
 @SuppressWarnings("serial")
 public class LoginFrame extends javax.swing.JFrame
@@ -42,10 +42,9 @@ public class LoginFrame extends javax.swing.JFrame
         String userName = tfUserID.getText();
     	String userPass = new String(jpPassword.getPassword());
     	boolean admin;
-    	User loginCheck = new User(userName);
     	if(numUsersLoggedIn == 0)
         {
-            loginCheck.initializePasswords();
+            UserUtils.initializePasswords();
     	}
 
         if(userName.isEmpty() || userPass.isEmpty())
@@ -56,13 +55,13 @@ public class LoginFrame extends javax.swing.JFrame
 
         jpPassword.setText(null);
 
-    	String verifyPassword = loginCheck.compareUserPasswordHash(userName, userPass);
+    	String verifyPassword = UserUtils.compareUserPasswordHash(userName, userPass);
     	if(verifyPassword == null)
         {
             JOptionPane.showMessageDialog(this, "User ID and password combination invalid");
             return;
     	}
-    	admin = loginCheck.checkAdmin(userName);
+    	admin = UserUtils.checkAdmin(userName);
     	numUsersLoggedIn++;
 
         MainFrame mf = new MainFrame(this, admin);

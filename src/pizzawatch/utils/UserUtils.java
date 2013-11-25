@@ -1,4 +1,4 @@
-package pizzawatch.gui.functions;
+package pizzawatch.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -7,31 +7,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import pizzawatch.sql.sqlreader.ResultSetParser;
 import pizzawatch.sql.sqlreader.SqlScriptReader;
 
-@SuppressWarnings("serial")
-public class User
+public class UserUtils
 {
     private static final Map<String, String> usersPasswords = new HashMap<>(16);
-    private final String name;
-    private static final SqlScriptReader sqlreader = new SqlScriptReader();
-    public boolean admin = false;
+    private static final SqlScriptReader SQL_READER = SqlScriptReader.getInstance();
 
-    public User(String name)
+    /**
+     * Returns the user's ID given their name
+     * @param name The user's name
+     * @return The user's ID, or null if there is no corresponding ID
+     */
+    public static String getUserIDFromName(String name)
     {
-        this.name = name;
+        ArrayList<LinkedList<String>> users =
+            ResultSetParser.parseResultSetIntoArray(SQL_READER.query("SELECT userID FROM Users WHERE name = '" + name + "'"), "userID");
+        try
+        {
+            return users.get(0).get(0);
+        }
+        catch(IndexOutOfBoundsException ex)
+        {
+            return null;
+        }
     }
 
-    public String getUserID()
-    {
-        ArrayList<LinkedList<String>> users = ResultSetParser.parseResultSetIntoArray(sqlreader.query("SELECT userID FROM Users WHERE name = '"+name+"'"), "userID");
-        return users.get(0).get(0);
-    }
-
-    public void initializePasswords()
+    public static void initializePasswords()
     {
         usersPasswords.put("Leonardo", "5ca888f39d61adfe533b0c08bd9f884ee6ff83d69c1221491ecad366dc56b646"); //watern4tur3
         usersPasswords.put("Raphael", "b1f51a511f1da0cd348b8f8598db32e61cb963e5fc69e2b41485bf99590ed75a"); //red
@@ -47,7 +51,7 @@ public class User
      * @return Password of String userID in hashTable if userPass == the corresponding user's
      * password in Tables, or null otherwise
      */
-    public String compareUserPasswordHash(String userID, String userPass)
+    public static String compareUserPasswordHash(String userID, String userPass)
     {
         String hashOfGivenPassword = hashPassword(userPass);
         String real = usersPasswords.get(userID);
@@ -65,9 +69,9 @@ public class User
      * @param userID
      * @return true when an admin user
      */
-    public boolean checkAdmin(String userID)
+    public static boolean checkAdmin(String userID)
     {
-        ArrayList<LinkedList<String>> users = ResultSetParser.parseResultSetIntoArray(sqlreader.query("SQL_Scripts/checkAdmin.sql"), "name");
+        ArrayList<LinkedList<String>> users = ResultSetParser.parseResultSetIntoArray(SQL_READER.query("SQL_Scripts/checkAdmin.sql"), "name");
 
         if(users == null) {return false;}
         else
@@ -81,7 +85,6 @@ public class User
                 }
                 else if(values.equals(userID))
                 {
-                    admin = true;
                     return true;
                 }
             }
@@ -114,7 +117,7 @@ public class User
      * @param userPass
      * @return The hash, or null if there is an error
      */
-    public String hashPassword(String userPass)
+    public static String hashPassword(String userPass)
     {
         try
         {
@@ -150,7 +153,7 @@ public class User
         }
         queryString += ")";
 
-        ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(sqlreader.query(queryString), ATTRIBUTES_STRING);
+        ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(queryString), ATTRIBUTES_STRING);
         for(int x = 0; x < attributesList.size(); x++)
         {
             LinkedList<String> attributesDataList = attributesList.get(x);
@@ -165,21 +168,23 @@ public class User
      * Our delete query.
      * @param uid The user ID
      * @param oid The order ID
+     * @param admin
      */
-    public void deleteOrders(String uid, String oid)
+    public static void deleteOrders(String uid, String oid, boolean admin)
     {
         if(admin)
         {
             String del_query = "DELETE FROM PizzaOrder WHERE userID = " + "'" +uid +"'" +" AND oid = "+ "'" +oid +"'";
-            sqlreader.insertUpdateCreateDelete(del_query);
+            SQL_READER.insertUpdateCreateDelete(del_query);
         }
     }
 
     /**
      * our nested aggregate query
+     * @param admin
      * @return
      */
-    public String punish()
+    public String punish(boolean admin)
     {
         if(admin)
         {
@@ -189,8 +194,8 @@ public class User
                        "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType" +
                        "GROUP BY u.userID";
             String max_query = "SELECT MAX(user_sum), userID FROM [User Total Sum] GROUP BY userID";
-            sqlreader.query(sum_query);
-            ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(sqlreader.query(max_query), "userID");
+            SQL_READER.query(sum_query);
+            ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(max_query), "userID");
             return total_user_sum.get(0).get(0);
         }
         return null;
@@ -198,15 +203,18 @@ public class User
 
     /**
      * our aggregate query
+     * @param name
      * @return
      */
-    public String getTotalSum()
+    public static String getTotalSum(String name)
     {
         String sum_query = "SELECT SUM(p.price)" +
                            "FROM Users u, PizzaOrder po, Pizza p" +
-                           "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType AND u.userID = " + getUserID()+
+                           "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType AND u.userID = " + getUserIDFromName(name)+
                            "GROUP BY u.userID";
-        ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(sqlreader.query(sum_query), "price");
+        ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(sum_query), "price");
         return total_user_sum.get(0).get(0);
     }
+
+    private UserUtils() {}
 }

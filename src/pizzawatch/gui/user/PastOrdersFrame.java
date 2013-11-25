@@ -1,6 +1,6 @@
 package pizzawatch.gui.user;
 
-import pizzawatch.gui.functions.User;
+import pizzawatch.utils.UserUtils;
 
 /**
  *
@@ -35,7 +35,7 @@ public class PastOrdersFrame extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jtPastOrders.setModel(User.getPastOrdersTableModel(userIDs));
+        jtPastOrders.setModel(UserUtils.getPastOrdersTableModel(userIDs));
         jScrollPane1.setViewportView(jtPastOrders);
 
         lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
