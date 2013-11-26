@@ -6,11 +6,15 @@
 
 package pizzawatch.gui.user;
 
+import pizzawatch.utils.UserUtils;
+
 @SuppressWarnings("serial")
 public class PendingOrdersFrame extends javax.swing.JFrame
 {
-    public PendingOrdersFrame()
+    private final String[] userIDs;
+    public PendingOrdersFrame(String[] userIDs)
     {
+        this.userIDs = userIDs;
         initComponents();
     }
 
@@ -33,42 +37,8 @@ public class PendingOrdersFrame extends javax.swing.JFrame
         lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbTitle.setText("Pending Orders");
 
-        jtPendingOrders.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String []
-            {
-                "Customer Name", "Pizza Type", "Delivery Method", "Date Ordered"
-            }
-        )
-        {
-            boolean[] canEdit = new boolean []
-            {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex)
-            {
-                return canEdit [columnIndex];
-            }
-        });
+        jtPendingOrders.setModel(UserUtils.getPendingOrdersTableModel(userIDs)
+        );
         spPendingOrders.setViewportView(jtPendingOrders);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -81,7 +51,7 @@ public class PendingOrdersFrame extends javax.swing.JFrame
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbTitle)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(spPendingOrders, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                    .addComponent(spPendingOrders, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

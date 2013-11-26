@@ -19,11 +19,13 @@ public class MainFrame extends javax.swing.JFrame
 {
     private final LoginFrame lf;
     private final User currentUser;
+    private final String[] currentUserIDArray;
 
     public MainFrame(LoginFrame lf, User user)
     {
         this.lf = lf;
         this.currentUser = user;
+        currentUserIDArray = new String[] {currentUser.getUserID()};
 
         initComponents();
 
@@ -141,7 +143,7 @@ public class MainFrame extends javax.swing.JFrame
                 .addComponent(btViewPastOrders)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRequestCancel)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("User", UserPanel);
@@ -182,7 +184,7 @@ public class MainFrame extends javax.swing.JFrame
                 .addComponent(btManageCancellationReqs)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btMultiplerUserPastOrders)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("Admin", AdminPanel);
@@ -206,7 +208,7 @@ public class MainFrame extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(lbTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainTabbedPane)
+                .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -244,13 +246,13 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btViewPastOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPastOrdersActionPerformed
     {//GEN-HEADEREND:event_btViewPastOrdersActionPerformed
-        PastOrdersFrame frame = new PastOrdersFrame(new String[] {currentUser.getUserID()});
+        PastOrdersFrame frame = new PastOrdersFrame(currentUserIDArray);
     	frame.setVisible(true);
     }//GEN-LAST:event_btViewPastOrdersActionPerformed
 
     private void btViewPendingOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btViewPendingOrdersActionPerformed
     {//GEN-HEADEREND:event_btViewPendingOrdersActionPerformed
-        PendingOrdersFrame frame = new PendingOrdersFrame();
+        PendingOrdersFrame frame = new PendingOrdersFrame(currentUserIDArray);
     	frame.setVisible(true);
     }//GEN-LAST:event_btViewPendingOrdersActionPerformed
 

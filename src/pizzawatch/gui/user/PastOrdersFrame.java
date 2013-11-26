@@ -51,7 +51,7 @@ public class PastOrdersFrame extends javax.swing.JFrame
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbTitle)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
