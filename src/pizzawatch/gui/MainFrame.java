@@ -10,10 +10,7 @@ import javax.swing.JOptionPane;
 import pizzawatch.datamodels.User;
 import pizzawatch.gui.admin.ManageCancellationReqsFrame;
 import pizzawatch.gui.admin.MultipleUserPastOrdersFrame;
-import pizzawatch.gui.user.AddOrderFrame;
-import pizzawatch.gui.user.PastOrdersFrame;
-import pizzawatch.gui.user.PendingOrdersFrame;
-import pizzawatch.gui.user.RequestCancellationFrame;
+import pizzawatch.gui.user.*;
 import pizzawatch.utils.UserUtils;
 
 @SuppressWarnings("serial")
@@ -313,8 +310,7 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btUpdateLocationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btUpdateLocationActionPerformed
     {//GEN-HEADEREND:event_btUpdateLocationActionPerformed
-        // TODO add your handling code here:
-    	
+        UpdateLocationFrame frame = new UpdateLocationFrame();
     }//GEN-LAST:event_btUpdateLocationActionPerformed
 
     private void btHighestTotalOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btHighestTotalOrdersActionPerformed
