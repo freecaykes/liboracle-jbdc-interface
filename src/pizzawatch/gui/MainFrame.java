@@ -335,7 +335,7 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btDeleteUserActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btDeleteUserActionPerformed
     {//GEN-HEADEREND:event_btDeleteUserActionPerformed
-        DeleteUserFrame frame = new DeleteUserFrame();
+        DeleteUserFrame frame = new DeleteUserFrame(currentUser);
         frame.setVisible(true);
     }//GEN-LAST:event_btDeleteUserActionPerformed
 

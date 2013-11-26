@@ -84,6 +84,30 @@ INSERT INTO PrivilegedUser VALUES
     'mastersplinter10'
 );
 
+INSERT INTO PrivilegedUser VALUES
+(
+    0,
+    'leonardo1'
+);
+
+INSERT INTO PrivilegedUser VALUES
+(
+    0,
+    'raphael2'
+);
+
+INSERT INTO PrivilegedUser VALUES
+(
+    0,
+    'michaelangelo3'
+);
+
+INSERT INTO PrivilegedUser VALUES
+(
+    0,
+    'donatello4'
+);
+
 INSERT INTO Pizza VALUES
 (
     'Pepperoni',

@@ -1,3 +1,38 @@
+INSERT INTO User_IsIn VALUES
+(
+    'Dojo, New York',
+    'mastersplinter10',
+    2
+);
+
+INSERT INTO User_IsIn VALUES
+(
+    'The Sewer Lair, New York',
+    'leonardo1',
+    1
+);
+
+INSERT INTO User_IsIn VALUES
+(
+    'Shredder Hideout, New York',
+    'raphael2',
+    3
+);
+
+INSERT INTO User_IsIn VALUES
+(
+    'Area 51, Nevada',
+    'donatello4',
+    5
+);
+
+INSERT INTO User_IsIn VALUES
+(
+    'The Sewer Lair, New York',
+    'michaelangelo3',
+    1
+);
+
 INSERT INTO Users VALUES
 (
     'leonardo1',
@@ -47,41 +82,6 @@ INSERT INTO PrivilegedUser VALUES
 (
     1,
     'mastersplinter10'
-);
-
-INSERT INTO User_IsIn VALUES
-(
-    'Dojo, New York',
-    'mastersplinter10',
-    2
-);
-
-INSERT INTO User_IsIn VALUES
-(
-    'The Sewer Lair, New York',
-    'leonardo1',
-    1
-);
-
-INSERT INTO User_IsIn VALUES
-(
-    'Shredder Hideout, New York',
-    'raphael2',
-    3
-);
-
-INSERT INTO User_IsIn VALUES
-(
-    'Area 51, Nevada',
-    'donatello4',
-    5
-);
-
-INSERT INTO User_IsIn VALUES
-(
-    'The Sewer Lair, New York',
-    'michaelangelo3',
-    1
 );
 
 INSERT INTO Pizza VALUES

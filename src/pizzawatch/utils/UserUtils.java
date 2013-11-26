@@ -380,6 +380,6 @@ public class UserUtils
     		SQL_READER.insertUpdateCreateDelete("delete from user_isin where userID = '" + uid + "'");
     	}
     }
-
+    
     private UserUtils() {}
 }

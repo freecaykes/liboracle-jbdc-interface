@@ -6,11 +6,17 @@
 
 package pizzawatch.gui.admin;
 
+import pizzawatch.datamodels.User;
+import pizzawatch.utils.UserUtils;
+
 @SuppressWarnings("serial")
 public class DeleteUserFrame extends javax.swing.JFrame
 {
-    public DeleteUserFrame()
+	private User currentUser;
+	
+    public DeleteUserFrame(User currentUser)
     {
+    	this.currentUser = currentUser;
         initComponents();
     }
 
@@ -79,7 +85,9 @@ public class DeleteUserFrame extends javax.swing.JFrame
 
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btDeleteActionPerformed
     {//GEN-HEADEREND:event_btDeleteActionPerformed
-        // TODO add your handling code here:
+        UserUtils.removeUser(jTextField1.getText(),currentUser.isAdmin());
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btDeleteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
