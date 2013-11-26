@@ -120,6 +120,7 @@ INSERT INTO PizzaOrder VALUES
     'Boat',
     'Vegitarian',
     0,
+    0,
     'michaelangelo3',
     'The Sewer Lair, New York'
 );
@@ -130,6 +131,7 @@ INSERT INTO PizzaOrder VALUES
     'Boat',
     'Cheese',
     0,
+    1,
     'leonardo1',
     'The Sewer Lair, New York'
 );
@@ -140,6 +142,7 @@ INSERT INTO PizzaOrder VALUES
     'Boat',
     'Hawaiian',
     1,
+    0,
     'raphael2',
     'Shredder Hideout, New York'
 );
@@ -149,6 +152,7 @@ INSERT INTO PizzaOrder VALUES
     4,
     'Car',
     'Pepperoni',
+    1,
     1,
     'mastersplinter10',
     'Dojo, New York'
@@ -160,6 +164,7 @@ INSERT INTO PizzaOrder VALUES
     'Boat',
     'Cheese',
     1,
+    1,
     'raphael2',
     'Shredder Hideout, New York'
 );
@@ -170,8 +175,9 @@ INSERT INTO PizzaOrder VALUES
     'Boat',
     'Pepperoni',
     0,
-    'raphael2',
-    'Shredder Hideout, New York'
+    0,
+    'michaelangelo3',
+    'The Sewer Lair, New York'
 );
 
 INSERT INTO PizzaOrder VALUES
@@ -180,6 +186,7 @@ INSERT INTO PizzaOrder VALUES
     'Car',
     'Meat Lover',
     1,
+    0,
     'raphael2',
     'Shredder Hideout, New York'
 );
@@ -189,6 +196,7 @@ INSERT INTO PizzaOrder VALUES
     8,
     'Boat',
     'Pepperoni',
+    0,
     0,
     'raphael2',
     'Shredder Hideout, New York'
@@ -200,6 +208,7 @@ INSERT INTO PizzaOrder VALUES
     'Car',
     'Cheese',
     0,
+    1,
     'raphael2',
     'Shredder Hideout, New York'
 );
@@ -209,6 +218,7 @@ INSERT INTO PizzaOrder VALUES
     10,
     'Boat',
     'Meat Lover',
+    1,
     1,
     'raphael2',
     'Shredder Hideout, New York'
@@ -220,6 +230,7 @@ INSERT INTO PizzaOrder VALUES
     'Car',
     'Meat Lover',
     1,
+    0,
     'raphael2',
     'Shredder Hideout, New York'
 );
@@ -230,6 +241,7 @@ INSERT INTO PizzaOrder VALUES
     'Boat',
     'Pepperoni',
     0,
+    1,
     'raphael2',
     'Shredder Hideout, New York'
 );
