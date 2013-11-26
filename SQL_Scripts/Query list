@@ -1,10 +1,10 @@
 Queries:
-1. LoginCheck for users -> Selection, Projection, Join ----- done
+1. LoginCheck for users -> Selection, Projection, Join ----- done------integrated
 2. View User's order -> Division ----- done
 3. Admin delete orders -> delete operation ------- done
-4. user makes orders, user -> insert operation ------ done
-5. who to punish-> user with most ordered price -> nested aggregation operation (max(of count))
+4. user makes orders, user -> insert operation ------ done------integrated
+5. who to punish-> user with most ordered price -> nested aggregation operation (max(of count))------integrated
 6. update user info -> update operation ------ for AddOREditUser form
-7. show TOTAL ORDER user -> aggregate operation sum ------- done
+7. show TOTAL ORDER user -> aggregate operation sum ------- done------integrated
 
 

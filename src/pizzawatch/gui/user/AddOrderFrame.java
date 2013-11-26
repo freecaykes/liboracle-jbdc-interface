@@ -8,18 +8,27 @@ package pizzawatch.gui.user;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
+
+import pizzawatch.datamodels.Order;
+import pizzawatch.datamodels.User;
+import pizzawatch.sql.sqlreader.ResultSetParser;
+import pizzawatch.sql.sqlreader.SqlScriptReader;
 import pizzawatch.utils.OrderUtils;
 
 @SuppressWarnings("serial")
 public class AddOrderFrame extends javax.swing.JFrame
 {
     private final String[] prices;
+    private SqlScriptReader SQL_READER = SqlScriptReader.getInstance();
+    private User currentUser;
 
     @SuppressWarnings("unchecked")
-    public AddOrderFrame()
+    public AddOrderFrame(User currentUser)
     {
+    	this.currentUser = currentUser;
         initComponents();
-
+        
         tfPrice.setEnabled(false);
 
         ArrayList<LinkedList<String>> pizzaTypeInfo = OrderUtils.getPizzaTypeInfo();
@@ -135,7 +144,10 @@ public class AddOrderFrame extends javax.swing.JFrame
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_submitButtonActionPerformed
     {//GEN-HEADEREND:event_submitButtonActionPerformed
-        // TODO add your handling code here:
+    	ArrayList<LinkedList<String>> user_location = ResultSetParser.parseResultSetIntoArray(SQL_READER.query("SELECT address FROM User_IsIn WHERE userID = " + currentUser.getUserID()), "name");
+    	Random rng = new Random();
+    	Order newOrder = new Order(rng.nextInt(10000000), currentUser.getUserID(), user_location.get(0).get(0) ,cbPizzaType.getSelectedItem().toString(), cbDeliveryMethod.getSelectedItem().toString(),0,0);
+    	OrderUtils.addOrder(newOrder);
     }//GEN-LAST:event_submitButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

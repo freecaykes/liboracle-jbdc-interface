@@ -21,7 +21,7 @@ import pizzawatch.utils.UserUtils;
 public class MainFrame extends javax.swing.JFrame
 {
     private final LoginFrame lf;
-    private final User currentUser;
+    public final User currentUser;
     private final String[] currentUserIDArray;
 
     public MainFrame(LoginFrame lf, User user)
@@ -259,7 +259,7 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btAddOrderActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btAddOrderActionPerformed
     {//GEN-HEADEREND:event_btAddOrderActionPerformed
-        AddOrderFrame aof = new AddOrderFrame();
+        AddOrderFrame aof = new AddOrderFrame(currentUser);
         aof.setVisible(true);
     }//GEN-LAST:event_btAddOrderActionPerformed
 
@@ -301,7 +301,7 @@ public class MainFrame extends javax.swing.JFrame
     private void btHighestTotalOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btMultiplerUserPastOrdersActionPerformed
     {//GEN-HEADEREND:event_btHighestTotalOrdersActionPerformed
     	String[] highest_buying_user_total = UserUtils.punish(currentUser.isAdmin()).split(";");
-    	JOptionPane.showMessageDialog(this, highest_buying_user_total[0] + " is spending and IMMENSE amount of $ " + highest_buying_user_total[1]);
+    	JOptionPane.showMessageDialog(this, highest_buying_user_total[0] + " is spending an IMMENSE amount of $ " + highest_buying_user_total[1]);
     }//GEN-LAST:event_btHighestTotalOrdersActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
