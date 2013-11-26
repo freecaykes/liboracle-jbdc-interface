@@ -144,10 +144,13 @@ public class AddOrderFrame extends javax.swing.JFrame
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_submitButtonActionPerformed
     {//GEN-HEADEREND:event_submitButtonActionPerformed
-    	ArrayList<LinkedList<String>> user_location = ResultSetParser.parseResultSetIntoArray(SQL_READER.query("SELECT address FROM User_IsIn WHERE userID = " + currentUser.getUserID()), "name");
+    	ArrayList<LinkedList<String>> user_location = ResultSetParser.parseResultSetIntoArray(SQL_READER.query("SELECT address FROM User_IsIn WHERE userID = " + "'" + currentUser.getUserID()+ "'"), "address");
     	Random rng = new Random();
     	Order newOrder = new Order(rng.nextInt(10000000), currentUser.getUserID(), user_location.get(0).get(0) ,cbPizzaType.getSelectedItem().toString(), cbDeliveryMethod.getSelectedItem().toString(),0,0);
     	OrderUtils.addOrder(newOrder);
+    	this.setVisible(false);
+    	this.dispose();
+    	
     }//GEN-LAST:event_submitButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

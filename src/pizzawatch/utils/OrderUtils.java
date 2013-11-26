@@ -21,7 +21,8 @@ public class OrderUtils
     {
         String query = "INSERT INTO PizzaOrder VALUES <*>";
         query = query.replace(REPLACE_CHAR, "('" + order.getOrderID() + "', '" + order.getDeliveryMethod() + "', '" +
-                                             order.getPizzaType() + "', '" + order.getUserID() + "', '" + order.getAddress() + "')");
+                                             order.getPizzaType() + "', '" + order.getIsDelivered() + "', '" +  order.getIsCancellationRequested() + "', '" + 
+                                             order.getUserID() + "', '" + order.getAddress() + "')");
         SQL_READER.insertUpdateCreateDelete(query);
     }
 
