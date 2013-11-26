@@ -347,19 +347,27 @@ public class UserUtils
                            "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType AND u.userID = '" + uid + "' " +
                            "GROUP BY u.userID";
         ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(sum_query), "sum(p.price)");
-        return total_user_sum.get(0).get(0);
+        try
+        {
+            return total_user_sum.get(0).get(0);
+        }
+        catch(IndexOutOfBoundsException ex)
+        {
+            //The query didn't return any results, just return 0
+            return "0";
+        }
     }
 
     public static void updateLocation(String uid, String address)
     {
-    	SQL_READER.insertUpdateCreateDelete("UPDATE User_IsIn SET address = '" + address + "' WHERE userID = '" + uid + "'");
+        SQL_READER.insertUpdateCreateDelete("UPDATE User_IsIn SET address = '" + address + "' WHERE userID = '" + uid + "'");
     }
-    
+
     public static void updateCancellationOrder(String uid, int request)
     {
     	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISCANCELLATIONREQUESTED = " + request +  " where oid = " + uid);
     }
-    
+
     public static void updateDelivered(String uid, int request)
     {
     	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISDELIVERED = " + request +  " where oid = " + uid);
