@@ -28,6 +28,7 @@ public class MainFrame extends javax.swing.JFrame
         currentUserIDArray = new String[] {currentUser.getUserID()};
 
         initComponents();
+        tfSum.setEnabled(false);
 
         if(currentUser.isAdmin() == false)
         {
@@ -54,9 +55,13 @@ public class MainFrame extends javax.swing.JFrame
         btViewPastOrders = new javax.swing.JButton();
         btRequestCancel = new javax.swing.JButton();
         btEditUserDetails = new javax.swing.JButton();
+        lbSum = new javax.swing.JLabel();
+        tfSum = new javax.swing.JTextField();
         AdminPanel = new javax.swing.JPanel();
         btManageCancellationReqs = new javax.swing.JButton();
         btMultiplerUserPastOrders = new javax.swing.JButton();
+        btMultiplerUserPendingOrders = new javax.swing.JButton();
+        btHighestTotalOrders = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter()
@@ -115,6 +120,8 @@ public class MainFrame extends javax.swing.JFrame
             }
         });
 
+        lbSum.setText("Sum:");
+
         javax.swing.GroupLayout UserPanelLayout = new javax.swing.GroupLayout(UserPanel);
         UserPanel.setLayout(UserPanelLayout);
         UserPanelLayout.setHorizontalGroup(
@@ -126,9 +133,14 @@ public class MainFrame extends javax.swing.JFrame
                     .addComponent(btViewPendingOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btViewPastOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btRequestCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addComponent(btEditUserDetails)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btEditUserDetails)
+                    .addGroup(UserPanelLayout.createSequentialGroup()
+                        .addComponent(lbSum)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfSum, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         UserPanelLayout.setVerticalGroup(
             UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +150,10 @@ public class MainFrame extends javax.swing.JFrame
                     .addComponent(btAddOrder)
                     .addComponent(btEditUserDetails))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btViewPendingOrders)
+                .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btViewPendingOrders)
+                    .addComponent(lbSum)
+                    .addComponent(tfSum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btViewPastOrders)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -166,6 +181,10 @@ public class MainFrame extends javax.swing.JFrame
             }
         });
 
+        btMultiplerUserPendingOrders.setText("View Pending Orders (multiple users)");
+
+        btHighestTotalOrders.setText("Find user with highest total orders");
+
         javax.swing.GroupLayout AdminPanelLayout = new javax.swing.GroupLayout(AdminPanel);
         AdminPanel.setLayout(AdminPanelLayout);
         AdminPanelLayout.setHorizontalGroup(
@@ -174,8 +193,10 @@ public class MainFrame extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btManageCancellationReqs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btMultiplerUserPastOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(174, Short.MAX_VALUE))
+                    .addComponent(btMultiplerUserPastOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btMultiplerUserPendingOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btHighestTotalOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         AdminPanelLayout.setVerticalGroup(
             AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,8 +204,12 @@ public class MainFrame extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(btManageCancellationReqs)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btMultiplerUserPendingOrders)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btMultiplerUserPastOrders)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btHighestTotalOrders)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("Admin", AdminPanel);
@@ -208,7 +233,7 @@ public class MainFrame extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(lbTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addComponent(mainTabbedPane)
                 .addContainerGap())
         );
 
@@ -267,12 +292,16 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JPanel UserPanel;
     private javax.swing.JButton btAddOrder;
     private javax.swing.JButton btEditUserDetails;
+    private javax.swing.JButton btHighestTotalOrders;
     private javax.swing.JButton btManageCancellationReqs;
     private javax.swing.JButton btMultiplerUserPastOrders;
+    private javax.swing.JButton btMultiplerUserPendingOrders;
     private javax.swing.JButton btRequestCancel;
     private javax.swing.JButton btViewPastOrders;
     private javax.swing.JButton btViewPendingOrders;
+    private javax.swing.JLabel lbSum;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JTabbedPane mainTabbedPane;
+    private javax.swing.JTextField tfSum;
     // End of variables declaration//GEN-END:variables
 }

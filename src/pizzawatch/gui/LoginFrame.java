@@ -91,11 +91,11 @@ public class LoginFrame extends javax.swing.JFrame
         lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbTitle.setText("TMNT Pizza Watch");
 
-        tfUserID.addActionListener(new java.awt.event.ActionListener()
+        tfUserID.addKeyListener(new java.awt.event.KeyAdapter()
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
+            public void keyReleased(java.awt.event.KeyEvent evt)
             {
-                tfUserIDActionPerformed(evt);
+                tfUserIDKeyReleased(evt);
             }
         });
 
@@ -226,10 +226,13 @@ public class LoginFrame extends javax.swing.JFrame
         attemptAndHandleConnection();
     }//GEN-LAST:event_btRetryConnectionActionPerformed
 
-    private void tfUserIDActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_tfUserIDActionPerformed
-    {//GEN-HEADEREND:event_tfUserIDActionPerformed
-        attemptAndHandleConnection();
-    }//GEN-LAST:event_tfUserIDActionPerformed
+    private void tfUserIDKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_tfUserIDKeyReleased
+    {//GEN-HEADEREND:event_tfUserIDKeyReleased
+        if(evt.getKeyChar() == KeyEvent.VK_ENTER)
+        {
+            handleLoginAttempt();
+        }
+    }//GEN-LAST:event_tfUserIDKeyReleased
 
     /**
      * @param args the command line arguments

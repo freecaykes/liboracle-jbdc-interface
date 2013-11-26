@@ -168,5 +168,5 @@ public class SqlScriptReader
         Files.write(path, aLines, ENCODING);
     }
 
-    public SqlScriptReader() {}
+    private SqlScriptReader() {}
 }

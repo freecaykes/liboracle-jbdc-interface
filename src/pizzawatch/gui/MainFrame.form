@@ -45,7 +45,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lbTitle" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="mainTabbedPane" pref="160" max="32767" attributes="0"/>
+              <Component id="mainTabbedPane" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -84,9 +84,16 @@
                           <Component id="btViewPastOrders" max="32767" attributes="0"/>
                           <Component id="btRequestCancel" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="79" max="32767" attributes="0"/>
-                      <Component id="btEditUserDetails" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btEditUserDetails" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="lbSum" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tfSum" min="-2" pref="83" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -99,7 +106,11 @@
                           <Component id="btEditUserDetails" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btViewPendingOrders" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btViewPendingOrders" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbSum" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfSum" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btViewPastOrders" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -150,6 +161,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btEditUserDetailsActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JLabel" name="lbSum">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sum:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="tfSum">
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="AdminPanel">
@@ -169,8 +187,10 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btManageCancellationReqs" max="32767" attributes="0"/>
                           <Component id="btMultiplerUserPastOrders" max="32767" attributes="0"/>
+                          <Component id="btMultiplerUserPendingOrders" max="32767" attributes="0"/>
+                          <Component id="btHighestTotalOrders" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="174" max="32767" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -180,8 +200,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btManageCancellationReqs" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btMultiplerUserPendingOrders" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btMultiplerUserPastOrders" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="69" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btHighestTotalOrders" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -202,6 +226,16 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btMultiplerUserPastOrdersActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btMultiplerUserPendingOrders">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="View Pending Orders (multiple users)"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btHighestTotalOrders">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Find user with highest total orders"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
