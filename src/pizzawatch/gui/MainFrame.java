@@ -13,6 +13,7 @@ import pizzawatch.gui.user.AddOrderFrame;
 import pizzawatch.gui.user.PastOrdersFrame;
 import pizzawatch.gui.user.PendingOrdersFrame;
 import pizzawatch.gui.user.RequestCancellationFrame;
+import pizzawatch.utils.UserUtils;
 
 @SuppressWarnings("serial")
 public class MainFrame extends javax.swing.JFrame
@@ -29,6 +30,7 @@ public class MainFrame extends javax.swing.JFrame
 
         initComponents();
         tfSum.setEnabled(false);
+        tfSum.setText(UserUtils.getTotalSum(currentUser.getUserID()));
 
         if(currentUser.isAdmin() == false)
         {

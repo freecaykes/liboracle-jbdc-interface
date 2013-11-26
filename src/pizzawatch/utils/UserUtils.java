@@ -273,13 +273,13 @@ public class UserUtils
      * @param name
      * @return
      */
-    public static String getTotalSum(String name)
+    public static String getTotalSum(String uid)
     {
-        String sum_query = "SELECT SUM(p.price)" +
-                           "FROM Users u, PizzaOrder po, Pizza p" +
-                           "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType AND u.userID = '" + getUserIDFromName(name) + "' " +
+        String sum_query = "SELECT SUM(p.price) " +
+                           "FROM Users u, PizzaOrder po, Pizza p " +
+                           "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType AND u.userID = '" + uid + "' " +
                            "GROUP BY u.userID";
-        ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(sum_query), "price");
+        ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(sum_query), "sum(p.price)");
         return total_user_sum.get(0).get(0);
     }
 
