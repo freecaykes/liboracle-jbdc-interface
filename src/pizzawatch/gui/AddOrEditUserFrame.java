@@ -68,6 +68,86 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         cardNumber.setText(currentUser.getCreditCardNumber());
     }
     
+    //Checks if the string is alphanumeric
+    private boolean isAlphaNumeric(String str) {
+        for (int i=0; i<str.length(); i++) {
+            char c = str.charAt(i);
+            if ( !Character.isLetterOrDigit(c) )
+                return false;
+        }
+
+        return true;
+    }
+    
+    //Checks if the string meets the maximum length for charaters
+    //Returns true if the entered string meets max length
+    private boolean verifyMaxLength (int type,String string){
+        boolean verify = true;
+        switch(type){
+            //user ID
+            case 1: if(string.length() > 30){
+                        verify = false;
+                    }
+                    else{
+                        verify = true;
+                    }
+                    break;
+            //First name
+            case 2: if(string.length() > 40){
+                        verify = false;
+                    }
+                    else{
+                        verify = true;
+                    }
+                    break;
+            //Last name
+            case 3: if(string.length() > 40){
+                        verify = false;
+                    }
+                    else{
+                        verify = true;
+                    }
+                    break;
+            default:verify = true;
+                    break;
+        }
+        return(verify);
+    }
+    
+    //Checks if the characters entered are alphanumeric characters
+    //Returns false if the characters entered are not alphanumeric
+    private boolean verifyChar (int type, String string){
+        boolean verify = false;
+        switch(type){
+            //user ID
+            case 1: if(isAlphaNumeric(string)){
+                        verify = true;
+                    }
+                    else{
+                        verify = false;
+                    }
+                    break;
+            //First name
+            case 2: if(isAlphaNumeric(string)){
+                        verify = true;
+                    }
+                    else{
+                        verify = false;
+                    }
+                    break;
+            //Last name
+            case 3: if(isAlphaNumeric(string)){
+                        verify = true;
+                    }
+                    else{
+                        verify = false;
+                    }
+                    break;
+            default:verify = false;
+                    break;
+        }
+        return(verify);
+    }
     private void handleSubmitAttempt()
     {
         String newUserID = userID.getText();
@@ -76,7 +156,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         String newFirstName = firstName.getText();
         String newLastName = lastName.getText();
         String newCardNumber = cardNumber.getText();
-        int userIDVar = 1,cardNumberVar = 2,firstNameVar = 3, lastNameVar = 4; 
+        int userIDVar = 1, firstNameVar = 2, lastNameVar = 3; 
         //Checks if all fields are filled / correct
         if (newUserID.isEmpty() || newPassword.isEmpty() || newPasswordReType.isEmpty() ||
             newFirstName.isEmpty() || newLastName.isEmpty() || newCardNumber.equals("0000000000000000")) {
@@ -87,6 +167,23 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         //Checks if the two passwords match
         if (!newPassword.equals(newPasswordReType)){
             JOptionPane.showMessageDialog (this, "Passwords do not match. Please try again.");
+            return;
+        }
+        
+        //Checks if the user ID entered meets restrictions
+        if (verifyMaxLength(userIDVar, newUserID) == false || verifyChar(userIDVar, newUserID) == false){
+            JOptionPane.showMessageDialog (this, "User ID entered is invalid. Please enter a valid user ID with a maximum of 30 characters and no symbols.");
+            return;
+        }
+        
+        //Checks if the the first name entered meets restrictions
+        if (verifyMaxLength(firstNameVar, newFirstName) == false || verifyChar(firstNameVar, newFirstName) == false){
+            JOptionPane.showMessageDialog (this, "First name entered is invalid. Please enter a valid first name with a maximum of 40 characters and no symbols.");
+            return;
+        }
+        //Checks if the last name entered meets restrictions
+        if (verifyMaxLength(lastNameVar, newLastName) == false || verifyChar(lastNameVar, newLastName) == false){
+            JOptionPane.showMessageDialog (this, "Last name entered is invalid. Please enter a valid last name with a maximum of 40 characters and no symbols.");
             return;
         }
         //Checks if the User ID is compose of only numbers and letters
