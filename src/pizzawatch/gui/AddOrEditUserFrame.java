@@ -67,54 +67,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         //But should be ok, just check hash of password field vs prev hash
         cardNumber.setText(currentUser.getCreditCardNumber());
     }
-    private boolean verifyMaxLength (int type,String string){
-        boolean verify = true;
-        switch(type){
-            case 1: if(string.length() > 30){
-                        verify = false;
-                    }
-                    break;
-            case 2: if(string.length() > 40){
-                        verify = false;
-                    }
-                    break;
-            case 3: if(string.length() > 40){
-                        verify = false;
-                    }
-                    break;
-            case 4: if(string.length() > 16){
-                        verify = false;
-                    }
-                    break;
-            default:verify = true;
-                    break;
-        }
-        return(verify);
-    }
-    private boolean veryChar (int type, String string){
-          boolean verify = true;
-        switch(type){
-            case 1: if(string.length() > 30){
-                        verify = false;
-                    }
-                    break;
-            case 2: if(string.length() > 40){
-                        verify = false;
-                    }
-                    break;
-            case 3: if(string.length() > 40){
-                        verify = false;
-                    }
-                    break;
-            case 4: if(string.length() > 16){
-                        verify = false;
-                    }
-                    break;
-            default:verify = true;
-                    break;
-        }
-        return(verify);
-    }
+    
     private void handleSubmitAttempt()
     {
         String newUserID = userID.getText();
@@ -211,11 +164,6 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        userID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userIDActionPerformed(evt);
-            }
-        });
 
         try {
             firstName.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
@@ -318,10 +266,6 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         handleSubmitAttempt();
     }//GEN-LAST:event_submitButtonActionPerformed
-
-    private void userIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userIDActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField cardNumber;
