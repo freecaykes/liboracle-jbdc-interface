@@ -95,7 +95,7 @@ public class UserUtils
         try
         {
             String realPasswordHash = attributesList.get(0).get(0);
-            return realPasswordHash.contains(hashOfGivenPassword); //hashOfGivenPassword can be null, but equals can deal with that
+            return realPasswordHash.equals(hashOfGivenPassword); //hashOfGivenPassword can be null, but equals can deal with that
         }
         catch(IndexOutOfBoundsException ex)
         {
@@ -391,7 +391,7 @@ public class UserUtils
      */
     public static void updateUserAttribute(String userID, String attribute, String value)
     {
-        String setStatement = "UPDATE Users SET " + attribute + " = '" + value + "'";
+        String setStatement = "UPDATE Users SET " + attribute + " = '" + value + "' WHERE userID = '" + userID + "'";
         SQL_READER.insertUpdateCreateDelete(setStatement);
     }
 
