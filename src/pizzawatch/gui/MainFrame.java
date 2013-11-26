@@ -11,6 +11,7 @@ import pizzawatch.datamodels.User;
 import pizzawatch.gui.admin.DeleteUserFrame;
 import pizzawatch.gui.admin.ManageCancellationReqsFrame;
 import pizzawatch.gui.admin.MultipleUserPastOrdersFrame;
+import pizzawatch.gui.admin.MultipleUserPendingOrdersFrame;
 import pizzawatch.gui.user.*;
 import pizzawatch.utils.UserUtils;
 
@@ -197,6 +198,13 @@ public class MainFrame extends javax.swing.JFrame
         });
 
         btMultiplerUserPendingOrders.setText("View Pending Orders (multiple users)");
+        btMultiplerUserPendingOrders.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btMultiplerUserPendingOrdersActionPerformed(evt);
+            }
+        });
 
         btHighestTotalOrders.setText("Find user with highest total orders");
         btHighestTotalOrders.addActionListener(new java.awt.event.ActionListener()
@@ -338,6 +346,12 @@ public class MainFrame extends javax.swing.JFrame
         DeleteUserFrame frame = new DeleteUserFrame(currentUser);
         frame.setVisible(true);
     }//GEN-LAST:event_btDeleteUserActionPerformed
+
+    private void btMultiplerUserPendingOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btMultiplerUserPendingOrdersActionPerformed
+    {//GEN-HEADEREND:event_btMultiplerUserPendingOrdersActionPerformed
+        MultipleUserPendingOrdersFrame frame = new MultipleUserPendingOrdersFrame();
+        frame.setVisible(true);
+    }//GEN-LAST:event_btMultiplerUserPendingOrdersActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AdminPanel;
