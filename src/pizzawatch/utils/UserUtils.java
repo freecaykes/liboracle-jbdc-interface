@@ -47,12 +47,11 @@ public class UserUtils
 
     private static boolean getUserIsAdmin(String userID)
     {
-        final String QUERY_STRING = "SELECT * FROM PrivilegedUser WHERE userID = '" + userID + "'";
-        ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(QUERY_STRING), "userID");
+        ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query("SQL_Scripts/checkAdmin.sql"), "userID");
 
         try
         {
-            return attributesList.get(0).get(0) != null;
+            return attributesList.get(0).get(0).equals(userID);
         }
         catch(IndexOutOfBoundsException ex)
         {
