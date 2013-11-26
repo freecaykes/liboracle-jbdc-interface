@@ -76,13 +76,14 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btAddOrder" max="32767" attributes="0"/>
-                          <Component id="btViewPendingOrders" max="32767" attributes="0"/>
-                          <Component id="btViewPastOrders" max="32767" attributes="0"/>
-                          <Component id="btRequestCancel" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="btUpdateLocation" max="32767" attributes="0"/>
+                          <Component id="btAddOrder" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btViewPendingOrders" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btViewPastOrders" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btRequestCancel" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -115,6 +116,8 @@
                       <Component id="btViewPastOrders" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btRequestCancel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btUpdateLocation" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -167,6 +170,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfSum">
+            </Component>
+            <Component class="javax.swing.JButton" name="btUpdateLocation">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Update Location"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btUpdateLocationActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -236,6 +247,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Find user with highest total orders"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btHighestTotalOrdersActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
