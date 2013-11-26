@@ -91,6 +91,14 @@ public class LoginFrame extends javax.swing.JFrame
         lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbTitle.setText("TMNT Pizza Watch");
 
+        tfUserID.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                tfUserIDActionPerformed(evt);
+            }
+        });
+
         lbUserID.setText("User ID:");
 
         lbPassword.setText("Password:");
@@ -153,15 +161,17 @@ public class LoginFrame extends javax.swing.JFrame
                                 .addComponent(lbPassword))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(btLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btNewUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGap(0, 182, Short.MAX_VALUE))
                                 .addComponent(jpPassword)
-                                .addComponent(tfUserID)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(btLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btNewUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(tfUserID))))
                     .addComponent(lbConnectionError1)
                     .addComponent(lbConnectionError2)
                     .addComponent(btRetryConnection))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,7 +196,7 @@ public class LoginFrame extends javax.swing.JFrame
                 .addComponent(lbConnectionError2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRetryConnection)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -215,6 +225,11 @@ public class LoginFrame extends javax.swing.JFrame
     {//GEN-HEADEREND:event_btRetryConnectionActionPerformed
         attemptAndHandleConnection();
     }//GEN-LAST:event_btRetryConnectionActionPerformed
+
+    private void tfUserIDActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_tfUserIDActionPerformed
+    {//GEN-HEADEREND:event_tfUserIDActionPerformed
+        attemptAndHandleConnection();
+    }//GEN-LAST:event_tfUserIDActionPerformed
 
     /**
      * @param args the command line arguments

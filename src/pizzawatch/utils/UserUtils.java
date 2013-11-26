@@ -166,17 +166,23 @@ public class UserUtils
     }
 
     /**
-     * Returns a TableModel containing the Past Orders for the given users
+     * Returns a TableModel containing the Pending or Past Orders for the given users
      * Assumes userIDs[0] is defined
      * Our Division Query
      * @param userIDs An array containing the user IDs
-     * @return A TableModel for use by the PastOrdersFrame JList
+     * @param isPast Whether the TableModel returned will be for past orders or for pending orders
+     * @return A TableModel for use by the PastOrdersFrame, PendingOrdersFrame etc JLists
      */
-    public static TableModel getPastOrdersTableModel(String[] userIDs)
+    private static TableModel getOrdersTableModel(String[] userIDs, boolean isPast)
     {
-        //TODO protect against non-admin multiuser queries
-        final String ATTRIBUTES_STRING = "userID;oid;deliveryMethod;pizzaType;address"; //Keep in sync with TABLE_TITLES
-        final String[] TABLE_TITLES = {"User ID", "Order ID", "Delivery Method", "Pizza Type", "Address"}; //Keep in sync with ATTRIBUTES_STRING
+        //Keep in sync with TABLE_TITLES
+        final String ATTRIBUTES_STRING = userIDs.length == 1 ?
+                                                "oid;deliveryMethod;pizzaType;address" :
+                                         "userID;oid;deliveryMethod;pizzaType;address";
+        //Keep in sync with ATTRIBUTES_STRING
+        final String[] TABLE_TITLES = userIDs.length == 1 ?
+                                                 new String[] {"Order ID", "Delivery Method", "Pizza Type", "Address"} :
+                                      new String[] {"User ID", "Order ID", "Delivery Method", "Pizza Type", "Address"};
         DefaultTableModelNoEdit tableModel = new DefaultTableModelNoEdit();
 
         String queryString = "SELECT * FROM PizzaOrder po WHERE po.userID IN " +
@@ -185,7 +191,14 @@ public class UserUtils
         {
             queryString += " OR u.userID = '" + userIDs[x] + "'"; //Add any remaining user IDs
         }
-        queryString += ") AND po.isDelivered = 1";
+        if(isPast)
+        {
+            queryString += ") AND po.isDelivered = 1";
+        }
+        else
+        {
+            queryString += ") AND po.isDelivered = 0";
+        }
 
         ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(queryString), ATTRIBUTES_STRING);
         for(int x = 0; x < attributesList.size(); x++)
@@ -195,6 +208,26 @@ public class UserUtils
         }
 
         return tableModel;
+    }
+
+    /**
+     * Returns a TableModel containing the Pending Orders for the given users
+     * @param userIDs An array containing the user IDs
+     * @return A TableModel for use by the PendingOrdersFrame etc JLists
+     */
+    public static TableModel getPendingOrdersTableModel(String[] userIDs)
+    {
+        return getOrdersTableModel(userIDs, /*isPast*/ false);
+    }
+
+    /**
+     * Returns a TableModel containing the Past Orders for the given users
+     * @param userIDs An array containing the user IDs
+     * @return A TableModel for use by the PastOrdersFrame etc JLists
+     */
+    public static TableModel getPastOrdersTableModel(String[] userIDs)
+    {
+        return getOrdersTableModel(userIDs, /*isPast*/ true);
     }
 
     /**
