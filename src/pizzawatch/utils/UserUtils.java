@@ -18,6 +18,11 @@ public class UserUtils
     //donatello4        purple       8E0A1B0ADA42172886FD1297E25ABF99F14396A9400ACBD5F20DA20289CFF02F
     //mastersplinter10  p3aceinm1nd  6B649D9C83A8E2E01B9B34F442AF5A25797EFE2187F9528DA0C481CDF4A4E1E0
 
+    private enum OrdersTableModelMode
+    {
+        PENDING, PAST, CANCEL_REQUESTED;
+    }
+
     private static final SqlScriptReader SQL_READER = SqlScriptReader.getInstance();
 
     public static User getUserFromDB(String userID)
@@ -170,10 +175,10 @@ public class UserUtils
      * Assumes userIDs[0] is defined
      * Our Division Query
      * @param userIDs An array containing the user IDs
-     * @param isPast Whether the TableModel returned will be for past orders or for pending orders
-     * @return A TableModel for use by the PastOrdersFrame, PendingOrdersFrame etc JLists
+     * @param mode The mode that corresponds to the desired data in the table model
+     * @return A TableModel for use by the PastOrdersFrame, PendingOrdersFrame, RequestCancellationFrame etc JTables
      */
-    private static TableModel getOrdersTableModel(String[] userIDs, boolean isPast)
+    private static TableModel getOrdersTableModel(String[] userIDs, OrdersTableModelMode mode)
     {
         //Keep in sync with TABLE_TITLES
         final String ATTRIBUTES_STRING = userIDs.length == 1 ?
@@ -191,13 +196,30 @@ public class UserUtils
         {
             queryString += " OR u.userID = '" + userIDs[x] + "'"; //Add any remaining user IDs
         }
-        if(isPast)
+
+        switch(mode)
         {
-            queryString += ") AND po.isDelivered = 1";
-        }
-        else
-        {
-            queryString += ") AND po.isDelivered = 0";
+            case PENDING:
+            {
+                queryString += ") AND po.isDelivered = 0";
+                break;
+            }
+            case PAST:
+            {
+                queryString += ") AND po.isDelivered = 1";
+                break;
+            }
+            case CANCEL_REQUESTED:
+            {
+                queryString += ") AND po.isCancellationRequested = 1";
+                break;
+            }
+            default:
+            {
+                System.err.println("UserUtils: invalid OrdersTableModelMode specified");
+                queryString += ")";
+                break;
+            }
         }
 
         ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(queryString), ATTRIBUTES_STRING);
@@ -211,23 +233,33 @@ public class UserUtils
     }
 
     /**
+     * Returns a TableModel containing the Cancel Requested Orders for the given users
+     * @param userIDs An array containing the user IDs
+     * @return A TableModel for use by the RequestCancellationFrame etc JTables
+     */
+    public static TableModel getCancelRequestedOrdersTableModel(String[] userIDs)
+    {
+        return getOrdersTableModel(userIDs, OrdersTableModelMode.CANCEL_REQUESTED);
+    }
+
+    /**
      * Returns a TableModel containing the Pending Orders for the given users
      * @param userIDs An array containing the user IDs
-     * @return A TableModel for use by the PendingOrdersFrame etc JLists
+     * @return A TableModel for use by the PendingOrdersFrame etc JTables
      */
     public static TableModel getPendingOrdersTableModel(String[] userIDs)
     {
-        return getOrdersTableModel(userIDs, /*isPast*/ false);
+        return getOrdersTableModel(userIDs, OrdersTableModelMode.PENDING);
     }
 
     /**
      * Returns a TableModel containing the Past Orders for the given users
      * @param userIDs An array containing the user IDs
-     * @return A TableModel for use by the PastOrdersFrame etc JLists
+     * @return A TableModel for use by the PastOrdersFrame etc JTables
      */
     public static TableModel getPastOrdersTableModel(String[] userIDs)
     {
-        return getOrdersTableModel(userIDs, /*isPast*/ true);
+        return getOrdersTableModel(userIDs, OrdersTableModelMode.PAST);
     }
 
     /**
@@ -256,9 +288,9 @@ public class UserUtils
         if(admin)
         {
             String sum_query = "create view  user_total as " +
-            				   "select sum(p.price) as user_sum, u.userID " + 
+            				   "select sum(p.price) as user_sum, u.userID " +
             				   "from Users u, PizzaOrder po, Pizza p " +
-            				   "where u.userID = po.userID and po.pizzaType = p.PizzaType " +    
+            				   "where u.userID = po.userID and po.pizzaType = p.PizzaType " +
             				   "group by u.userID";
             String max_query = "SELECT us.userId, us.user_sum from user_total us where us.user_sum = (select max(us2.user_sum) from user_total us2)";
             SQL_READER.insertUpdateCreateDelete(sum_query);

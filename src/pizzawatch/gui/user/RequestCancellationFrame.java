@@ -6,26 +6,16 @@
 
 package pizzawatch.gui.user;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
+import pizzawatch.utils.UserUtils;
 
 @SuppressWarnings("serial")
 public class RequestCancellationFrame extends javax.swing.JFrame
 {
-    public RequestCancellationFrame()
+    private final String[] userIDs;
+    public RequestCancellationFrame(String[] userIDs)
     {
+        this.userIDs = userIDs;
         initComponents();
-    }
-
-    private DefaultListModel getDefaultListModel()
-    {
-        DefaultListModel dlm = new DefaultListModel();
-        dlm.addElement("Item 1");
-        dlm.addElement("Item 2");
-        dlm.addElement("Item 3");
-        dlm.addElement("Item 4");
-
-        return dlm;
     }
 
     /** This method is called from within the constructor to
@@ -39,23 +29,45 @@ public class RequestCancellationFrame extends javax.swing.JFrame
     {
 
         lbTitle = new javax.swing.JLabel();
-        jlPendingOrders = new javax.swing.JList();
-        btRequest = new javax.swing.JButton();
+        btRequestCancellation = new javax.swing.JButton();
+        spCancelRequested = new javax.swing.JScrollPane();
+        jtRequestCancellation = new javax.swing.JTable();
+        lbNotCancelRequested = new javax.swing.JLabel();
+        spNotCancelRequested = new javax.swing.JScrollPane();
+        jtRequestCancellation1 = new javax.swing.JTable();
+        lbCancelRequested = new javax.swing.JLabel();
+        btUndoRequest = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbTitle.setText("Request Cancellation");
 
-        jlPendingOrders.setModel(getDefaultListModel());
-        jlPendingOrders.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        btRequest.setText("Request");
-        btRequest.addActionListener(new java.awt.event.ActionListener()
+        btRequestCancellation.setText("Request Cancellation");
+        btRequestCancellation.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btRequestActionPerformed(evt);
+                btRequestCancellationActionPerformed(evt);
+            }
+        });
+
+        jtRequestCancellation.setModel(UserUtils.getCancelRequestedOrdersTableModel(userIDs));
+        spCancelRequested.setViewportView(jtRequestCancellation);
+
+        lbNotCancelRequested.setText("Not Requested");
+
+        jtRequestCancellation1.setModel(UserUtils.getCancelRequestedOrdersTableModel(userIDs));
+        spNotCancelRequested.setViewportView(jtRequestCancellation1);
+
+        lbCancelRequested.setText("Requested");
+
+        btUndoRequest.setText("Undo Request Cancellation");
+        btUndoRequest.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btUndoRequestActionPerformed(evt);
             }
         });
 
@@ -66,12 +78,24 @@ public class RequestCancellationFrame extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbTitle)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlPendingOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btRequest)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbTitle)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(spNotCancelRequested, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbNotCancelRequested))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbCancelRequested)
+                                    .addComponent(spCancelRequested, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(btRequestCancellation)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btUndoRequest)
+                        .addGap(57, 57, 57))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,31 +103,43 @@ public class RequestCancellationFrame extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(lbTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbNotCancelRequested)
+                    .addComponent(lbCancelRequested))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlPendingOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btRequest))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(spNotCancelRequested, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spCancelRequested, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btRequestCancellation)
+                    .addComponent(btUndoRequest))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btRequestActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRequestActionPerformed
-    {//GEN-HEADEREND:event_btRequestActionPerformed
-        Object selectValue = jlPendingOrders.getSelectedValue();
-        if(selectValue != null)
-        {
-            JOptionPane.showMessageDialog(this, "Requesting: " + selectValue);
-            //TODO: fix casting fragility
-            DefaultListModel model = (DefaultListModel)jlPendingOrders.getModel();
-            model.removeElement(selectValue);
-        }
-    }//GEN-LAST:event_btRequestActionPerformed
+    private void btRequestCancellationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRequestCancellationActionPerformed
+    {//GEN-HEADEREND:event_btRequestCancellationActionPerformed
+
+    }//GEN-LAST:event_btRequestCancellationActionPerformed
+
+    private void btUndoRequestActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btUndoRequestActionPerformed
+    {//GEN-HEADEREND:event_btUndoRequestActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btUndoRequestActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btRequest;
-    private javax.swing.JList jlPendingOrders;
+    private javax.swing.JButton btRequestCancellation;
+    private javax.swing.JButton btUndoRequest;
+    private javax.swing.JTable jtRequestCancellation;
+    private javax.swing.JTable jtRequestCancellation1;
+    private javax.swing.JLabel lbCancelRequested;
+    private javax.swing.JLabel lbNotCancelRequested;
     private javax.swing.JLabel lbTitle;
+    private javax.swing.JScrollPane spCancelRequested;
+    private javax.swing.JScrollPane spNotCancelRequested;
     // End of variables declaration//GEN-END:variables
 
 }
