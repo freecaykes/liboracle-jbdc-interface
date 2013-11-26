@@ -26,6 +26,7 @@ CREATE TABLE PizzaOrder
     isDelivered INTEGER NOT NULL,
     isCancellationRequested INTEGER NOT NULL,
     userID varchar(30) NOT NULL,
+    FOREIGN KEY (userID) REFERENCES Users,
     address varchar(100) NOT NULL,
     FOREIGN KEY (userID) REFERENCES User_IsIn ON DELETE CASCADE
 );

@@ -17,25 +17,26 @@ CREATE TABLE Users
     passwordHash char(64) NOT NULL
 );
 
+CREATE TABLE Pizza
+(
+    pizzaType varchar(50) NOT NULL,
+    PRIMARY KEY (pizzaType),
+    price DOUBLE PRECISION NOT NULL
+);
+
 CREATE TABLE PizzaOrder
 (
     oid INTEGER,
     PRIMARY KEY (oid),
     deliveryMethod varchar(20) NOT NULL,
     pizzaType varchar(20) NOT NULL,
+    FOREIGN KEY (pizzaType) REFERENCES Pizza ON DELETE CASCADE,
     isDelivered INTEGER NOT NULL,
     isCancellationRequested INTEGER NOT NULL,
     userID varchar(30) NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users,
     address varchar(100) NOT NULL,
     FOREIGN KEY (userID) REFERENCES User_IsIn ON DELETE CASCADE
-);
-
-CREATE TABLE Pizza
-(
-    pizzaType varchar(50) NOT NULL,
-    PRIMARY KEY (pizzaType),
-    price DOUBLE PRECISION NOT NULL
 );
 
 CREATE TABLE PrivilegedUser

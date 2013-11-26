@@ -264,6 +264,7 @@ public class LoginFrame extends javax.swing.JFrame
             @Override
             public void run()
             {
+            	
                 new LoginFrame().setVisible(true);
             }
         });

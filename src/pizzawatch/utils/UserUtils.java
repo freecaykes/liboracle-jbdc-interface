@@ -87,7 +87,7 @@ public class UserUtils
     public static boolean isPasswordCorrect(String userID, String givenPassword)
     {
         final String ATTRIBUTES_STRING = "passwordHash";
-        final String QUERY_STRING = "SELECT * FROM Users WHERE userID = '" + userID + "'";
+        final String QUERY_STRING = "SELECT passwordHash FROM Users WHERE userID = '" + userID + "'";
 
         ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(QUERY_STRING), ATTRIBUTES_STRING);
 
@@ -95,7 +95,7 @@ public class UserUtils
         try
         {
             String realPasswordHash = attributesList.get(0).get(0);
-            return realPasswordHash.equals(hashOfGivenPassword); //hashOfGivenPassword can be null, but equals can deal with that
+            return realPasswordHash.contains(hashOfGivenPassword); //hashOfGivenPassword can be null, but equals can deal with that
         }
         catch(IndexOutOfBoundsException ex)
         {
