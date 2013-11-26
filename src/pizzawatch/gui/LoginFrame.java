@@ -7,13 +7,18 @@
 package pizzawatch.gui;
 
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+
 import javax.swing.JOptionPane;
 import pizzawatch.sql.connection.JBDCSQLConnection;
+import pizzawatch.sql.sqlreader.SqlScriptReader;
 import pizzawatch.utils.UserUtils;
 
 @SuppressWarnings("serial")
 public class LoginFrame extends javax.swing.JFrame
 {
+	private static final SqlScriptReader SQL_READER = SqlScriptReader.getInstance();
+	
     public LoginFrame()
     {
         initComponents();
@@ -264,7 +269,12 @@ public class LoginFrame extends javax.swing.JFrame
             @Override
             public void run()
             {
-            	
+            	if(SQL_READER.query("SQL_Scripts/testQueries.sql") == null)
+            	{
+            		SQL_READER.insertUpdateCreateDelete("SQL_Scripts/projectDefs.sql");
+            		SQL_READER.insertUpdateCreateDelete("SQL_Scripts/dataInserts.sql");
+            	}
+            		
                 new LoginFrame().setVisible(true);
             }
         });

@@ -10,7 +10,7 @@ public class SqlScriptReaderTest {
 	@Test
 	public void test() {
 		SqlScriptReader sqlreader = SqlScriptReader.getInstance();
-		//sqlreader.insertUpdateCreateDelete("SQL_Scripts/projectDefs.sql");
+		sqlreader.insertUpdateCreateDelete("SQL_Scripts/projectDefs.sql");
 		sqlreader.insertUpdateCreateDelete("SQL_Scripts/dataInserts.sql");
 
 		ResultSet testResult = sqlreader.query("SQL_Scripts/testQueries.sql");
