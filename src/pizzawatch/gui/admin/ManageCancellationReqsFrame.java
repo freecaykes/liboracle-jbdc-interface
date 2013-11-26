@@ -6,8 +6,9 @@
 
 package pizzawatch.gui.admin;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import pizzawatch.utils.UserUtils;
 
 @SuppressWarnings("serial")
 public class ManageCancellationReqsFrame extends javax.swing.JFrame
@@ -15,17 +16,6 @@ public class ManageCancellationReqsFrame extends javax.swing.JFrame
     public ManageCancellationReqsFrame()
     {
         initComponents();
-    }
-
-    private DefaultListModel getDefaultListModel()
-    {
-        DefaultListModel dlm = new DefaultListModel();
-        dlm.addElement("Item 1");
-        dlm.addElement("Item 2");
-        dlm.addElement("Item 3");
-        dlm.addElement("Item 4");
-
-        return dlm;
     }
 
     /**
@@ -40,16 +30,15 @@ public class ManageCancellationReqsFrame extends javax.swing.JFrame
     {
 
         spCancellationReqs = new javax.swing.JScrollPane();
-        jlCancellationReqs = new javax.swing.JList();
+        jtCancellationReqs = new javax.swing.JTable();
         lbTitle = new javax.swing.JLabel();
         btApprove = new javax.swing.JButton();
         btReject = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jlCancellationReqs.setModel(getDefaultListModel());
-        jlCancellationReqs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        spCancellationReqs.setViewportView(jlCancellationReqs);
+        jtCancellationReqs.setModel(UserUtils.getCancelRequestedOrdersAllUsersTableModel());
+        spCancellationReqs.setViewportView(jtCancellationReqs);
 
         lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbTitle.setText("Manage Cancellation Requests");
@@ -78,14 +67,19 @@ public class ManageCancellationReqsFrame extends javax.swing.JFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(spCancellationReqs)
-                    .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btApprove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btReject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(spCancellationReqs, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(btApprove))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btReject, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,32 +102,54 @@ public class ManageCancellationReqsFrame extends javax.swing.JFrame
 
     private void btApproveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btApproveActionPerformed
     {//GEN-HEADEREND:event_btApproveActionPerformed
-        Object selectValue = jlCancellationReqs.getSelectedValue();
-        if(selectValue != null)
+        //Loop through the column names and the one for the user ID
+        //Have to do this every time as the columns can be rearranged
+        TableModel tm = jtCancellationReqs.getModel();
+        int tableModelOrderIDColumnNum = -1;
+        for(int x = 0; x < tm.getColumnCount(); x++)
         {
-            JOptionPane.showMessageDialog(this, "Approving: " + selectValue);
-            //TODO: fix casting fragility
-            DefaultListModel model = (DefaultListModel)jlCancellationReqs.getModel();
-            model.removeElement(selectValue);
+            if(tm.getColumnName(x).equals(UserUtils.ORDER_ID_COLUMN_NAME))
+            {
+                tableModelOrderIDColumnNum = x;
+                break;
+            }
+        }
+
+        int selectedRow = jtCancellationReqs.getSelectedRow();
+        if(selectedRow != -1 && tableModelOrderIDColumnNum != -1)
+        {
+            //tm.getValueAt(selectedRow, tableModelOrderIDColumnNum); //Order ID
+            ((DefaultTableModel)tm).removeRow(selectedRow); //Remove the row from the table //TODO Casting fragility?
         }
     }//GEN-LAST:event_btApproveActionPerformed
 
     private void btRejectActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRejectActionPerformed
     {//GEN-HEADEREND:event_btRejectActionPerformed
-        Object selectValue = jlCancellationReqs.getSelectedValue();
-        if(selectValue != null)
+        //Loop through the column names and the one for the user ID
+        //Have to do this every time as the columns can be rearranged
+        TableModel tm = jtCancellationReqs.getModel();
+        int tableModelOrderIDColumnNum = -1;
+        for(int x = 0; x < tm.getColumnCount(); x++)
         {
-            JOptionPane.showMessageDialog(this, "Rejecting: " + selectValue);
-            //TODO: fix casting fragility
-            DefaultListModel model = (DefaultListModel)jlCancellationReqs.getModel();
-            model.removeElement(selectValue);
+            if(tm.getColumnName(x).equals(UserUtils.ORDER_ID_COLUMN_NAME))
+            {
+                tableModelOrderIDColumnNum = x;
+                break;
+            }
+        }
+
+        int selectedRow = jtCancellationReqs.getSelectedRow();
+        if(selectedRow != -1 && tableModelOrderIDColumnNum != -1)
+        {
+            //tm.getValueAt(selectedRow, tableModelOrderIDColumnNum); //Order ID
+            ((DefaultTableModel)tm).removeRow(selectedRow); //Remove the row from the table //TODO Casting fragility?
         }
     }//GEN-LAST:event_btRejectActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btApprove;
     private javax.swing.JButton btReject;
-    private javax.swing.JList jlCancellationReqs;
+    private javax.swing.JTable jtCancellationReqs;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JScrollPane spCancellationReqs;
     // End of variables declaration//GEN-END:variables

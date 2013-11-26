@@ -18,9 +18,11 @@ public class UserUtils
     //donatello4        purple       8E0A1B0ADA42172886FD1297E25ABF99F14396A9400ACBD5F20DA20289CFF02F
     //mastersplinter10  p3aceinm1nd  6B649D9C83A8E2E01B9B34F442AF5A25797EFE2187F9528DA0C481CDF4A4E1E0
 
+    public static final String ORDER_ID_COLUMN_NAME = "Order ID";
+
     private enum OrdersTableModelMode
     {
-        PENDING, PAST, CANCEL_REQUESTED, NOT_CANCEL_REQUESTED;
+        PENDING, PAST, CANCEL_REQUESTED_USER_ONLY, CANCEL_REQUESTED_ALL_USERS, NOT_CANCEL_REQUESTED;
     }
 
     private static final SqlScriptReader SQL_READER = SqlScriptReader.getInstance();
@@ -175,56 +177,65 @@ public class UserUtils
      * Assumes userIDs[0] is defined
      * Our Division Query
      * @param userIDs An array containing the user IDs
-     * @param mode The mode that corresponds to the desired data in the table model
-     * @return A TableModel for use by the PastOrdersFrame, PendingOrdersFrame, RequestCancellationFrame etc JTables
+     * @param mode The mode that corresponds to the desired data in the table model.
+     *             If mode is CANCEL_REQUESTED_ALL_USERS, userIDs is ignored, and the data for all users is returned
+     * @return A TableModel for use by the GUI Frames dealing with PizzaOrders
      */
     private static TableModel getOrdersTableModel(String[] userIDs, OrdersTableModelMode mode)
     {
         //Keep in sync with TABLE_TITLES
-        final String ATTRIBUTES_STRING = userIDs.length == 1 ?
+        final String ATTRIBUTES_STRING = (mode == OrdersTableModelMode.CANCEL_REQUESTED_ALL_USERS || userIDs.length == 1) ?
                                                 "oid;deliveryMethod;pizzaType;address" :
                                          "userID;oid;deliveryMethod;pizzaType;address";
         //Keep in sync with ATTRIBUTES_STRING
-        final String[] TABLE_TITLES = userIDs.length == 1 ?
-                                                 new String[] {"Order ID", "Delivery Method", "Pizza Type", "Address"} :
-                                      new String[] {"User ID", "Order ID", "Delivery Method", "Pizza Type", "Address"};
+        final String[] TABLE_TITLES = (mode == OrdersTableModelMode.CANCEL_REQUESTED_ALL_USERS || userIDs.length == 1) ?
+                                                 new String[] {ORDER_ID_COLUMN_NAME, "Delivery Method", "Pizza Type", "Address"} :
+                                      new String[] {"User ID", ORDER_ID_COLUMN_NAME, "Delivery Method", "Pizza Type", "Address"};
+
         DefaultTableModelNoEdit tableModel = new DefaultTableModelNoEdit();
+        String queryString;
 
-        String queryString = "SELECT * FROM PizzaOrder po WHERE po.userID IN " +
-                             "(SELECT u.userID FROM Users u WHERE u.userID = '" + userIDs[0] + "'"; //Add the first user ID
-        for(int x = 1; x < userIDs.length; x++)
+        if(mode != OrdersTableModelMode.CANCEL_REQUESTED_ALL_USERS)
         {
-            queryString += " OR u.userID = '" + userIDs[x] + "'"; //Add any remaining user IDs
+            queryString = "SELECT * FROM PizzaOrder po WHERE po.userID IN " +
+                          "(SELECT u.userID FROM Users u WHERE u.userID = '" + userIDs[0] + "'"; //Add the first user ID
+            for(int x = 1; x < userIDs.length; x++)
+            {
+                queryString += " OR u.userID = '" + userIDs[x] + "'"; //Add any remaining user IDs
+            }
+
+            switch(mode)
+            {
+                case PENDING:
+                {
+                    queryString += ") AND po.isDelivered = 0";
+                    break;
+                }
+                case PAST:
+                {
+                    queryString += ") AND po.isDelivered = 1";
+                    break;
+                }
+                case CANCEL_REQUESTED_USER_ONLY:
+                {
+                    queryString += ") AND po.isCancellationRequested = 1";
+                    break;
+                }
+                case NOT_CANCEL_REQUESTED:
+                {
+                    queryString += ") AND po.isCancellationRequested = 0";
+                    break;
+                }
+                default:
+                {
+                    queryString += ")";
+                    break;
+                }
+            }
         }
-
-        switch(mode)
+        else
         {
-            case PENDING:
-            {
-                queryString += ") AND po.isDelivered = 0";
-                break;
-            }
-            case PAST:
-            {
-                queryString += ") AND po.isDelivered = 1";
-                break;
-            }
-            case CANCEL_REQUESTED:
-            {
-                queryString += ") AND po.isDelivered = 0 AND po.isCancellationRequested = 1";
-                break;
-            }
-            case NOT_CANCEL_REQUESTED:
-            {
-                queryString += ") AND po.isDelivered = 0 AND po.isCancellationRequested = 0";
-                break;
-            }
-            default:
-            {
-                System.err.println("UserUtils: invalid OrdersTableModelMode specified");
-                queryString += ")";
-                break;
-            }
+            queryString = "SELECT * FROM PizzaOrder po WHERE po.isCancellationRequested = 1";
         }
 
         ArrayList<LinkedList<String>> attributesList = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(queryString), ATTRIBUTES_STRING);
@@ -248,13 +259,22 @@ public class UserUtils
     }
 
     /**
+     * Returns a TableModel containing the Cancel Requested Orders for all the users
+     * @return A TableModel for use by ManageCancellationReqsFrame
+     */
+    public static TableModel getCancelRequestedOrdersAllUsersTableModel()
+    {
+        return getOrdersTableModel(new String[] {}, OrdersTableModelMode.CANCEL_REQUESTED_ALL_USERS);
+    }
+
+    /**
      * Returns a TableModel containing the Cancel Requested Orders for the given users
      * @param userIDs An array containing the user IDs
      * @return A TableModel for use by the RequestCancellationFrame etc JTables
      */
     public static TableModel getCancelRequestedOrdersTableModel(String[] userIDs)
     {
-        return getOrdersTableModel(userIDs, OrdersTableModelMode.CANCEL_REQUESTED);
+        return getOrdersTableModel(userIDs, OrdersTableModelMode.CANCEL_REQUESTED_USER_ONLY);
     }
 
     /**
@@ -317,7 +337,7 @@ public class UserUtils
 
     /**
      * our aggregate query
-     * @param name
+     * @param uid
      * @return
      */
     public static String getTotalSum(String uid)
@@ -329,7 +349,7 @@ public class UserUtils
         ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(sum_query), "sum(p.price)");
         return total_user_sum.get(0).get(0);
     }
-    
+
     public static void updateLocation(String uid, String address)
     {
     	SQL_READER.insertUpdateCreateDelete("UPDATE User_IsIn SET address = '" + address + "' WHERE userID = '" + uid + "'");
