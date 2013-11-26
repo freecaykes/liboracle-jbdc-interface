@@ -6,7 +6,6 @@
 
 package pizzawatch.gui.user;
 
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import pizzawatch.utils.UserUtils;
 
@@ -140,8 +139,11 @@ public class RequestCancellationFrame extends javax.swing.JFrame
         int selectedRow = jtNotCancelRequested.getSelectedRow();
         if(selectedRow != -1 && tableModelOrderIDColumnNum != -1)
         {
-            //tm.getValueAt(selectedRow, tableModelOrderIDColumnNum); //Order ID
-            ((DefaultTableModel)tm).removeRow(selectedRow); //Remove the row from the table //TODO Casting fragility?
+            UserUtils.updateCancellationOrder(tm.getValueAt(selectedRow, tableModelOrderIDColumnNum),
+                                              /*isCancellationRequested*/ true);
+            //Set the models again to update the tables
+            jtNotCancelRequested.setModel(UserUtils.getNotCancelRequestedOrdersTableModel(userIDs));
+            jtCancelRequested.setModel(UserUtils.getCancelRequestedOrdersTableModel(userIDs));
         }
     }//GEN-LAST:event_btRequestCancellationActionPerformed
 
@@ -163,8 +165,11 @@ public class RequestCancellationFrame extends javax.swing.JFrame
         int selectedRow = jtCancelRequested.getSelectedRow();
         if(selectedRow != -1 && tableModelOrderIDColumnNum != -1)
         {
-            //tm.getValueAt(selectedRow, tableModelOrderIDColumnNum); //Order ID
-            ((DefaultTableModel)tm).removeRow(selectedRow); //Remove the row from the table //TODO Casting fragility?
+            UserUtils.updateCancellationOrder(tm.getValueAt(selectedRow, tableModelOrderIDColumnNum),
+                                              /*isCancellationRequested*/ false);
+            //Set the models again to update the tables
+            jtNotCancelRequested.setModel(UserUtils.getNotCancelRequestedOrdersTableModel(userIDs));
+            jtCancelRequested.setModel(UserUtils.getCancelRequestedOrdersTableModel(userIDs));
         }
     }//GEN-LAST:event_btUndoRequestActionPerformed
 

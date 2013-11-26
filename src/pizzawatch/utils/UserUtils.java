@@ -184,11 +184,11 @@ public class UserUtils
     private static TableModel getOrdersTableModel(String[] userIDs, OrdersTableModelMode mode)
     {
         //Keep in sync with TABLE_TITLES
-        final String ATTRIBUTES_STRING = (mode == OrdersTableModelMode.CANCEL_REQUESTED_ALL_USERS || userIDs.length == 1) ?
+        final String ATTRIBUTES_STRING = (mode != OrdersTableModelMode.CANCEL_REQUESTED_ALL_USERS && userIDs.length == 1) ?
                                                 "oid;deliveryMethod;pizzaType;address" :
                                          "userID;oid;deliveryMethod;pizzaType;address";
         //Keep in sync with ATTRIBUTES_STRING
-        final String[] TABLE_TITLES = (mode == OrdersTableModelMode.CANCEL_REQUESTED_ALL_USERS || userIDs.length == 1) ?
+        final String[] TABLE_TITLES = (mode != OrdersTableModelMode.CANCEL_REQUESTED_ALL_USERS && userIDs.length == 1) ?
                                                  new String[] {ORDER_ID_COLUMN_NAME, "Delivery Method", "Pizza Type", "Address"} :
                                       new String[] {"User ID", ORDER_ID_COLUMN_NAME, "Delivery Method", "Pizza Type", "Address"};
 
@@ -264,7 +264,7 @@ public class UserUtils
      */
     public static TableModel getCancelRequestedOrdersAllUsersTableModel()
     {
-        return getOrdersTableModel(new String[] {}, OrdersTableModelMode.CANCEL_REQUESTED_ALL_USERS);
+        return getOrdersTableModel(null, OrdersTableModelMode.CANCEL_REQUESTED_ALL_USERS);
     }
 
     /**
@@ -298,19 +298,14 @@ public class UserUtils
     }
 
     /**
-     * Deletes an order if the current user is an admin
-     * Our delete query.
-     * @param uid The user ID
+     * Deletes a PizzaOrder
+     * Our delete query
      * @param oid The order ID
-     * @param admin
      */
-    public static void deleteOrders(String uid, int oid, boolean admin)
+    public static void deleteOrders(Object oid)
     {
-        if(admin)
-        {
-            String del_query = "DELETE FROM PizzaOrder WHERE userID = '" + uid + "' AND oid = '" + oid + "'";
-            SQL_READER.insertUpdateCreateDelete(del_query);
-        }
+        String del_query = "DELETE FROM PizzaOrder WHERE oid = '" + oid + "'";
+        SQL_READER.insertUpdateCreateDelete(del_query);
     }
 
     /**
@@ -363,16 +358,18 @@ public class UserUtils
         SQL_READER.insertUpdateCreateDelete("UPDATE User_IsIn SET address = '" + address + "' WHERE userID = '" + uid + "'");
     }
 
-    public static void updateCancellationOrder(Object oid, int request)
+    public static void updateCancellationOrder(Object oid, boolean isCancellationRequested)
     {
-    	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISCANCELLATIONREQUESTED = " + request +  " where oid = " + oid);
+    	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISCANCELLATIONREQUESTED = " +
+                                            (isCancellationRequested ? 1 : 0) +
+                                            " where oid = '" + oid + "'");
     }
 
     public static void updateDelivered(String oid, int request)
     {
     	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISDELIVERED = " + request +  " where oid = " + oid);
     }
-    
+
     public static void removeUser(String uid, boolean admin)
     {
     	if(admin)

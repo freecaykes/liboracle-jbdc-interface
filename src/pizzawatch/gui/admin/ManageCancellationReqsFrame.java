@@ -6,7 +6,6 @@
 
 package pizzawatch.gui.admin;
 
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import pizzawatch.utils.UserUtils;
 
@@ -118,8 +117,9 @@ public class ManageCancellationReqsFrame extends javax.swing.JFrame
         int selectedRow = jtCancellationReqs.getSelectedRow();
         if(selectedRow != -1 && tableModelOrderIDColumnNum != -1)
         {
-            //tm.getValueAt(selectedRow, tableModelOrderIDColumnNum); //Order ID
-            ((DefaultTableModel)tm).removeRow(selectedRow); //Remove the row from the table //TODO Casting fragility?
+            UserUtils.deleteOrders(tm.getValueAt(selectedRow, tableModelOrderIDColumnNum));
+            //Set the model again to update the table
+            jtCancellationReqs.setModel(UserUtils.getCancelRequestedOrdersAllUsersTableModel());
         }
     }//GEN-LAST:event_btApproveActionPerformed
 
@@ -141,7 +141,8 @@ public class ManageCancellationReqsFrame extends javax.swing.JFrame
         int selectedRow = jtCancellationReqs.getSelectedRow();
         if(selectedRow != -1 && tableModelOrderIDColumnNum != -1)
         {
-            UserUtils.updateCancellationOrder(tm.getValueAt(selectedRow, tableModelOrderIDColumnNum), 0);
+            UserUtils.updateCancellationOrder(tm.getValueAt(selectedRow, tableModelOrderIDColumnNum),
+                                              /*isCancellationRequested*/ false);
             //Set the model again to update the table
             jtCancellationReqs.setModel(UserUtils.getCancelRequestedOrdersAllUsersTableModel());
         }
