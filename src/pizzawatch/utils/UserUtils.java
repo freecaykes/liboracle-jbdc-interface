@@ -372,6 +372,14 @@ public class UserUtils
     {
     	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISDELIVERED = " + request +  " where oid = " + uid);
     }
+    
+    public static void removeUser(String uid, boolean admin)
+    {
+    	if(admin)
+    	{
+    		SQL_READER.insertUpdateCreateDelete("delete from user_isin where userID = '" + uid + "'");
+    	}
+    }
 
     private UserUtils() {}
 }
