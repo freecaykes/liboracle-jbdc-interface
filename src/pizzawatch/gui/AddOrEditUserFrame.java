@@ -67,7 +67,54 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         //But should be ok, just check hash of password field vs prev hash
         cardNumber.setText(currentUser.getCreditCardNumber());
     }
-
+    private boolean verifyMaxLength (int type,String string){
+        boolean verify = true;
+        switch(type){
+            case 1: if(string.length() > 30){
+                        verify = false;
+                    }
+                    break;
+            case 2: if(string.length() > 40){
+                        verify = false;
+                    }
+                    break;
+            case 3: if(string.length() > 40){
+                        verify = false;
+                    }
+                    break;
+            case 4: if(string.length() > 16){
+                        verify = false;
+                    }
+                    break;
+            default:verify = true;
+                    break;
+        }
+        return(verify);
+    }
+    private boolean veryChar (int type, String string){
+          boolean verify = true;
+        switch(type){
+            case 1: if(string.length() > 30){
+                        verify = false;
+                    }
+                    break;
+            case 2: if(string.length() > 40){
+                        verify = false;
+                    }
+                    break;
+            case 3: if(string.length() > 40){
+                        verify = false;
+                    }
+                    break;
+            case 4: if(string.length() > 16){
+                        verify = false;
+                    }
+                    break;
+            default:verify = true;
+                    break;
+        }
+        return(verify);
+    }
     private void handleSubmitAttempt()
     {
         String newUserID = userID.getText();
@@ -76,20 +123,20 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         String newFirstName = firstName.getText();
         String newLastName = lastName.getText();
         String newCardNumber = cardNumber.getText();
-
+        int userIDVar = 1,cardNumberVar = 2,firstNameVar = 3, lastNameVar = 4; 
         //Checks if all fields are filled / correct
         if (newUserID.isEmpty() || newPassword.isEmpty() || newPasswordReType.isEmpty() ||
             newFirstName.isEmpty() || newLastName.isEmpty() || newCardNumber.equals("0000000000000000")) {
             JOptionPane.showMessageDialog(this, "Some fields are blank. All fields are required.");
             return;
         }
-
+        
         //Checks if the two passwords match
         if (!newPassword.equals(newPasswordReType)){
             JOptionPane.showMessageDialog (this, "Passwords do not match. Please try again.");
             return;
         }
-
+        //Checks if the User ID is compose of only numbers and letters
         //If in edit mode, check (via hash) if the password in the DB matches the one in the password field
         //If they don't match, ask if the user wanted to change their password
         //TODO store hash in User.java so that we can avoid calling the DB again?
@@ -112,8 +159,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         firstNameLabel = new javax.swing.JLabel();
         lastNameLabel = new javax.swing.JLabel();
@@ -127,9 +173,9 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         passwordReType = new javax.swing.JPasswordField();
         cardNumber = new javax.swing.JFormattedTextField();
         createOrEditAccountLabel = new javax.swing.JLabel();
-        firstName = new javax.swing.JTextField();
-        lastName = new javax.swing.JTextField();
-        userID = new javax.swing.JTextField();
+        userID = new javax.swing.JFormattedTextField();
+        firstName = new javax.swing.JFormattedTextField();
+        lastName = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -145,10 +191,8 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         userIDLabel.setText("User ID");
 
         submitButton.setText("Submit");
-        submitButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
             }
         });
@@ -161,6 +205,29 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
 
         createOrEditAccountLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         createOrEditAccountLabel.setText("CREATE A NEW ACCOUNT");
+
+        try {
+            userID.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        userID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userIDActionPerformed(evt);
+            }
+        });
+
+        try {
+            firstName.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            lastName.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,23 +247,15 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cardNumberLabel)
+                            .addComponent(createOrEditAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lastName))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cardNumberLabel)
-                                    .addComponent(createOrEditAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(firstNameLabel)
-                                        .addGap(274, 274, 274)
-                                        .addComponent(lastNameLabel)))
-                                .addGap(0, 275, Short.MAX_VALUE)))
-                        .addGap(10, 10, 10))
+                                .addComponent(firstNameLabel)
+                                .addGap(274, 274, 274)
+                                .addComponent(lastNameLabel)))
+                        .addContainerGap(285, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(userID, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(passwordReType, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -207,6 +266,15 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
                 .addGap(299, 299, 299)
                 .addComponent(submitButton)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(userID)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lastName)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,8 +285,8 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
                 .addComponent(createOrEditAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
                 .addComponent(userIDLabel)
-                .addGap(5, 5, 5)
-                .addComponent(userID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(userID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(passwordLabel)
                 .addGap(5, 5, 5)
@@ -232,10 +300,10 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
                     .addComponent(firstNameLabel)
                     .addComponent(lastNameLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lastName, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(firstName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addComponent(cardNumberLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,13 +319,17 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         handleSubmitAttempt();
     }//GEN-LAST:event_submitButtonActionPerformed
 
+    private void userIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userIDActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField cardNumber;
     private javax.swing.JLabel cardNumberLabel;
     private javax.swing.JLabel createOrEditAccountLabel;
-    private javax.swing.JTextField firstName;
+    private javax.swing.JFormattedTextField firstName;
     private javax.swing.JLabel firstNameLabel;
-    private javax.swing.JTextField lastName;
+    private javax.swing.JFormattedTextField lastName;
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JPasswordField password;
@@ -265,7 +337,7 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
     private javax.swing.JPasswordField passwordReType;
     private javax.swing.JLabel reTypePasswordLabel;
     private javax.swing.JButton submitButton;
-    private javax.swing.JTextField userID;
+    private javax.swing.JFormattedTextField userID;
     private javax.swing.JLabel userIDLabel;
     // End of variables declaration//GEN-END:variables
 }
