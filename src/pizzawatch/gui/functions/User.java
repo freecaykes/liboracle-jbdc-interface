@@ -14,7 +14,7 @@ public class User {
 	@SuppressWarnings("serial")
 	private static final Map<String, String> usersPasswords = new HashMap<>(16);
 	private String name;
-	private SqlScriptReader sqlreader = new SqlScriptReader();
+	private SqlScriptReader sqlreader = new SqlScriptReader().getInstance();
 	public boolean admin = false;
 	
 	public User(String name)

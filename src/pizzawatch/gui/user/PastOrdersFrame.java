@@ -1,22 +1,21 @@
 package pizzawatch.gui.user;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import pizzawatch.utils.UserUtils;
 
 /**
  *
  * @author Standard
  */
 @SuppressWarnings("serial")
-public class PastOrdersFrame extends javax.swing.JFrame {
-
+public class PastOrdersFrame extends javax.swing.JFrame
+{
+    private final String[] userIDs;
     /**
      * Creates new form PastOrderFrame
+     * @param userIDs The user IDs for which this frame will display orders of
      */
-    public PastOrdersFrame() {
+    public PastOrdersFrame(String[] userIDs) {
+        this.userIDs = userIDs;
         initComponents();
     }
 
@@ -31,48 +30,38 @@ public class PastOrdersFrame extends javax.swing.JFrame {
     {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtPastOrders = new javax.swing.JTable();
+        lbTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String []
-            {
-                "Customer Name", "Pizza Type", "Delivery Method", "Date Ordered"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        jtPastOrders.setModel(UserUtils.getPastOrdersTableModel(userIDs));
+        jScrollPane1.setViewportView(jtPastOrders);
+
+        lbTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbTitle.setText("Past Orders");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbTitle)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -80,6 +69,7 @@ public class PastOrdersFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtPastOrders;
+    private javax.swing.JLabel lbTitle;
     // End of variables declaration//GEN-END:variables
 }
