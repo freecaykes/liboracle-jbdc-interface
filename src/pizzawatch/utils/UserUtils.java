@@ -329,6 +329,11 @@ public class UserUtils
         ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(sum_query), "sum(p.price)");
         return total_user_sum.get(0).get(0);
     }
+    
+    public static void updateLocation(String uid, String address)
+    {
+    	SQL_READER.insertUpdateCreateDelete("UPDATE User_IsIn SET address = '" + address + "' WHERE userID = '" + uid + "'");
+    }
 
     private UserUtils() {}
 }

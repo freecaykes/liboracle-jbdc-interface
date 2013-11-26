@@ -310,7 +310,8 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btUpdateLocationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btUpdateLocationActionPerformed
     {//GEN-HEADEREND:event_btUpdateLocationActionPerformed
-        UpdateLocationFrame frame = new UpdateLocationFrame();
+        UpdateLocationFrame updateFrame = new UpdateLocationFrame(currentUser);
+        updateFrame.setVisible(true);
     }//GEN-LAST:event_btUpdateLocationActionPerformed
 
     private void btHighestTotalOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btHighestTotalOrdersActionPerformed

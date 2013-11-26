@@ -18,7 +18,7 @@ public class SqlScriptReaderTest {
 		try {
 			while(testResult.next())
 			{
-				System.out.println(testResult.getString("name"));
+				System.out.println(testResult.getString("userid"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

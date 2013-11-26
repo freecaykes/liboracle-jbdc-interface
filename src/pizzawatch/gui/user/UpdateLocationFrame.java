@@ -6,11 +6,17 @@
 
 package pizzawatch.gui.user;
 
+import pizzawatch.datamodels.User;
+import pizzawatch.utils.UserUtils;
+
 @SuppressWarnings("serial")
 public class UpdateLocationFrame extends javax.swing.JFrame
 {
-    public UpdateLocationFrame()
+	private User currentUser;
+	
+    public UpdateLocationFrame(User currentUser)
     {
+    	this.currentUser = currentUser;
         initComponents();
     }
 
@@ -77,7 +83,9 @@ public class UpdateLocationFrame extends javax.swing.JFrame
 
     private void btSubmitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btSubmitActionPerformed
     {//GEN-HEADEREND:event_btSubmitActionPerformed
-        // TODO add your handling code here:
+    	UserUtils.updateLocation(currentUser.getUserID(), tfNewLocation.getText());
+    	this.setVisible(false);
+    	this.dispose();
     }//GEN-LAST:event_btSubmitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

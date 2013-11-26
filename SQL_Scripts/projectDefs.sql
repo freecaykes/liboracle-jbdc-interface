@@ -21,7 +21,7 @@ CREATE TABLE User_IsIn
     userID varchar(30) NOT NULL,
     distance INTEGER NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users,
-    CONSTRAINT location_id PRIMARY KEY (address,userID)
+    PRIMARY KEY (userID)
 );
 
 CREATE TABLE PizzaOrder
@@ -35,7 +35,7 @@ CREATE TABLE PizzaOrder
     userID varchar(30) NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users,
     address varchar(100) NOT NULL,
-    FOREIGN KEY (address,userID) REFERENCES User_IsIn
+    FOREIGN KEY (userID) REFERENCES User_IsIn 
 );
 
 CREATE TABLE Pizza
