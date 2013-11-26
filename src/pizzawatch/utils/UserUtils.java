@@ -352,24 +352,45 @@ public class UserUtils
             return "0";
         }
     }
-
+    
+    /**
+     * change location of logged in User in User_isin table
+     * @param uid
+     * @param address
+     */
     public static void updateLocation(String uid, String address)
     {
         SQL_READER.insertUpdateCreateDelete("UPDATE User_IsIn SET address = '" + address + "' WHERE userID = '" + uid + "'");
     }
-
+    
+    /**
+     * set isCancellationRequested to 1 to notify order is cancelled by admin
+     * @param oid
+     * @param isCancellationRequested
+     */
     public static void updateCancellationOrder(Object oid, boolean isCancellationRequested)
     {
     	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISCANCELLATIONREQUESTED = " +
                                             (isCancellationRequested ? 1 : 0) +
                                             " where oid = '" + oid + "'");
     }
-
+    
+    /**
+     * set ISDELIVERED to 1 to notify order is cancelled by admin
+     * @param oid
+     * @param isCancellationRequested
+     */
     public static void updateDelivered(String oid, int request)
     {
     	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISDELIVERED = " + request +  " where oid = " + oid);
     }
 
+    /**
+     * Delete user should delete all entries with same userID in PizzaOrder and User_isin tables
+     * our cascade delete
+     * @param uid
+     * @param admin
+     */
     public static void removeUser(String uid, boolean admin)
     {
     	if(admin)

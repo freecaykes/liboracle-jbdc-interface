@@ -13,8 +13,7 @@ public class OrderUtils
     private static final String REPLACE_CHAR = "<*>";
 
     /**
-     * Add an order to the database
-     * Insert Query
+     * Add an order to the PizzaOrder table
      * @param order
      */
     public static void addOrder(Order order)

@@ -9,11 +9,14 @@ public class JBDCSQLConnection
     private final static String USER_NAME = "ora_i2c8"; /*ora_<cs_id>*/
     private final static String USER_PASSWORD = "a30758114"; /*a<Student Number> this like how we connected to SQL_Plus in lab*/
     private final static String CONNECTION_URL = "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug"; /*port 1521 has problems*/
-
+    
+    /**
+     * treat connection as singleton 
+     */
     private Connection connection;
 
     /**
-     * Sets up the connection to the Oracle DB
+     * Sets up the connection to the Oracle DB == connection.getInstance()
      * @return Whether the connection succeeded or not
      */
     public boolean setOracleConnection()

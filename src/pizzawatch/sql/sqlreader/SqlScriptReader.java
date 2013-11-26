@@ -128,7 +128,12 @@ public class SqlScriptReader
         }
 
     }
-
+    
+    /**
+     * same as runscript but enter SQL as String
+     * @param source
+     * @return
+     */
     public ResultSet query(String source)
     {
         ResultSet results = null;
@@ -148,7 +153,10 @@ public class SqlScriptReader
 
         return results;
     }
-
+    
+    /**
+     * calls JBDCSQLConnection class to connect to Oracle
+     */
     private void setConnection()
     {
         JBDCSQLConnection sqlConnector = new JBDCSQLConnection();
