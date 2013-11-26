@@ -200,6 +200,7 @@
                           <Component id="btMultiplerUserPastOrders" max="32767" attributes="0"/>
                           <Component id="btMultiplerUserPendingOrders" max="32767" attributes="0"/>
                           <Component id="btHighestTotalOrders" max="32767" attributes="0"/>
+                          <Component id="btDeleteUser" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="97" max="32767" attributes="0"/>
                   </Group>
@@ -216,6 +217,8 @@
                       <Component id="btMultiplerUserPastOrders" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btHighestTotalOrders" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btDeleteUser" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -249,6 +252,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btHighestTotalOrdersActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btDeleteUser">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Delete User"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDeleteUserActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

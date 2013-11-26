@@ -8,6 +8,7 @@ package pizzawatch.gui;
 
 import javax.swing.JOptionPane;
 import pizzawatch.datamodels.User;
+import pizzawatch.gui.admin.DeleteUserFrame;
 import pizzawatch.gui.admin.ManageCancellationReqsFrame;
 import pizzawatch.gui.admin.MultipleUserPastOrdersFrame;
 import pizzawatch.gui.user.*;
@@ -63,6 +64,7 @@ public class MainFrame extends javax.swing.JFrame
         btMultiplerUserPastOrders = new javax.swing.JButton();
         btMultiplerUserPendingOrders = new javax.swing.JButton();
         btHighestTotalOrders = new javax.swing.JButton();
+        btDeleteUser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter()
@@ -140,11 +142,10 @@ public class MainFrame extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btUpdateLocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btAddOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btViewPendingOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btViewPastOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btRequestCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btAddOrder, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btViewPendingOrders, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btViewPastOrders, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btRequestCancel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btEditUserDetails)
@@ -206,6 +207,15 @@ public class MainFrame extends javax.swing.JFrame
             }
         });
 
+        btDeleteUser.setText("Delete User");
+        btDeleteUser.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btDeleteUserActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout AdminPanelLayout = new javax.swing.GroupLayout(AdminPanel);
         AdminPanel.setLayout(AdminPanelLayout);
         AdminPanelLayout.setHorizontalGroup(
@@ -216,7 +226,8 @@ public class MainFrame extends javax.swing.JFrame
                     .addComponent(btManageCancellationReqs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btMultiplerUserPastOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btMultiplerUserPendingOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btHighestTotalOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btHighestTotalOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(97, Short.MAX_VALUE))
         );
         AdminPanelLayout.setVerticalGroup(
@@ -230,6 +241,8 @@ public class MainFrame extends javax.swing.JFrame
                 .addComponent(btMultiplerUserPastOrders)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btHighestTotalOrders)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btDeleteUser)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -320,10 +333,17 @@ public class MainFrame extends javax.swing.JFrame
     	JOptionPane.showMessageDialog(this, highest_buying_user_total[0] + " is spending an IMMENSE amount of $ " + highest_buying_user_total[1]);
     }//GEN-LAST:event_btHighestTotalOrdersActionPerformed
 
+    private void btDeleteUserActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btDeleteUserActionPerformed
+    {//GEN-HEADEREND:event_btDeleteUserActionPerformed
+        DeleteUserFrame frame = new DeleteUserFrame();
+        frame.setVisible(true);
+    }//GEN-LAST:event_btDeleteUserActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AdminPanel;
     private javax.swing.JPanel UserPanel;
     private javax.swing.JButton btAddOrder;
+    private javax.swing.JButton btDeleteUser;
     private javax.swing.JButton btEditUserDetails;
     private javax.swing.JButton btHighestTotalOrders;
     private javax.swing.JButton btManageCancellationReqs;
