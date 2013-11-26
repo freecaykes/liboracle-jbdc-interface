@@ -255,15 +255,15 @@ public class UserUtils
     {
         if(admin)
         {
-            String sum_query = "CREATE VIEW [User Total Sum] AS" +
-                       "SELECT SUM(p.price) AS user_sum, u.userID" +
-                       "FROM Users u, PizzaOrder po, Pizza p" +
-                       "WHERE u.userID = po.userID AND po.pizzaType = p.PizzaType" +
-                       "GROUP BY u.userID";
-            String max_query = "SELECT MAX(user_sum), userID FROM [User Total Sum] GROUP BY userID";
-            SQL_READER.query(sum_query);
-            ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(max_query), "userID");
-            return total_user_sum.get(0).get(0);
+            String sum_query = "create view  user_total as" +
+            				   "select sum(p.price) as user_sum, u.userID" + 
+            				   "from Users u, PizzaOrder po, Pizza p" +
+            				   "where u.userID = po.userID and po.pizzaType = p.PizzaType" +    
+            				   "group by u.userID";
+            String max_query = "SELECT us.userId, us.user_sum from user_total us where us.user_sum = (select max(us2.user_sum) from user_total us2)";
+            SQL_READER.insertUpdateCreateDelete(sum_query);
+            ArrayList<LinkedList<String>> total_user_sum = ResultSetParser.parseResultSetIntoArray(SQL_READER.query(max_query), "userID;user_sum");
+            return total_user_sum.get(0).get(0) + ";" + total_user_sum.get(1).get(0);
         }
         return null;
     }
