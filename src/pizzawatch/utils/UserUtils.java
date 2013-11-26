@@ -217,12 +217,12 @@ public class UserUtils
                 }
                 case CANCEL_REQUESTED_USER_ONLY:
                 {
-                    queryString += ") AND po.isCancellationRequested = 1";
+                    queryString += ") AND po.isDelivered = 0 AND po.isCancellationRequested = 1";
                     break;
                 }
                 case NOT_CANCEL_REQUESTED:
                 {
-                    queryString += ") AND po.isCancellationRequested = 0";
+                    queryString += ") AND po.isDelivered = 0 AND po.isCancellationRequested = 0";
                     break;
                 }
                 default:
@@ -351,7 +351,7 @@ public class UserUtils
             return "0";
         }
     }
-    
+
     /**
      * change location of logged in User in User_isin table
      * @param uid
@@ -361,11 +361,11 @@ public class UserUtils
     {
         SQL_READER.insertUpdateCreateDelete("UPDATE User_IsIn SET address = '" + address + "' WHERE userID = '" + uid + "'");
     }
-    
+
     /**
-     * set isCancellationRequested to 1 to notify order is cancelled by admin
-     * @param oid
-     * @param isCancellationRequested
+     * Sets isCancellationRequested for cancellation request tracking purposes
+     * @param oid The orderID
+     * @param isCancellationRequested Whether the order should be marked as having a cancellation request
      */
     public static void updateCancellationOrder(Object oid, boolean isCancellationRequested)
     {
@@ -373,15 +373,67 @@ public class UserUtils
                                             (isCancellationRequested ? 1 : 0) +
                                             " where oid = '" + oid + "'");
     }
-    
+
     /**
-     * set ISDELIVERED to 1 to notify order is cancelled by admin
-     * @param oid
-     * @param isCancellationRequested
+     * Sets isDelivered of order to 1 to notify order has been delivered
+     * @param oid The orderID
      */
-    public static void updateDelivered(String oid, int request)
+    public static void updateDelivered(Object oid)
     {
-    	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISDELIVERED = " + request +  " where oid = " + oid);
+    	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISDELIVERED = 1 where oid = '" + oid + "'");
+    }
+
+    /**
+     * Updates an attribute of a User tuple in the DB
+     * @param userID The user ID
+     * @param attribute
+     * @param value
+     */
+    public static void updateUserAttribute(String userID, String attribute, String value)
+    {
+        String setStatement = "UPDATE Users SET " + attribute + " = '" + value + "'";
+        SQL_READER.insertUpdateCreateDelete(setStatement);
+    }
+
+    /**
+     * Adds a new User_IsIn tuple to the DB
+     * @param address The address of the user
+     * @param userID The user ID
+     */
+    private static void addUserIsIn(String address, String userID)
+    {
+        String insertStatement = "INSERT INTO User_IsIn VALUES ( '" +
+                                 address + "', '" +
+                                 userID + "', 1)";
+        SQL_READER.insertUpdateCreateDelete(insertStatement);
+    }
+
+    /**
+     * Adds a new User tuple to the DB
+     * @param user The representation of the user to add to the DB
+     * @param password The password of the user
+     * @param address The address of the user
+     * @return Whether or not the add succeeded
+     */
+    public static boolean addUser(User user, String password, String address)
+    {
+        String passwordHash = hashPassword(password);
+        if(passwordHash != null)
+        {
+            addUserIsIn(address, user.getUserID()); //Add User_IsIn first to satisfy integrity constraint
+
+            String insertStatement = "INSERT INTO Users VALUES ( '" +
+                                     user.getUserID() + "', '" +
+                                     user.getFirstName() + "', '" +
+                                     user.getLastName() + "', '" +
+                                     user.getCreditCardNumber() + "', '" +
+                                     passwordHash +
+                                     "')";
+            SQL_READER.insertUpdateCreateDelete(insertStatement);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -397,6 +449,6 @@ public class UserUtils
     		SQL_READER.insertUpdateCreateDelete("delete from user_isin where userID = '" + uid + "'");
     	}
     }
-    
+
     private UserUtils() {}
 }

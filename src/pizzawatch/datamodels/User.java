@@ -5,9 +5,9 @@ public class User
 {
     private final String userID;
     private final boolean admin;
-    private final String firstName;
-    private final String lastName;
-    private final String creditCardNumber;
+    private String firstName;
+    private String lastName;
+    private String creditCardNumber;
 
     public User(String userID, boolean admin, String firstName, String lastName, String creditCardNumber)
     {
@@ -33,13 +33,28 @@ public class User
         return firstName;
     }
 
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
     public String getLastName()
     {
         return lastName;
     }
 
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
+
     public String getCreditCardNumber()
     {
         return creditCardNumber;
+    }
+
+    public void setCreditCardNumber(String creditCardNumber)
+    {
+        this.creditCardNumber = creditCardNumber;
     }
 }

@@ -23,6 +23,8 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
 {
     private final boolean isEditMode;
     private final User currentUser;
+    private final int USER_ID_VAR = 1, FIRST_NAME_VAR = 2, LAST_NAME_VAR = 3, PASSWORD_VAR = 4, ADDRESS_VAR = 5;
+
     /**
      * Creates new form NewUserFrame
      * If user is null, the frame is in add mode, otherwise it is in edit mode
@@ -34,13 +36,14 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         initComponents();
 
         if(isEditMode) {
-            userID.setEnabled(false);
+            tfUserID.setEnabled(false);
+            tfAddress.setEnabled(false);
             createOrEditAccountLabel.setText("EDIT ACCOUNT DETAILS");
             loadPrevData();
         }
     }
 
-    private AbstractFormatterFactory getMaskFormatterFactory()
+    private AbstractFormatterFactory getCreditCardMaskFormatterFactory()
     {
         AbstractFormatterFactory dff = new AbstractFormatterFactory() {
             @Override
@@ -60,15 +63,17 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
 
     private void loadPrevData()
     {
-        userID.setText(currentUser.getUserID());
-        firstName.setText(currentUser.getFirstName());
-        lastName.setText(currentUser.getLastName());
+        tfUserID.setText(currentUser.getUserID());
+        tfFirstName.setText(currentUser.getFirstName());
+        tfLastName.setText(currentUser.getLastName());
         //The plaintext password isn't stored in the DB
         //But should be ok, just check hash of password field vs prev hash
         cardNumber.setText(currentUser.getCreditCardNumber());
     }
-    
-    //Checks if the string is alphanumeric
+
+    /**
+     * Checks if the string is strictly alphanumeric
+     */
     private boolean isAlphaNumeric(String str) {
         for (int i=0; i<str.length(); i++) {
             char c = str.charAt(i);
@@ -78,128 +83,164 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
 
         return true;
     }
-    
+
+    /**
+     * Checks if the string is alphanumeric, allowing for whitespace
+     */
+    private boolean isAlphaNumericAllowWhitespace(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if(Character.isLetterOrDigit(c) == false && Character.isWhitespace(c) == false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     //Checks if the string meets the maximum length for charaters
     //Returns true if the entered string meets max length
     private boolean verifyMaxLength (int type,String string){
-        boolean verify = true;
         switch(type){
-            //user ID
-            case 1: if(string.length() > 30){
-                        verify = false;
-                    }
-                    else{
-                        verify = true;
-                    }
-                    break;
-            //First name
-            case 2: if(string.length() > 40){
-                        verify = false;
-                    }
-                    else{
-                        verify = true;
-                    }
-                    break;
-            //Last name
-            case 3: if(string.length() > 40){
-                        verify = false;
-                    }
-                    else{
-                        verify = true;
-                    }
-                    break;
-            default:verify = true;
-                    break;
+            case USER_ID_VAR: {
+                return string.length() <= 30;
+            }
+            case FIRST_NAME_VAR:
+            case LAST_NAME_VAR: {
+                return string.length() <= 40;
+            }
+            case PASSWORD_VAR:
+            case ADDRESS_VAR: {
+                return string.length() <= 100;
+            }
+            default: {
+                return false;
+            }
         }
-        return(verify);
     }
-    
-    //Checks if the characters entered are alphanumeric characters
-    //Returns false if the characters entered are not alphanumeric
-    private boolean verifyChar (int type, String string){
-        boolean verify = false;
-        switch(type){
-            //user ID
-            case 1: if(isAlphaNumeric(string)){
-                        verify = true;
-                    }
-                    else{
-                        verify = false;
-                    }
-                    break;
-            //First name
-            case 2: if(isAlphaNumeric(string)){
-                        verify = true;
-                    }
-                    else{
-                        verify = false;
-                    }
-                    break;
-            //Last name
-            case 3: if(isAlphaNumeric(string)){
-                        verify = true;
-                    }
-                    else{
-                        verify = false;
-                    }
-                    break;
-            default:verify = false;
-                    break;
+
+    /**
+     * Verifies if input meets a minimum length
+     * @param type The type of input this is, defined by the constants in this file
+     * @param input The input to verify the length of
+     * @return Whether the input meets the minimum length depending on its type
+     */
+    private boolean verifyMinLength(int type, String input) {
+        switch(type) {
+            case USER_ID_VAR:
+            case PASSWORD_VAR: {
+                return input.length() >= 6;
+            }
+            case FIRST_NAME_VAR:
+            case LAST_NAME_VAR: {
+                return input.length() >= 1;
+            }
+            case ADDRESS_VAR: {
+                return input.length() >= 15;
+            }
+            default: {
+                return false;
+            }
         }
-        return(verify);
     }
+
     private void handleSubmitAttempt()
     {
-        String newUserID = userID.getText();
+        String newUserID = tfUserID.getText();
         String newPassword = new String (password.getPassword());
         String newPasswordReType = new String (passwordReType.getPassword());
-        String newFirstName = firstName.getText();
-        String newLastName = lastName.getText();
+        String newFirstName = tfFirstName.getText();
+        String newLastName = tfLastName.getText();
         String newCardNumber = cardNumber.getText();
-        int userIDVar = 1, firstNameVar = 2, lastNameVar = 3; 
-        //Checks if all fields are filled / correct
-        if (newUserID.isEmpty() || newPassword.isEmpty() || newPasswordReType.isEmpty() ||
-            newFirstName.isEmpty() || newLastName.isEmpty() || newCardNumber.equals("0000000000000000")) {
-            JOptionPane.showMessageDialog(this, "Some fields are blank. All fields are required.");
-            return;
-        }
-        
+        String newAddress = tfAddress.getText();
+
         //Checks if the two passwords match
         if (!newPassword.equals(newPasswordReType)){
             JOptionPane.showMessageDialog (this, "Passwords do not match. Please try again.");
             return;
         }
-        
+
         //Checks if the user ID entered meets restrictions
-        if (verifyMaxLength(userIDVar, newUserID) == false || verifyChar(userIDVar, newUserID) == false){
-            JOptionPane.showMessageDialog (this, "User ID entered is invalid. Please enter a valid user ID with a maximum of 30 characters and no symbols.");
+        if(isEditMode == false &&
+           (verifyMaxLength(USER_ID_VAR, newUserID) == false ||
+            verifyMinLength(USER_ID_VAR, newUserID) == false ||
+            isAlphaNumeric(newUserID) == false)) {
+            JOptionPane.showMessageDialog(this, "User ID entered is invalid. Please enter a minimum of 6 and a maximum of 30 alphanumeric characters. No spaces.");
             return;
-        }
-        
-        //Checks if the the first name entered meets restrictions
-        if (verifyMaxLength(firstNameVar, newFirstName) == false || verifyChar(firstNameVar, newFirstName) == false){
-            JOptionPane.showMessageDialog (this, "First name entered is invalid. Please enter a valid first name with a maximum of 40 characters and no symbols.");
-            return;
-        }
-        //Checks if the last name entered meets restrictions
-        if (verifyMaxLength(lastNameVar, newLastName) == false || verifyChar(lastNameVar, newLastName) == false){
-            JOptionPane.showMessageDialog (this, "Last name entered is invalid. Please enter a valid last name with a maximum of 40 characters and no symbols.");
-            return;
-        }
-        //Checks if the User ID is compose of only numbers and letters
-        //If in edit mode, check (via hash) if the password in the DB matches the one in the password field
-        //If they don't match, ask if the user wanted to change their password
-        //TODO store hash in User.java so that we can avoid calling the DB again?
-        if(isEditMode && UserUtils.isPasswordCorrect(currentUser.getUserID(), newPassword) == false) {
-            int result = JOptionPane.showConfirmDialog(this,
-                                                       "The password you have entered is different from the stored. Do you wish to update your password?");
-            if(result != JOptionPane.YES_OPTION) {
-                return;
-            }
         }
 
-        //Do actual updating here
-        String dummy = null;
+        //Checks if the password entered meets restrictions
+        if(verifyMaxLength(PASSWORD_VAR, newPassword) == false ||
+           verifyMinLength(PASSWORD_VAR, newPassword) == false) {
+           JOptionPane.showMessageDialog (this, "Password entered is invalid. Please enter a minimum of 6 and a maximum of 100 characters.");
+            return;
+        }
+
+        //Checks if the the first name entered meets restrictions
+        if(verifyMaxLength(FIRST_NAME_VAR, newFirstName) == false ||
+           verifyMinLength(FIRST_NAME_VAR, newFirstName) == false ||
+           isAlphaNumericAllowWhitespace(newFirstName) == false) {
+            JOptionPane.showMessageDialog (this, "First name entered is invalid. Please enter a minimum of 1 and a maximum of 40 alphanumeric characters.");
+            return;
+        }
+
+        //Checks if the last name entered meets restrictions
+        if(verifyMaxLength(LAST_NAME_VAR, newLastName) == false ||
+           verifyMinLength(LAST_NAME_VAR, newLastName) == false ||
+           isAlphaNumericAllowWhitespace(newLastName) == false) {
+            JOptionPane.showMessageDialog (this, "Last name entered is invalid. Please enter a minimum of 1 and a maximum of 40 alphanumeric characters.");
+            return;
+        }
+
+        //Check the credit card number
+        if(newCardNumber.equals("0000000000000000")) {
+            JOptionPane.showMessageDialog(this, "The given credit card number is invalid.");
+            return;
+        }
+
+        //Checks if the address entered meets restrictions
+        if(isEditMode == false &&
+           (verifyMaxLength(ADDRESS_VAR, newAddress) == false ||
+            verifyMinLength(ADDRESS_VAR, newAddress) == false ||
+            isAlphaNumericAllowWhitespace(newAddress) == false)) {
+            JOptionPane.showMessageDialog(this, "Address entered is invalid. Please enter a minimum of 15 and a maximum of 100 alphanumeric characters.");
+            return;
+        }
+
+        if(isEditMode) {
+            String newPasswordHash = UserUtils.hashPassword(newPassword);
+            if(newPasswordHash != null) {
+                UserUtils.updateUserAttribute(currentUser.getUserID(), "passwordHash", newPasswordHash);
+            } else {
+                JOptionPane.showMessageDialog(this, "A failure occured when trying to update your account details.");
+                return;
+            }
+            if(currentUser.getFirstName().equals(newFirstName) == false) {
+                UserUtils.updateUserAttribute(currentUser.getUserID(), "firstName", newFirstName);
+                currentUser.setFirstName(newFirstName);
+            }
+            if(currentUser.getLastName().equals(newLastName) == false) {
+                UserUtils.updateUserAttribute(currentUser.getUserID(), "lastName", newLastName);
+                currentUser.setLastName(newLastName);
+            }
+            if(currentUser.getCreditCardNumber().equals(newCardNumber) == false) {
+                UserUtils.updateUserAttribute(currentUser.getUserID(), "cardNumber", newCardNumber);
+                currentUser.setCreditCardNumber(newCardNumber);
+            }
+            JOptionPane.showMessageDialog(this, "Successfully updated your account details.");
+            setVisible(false);
+            dispose();
+        }
+        else {
+            User user = new User(newUserID, false, newFirstName, newLastName, newCardNumber);
+            if(UserUtils.addUser(user, newPassword, newAddress)) {
+                JOptionPane.showMessageDialog(this, "Successfully made a new user account.");
+                setVisible(false);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "A failure occured when trying to make a new user account.");
+            }
+        }
     }
 
     /**
@@ -209,7 +250,8 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         firstNameLabel = new javax.swing.JLabel();
         lastNameLabel = new javax.swing.JLabel();
@@ -223,9 +265,11 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         passwordReType = new javax.swing.JPasswordField();
         cardNumber = new javax.swing.JFormattedTextField();
         createOrEditAccountLabel = new javax.swing.JLabel();
-        userID = new javax.swing.JFormattedTextField();
-        firstName = new javax.swing.JFormattedTextField();
-        lastName = new javax.swing.JFormattedTextField();
+        tfAddress = new javax.swing.JTextField();
+        tfLastName = new javax.swing.JTextField();
+        tfFirstName = new javax.swing.JTextField();
+        lbAddress = new javax.swing.JLabel();
+        tfUserID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -241,8 +285,10 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
         userIDLabel.setText("User ID");
 
         submitButton.setText("Submit");
-        submitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        submitButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 submitButtonActionPerformed(evt);
             }
         });
@@ -251,74 +297,52 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
 
         reTypePasswordLabel.setText("Re-type Password");
 
-        cardNumber.setFormatterFactory(getMaskFormatterFactory());
+        cardNumber.setFormatterFactory(getCreditCardMaskFormatterFactory());
 
         createOrEditAccountLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         createOrEditAccountLabel.setText("CREATE A NEW ACCOUNT");
 
-        try {
-            userID.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            firstName.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            lastName.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        lbAddress.setText("Address");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cardNumber)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbTitle)
-                            .addComponent(reTypePasswordLabel)
-                            .addComponent(passwordLabel))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cardNumberLabel)
-                            .addComponent(createOrEditAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(firstNameLabel)
-                                .addGap(274, 274, 274)
-                                .addComponent(lastNameLabel)))
-                        .addContainerGap(285, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(passwordReType, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(userIDLabel)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(299, 299, 299)
-                .addComponent(submitButton)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(userID)
+                                .addContainerGap()
+                                .addComponent(lbAddress))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(300, 300, 300)
+                                .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(295, 295, 295))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lastName)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cardNumber)
+                            .addComponent(passwordReType)
+                            .addComponent(password)
+                            .addComponent(tfAddress)
+                            .addComponent(tfUserID)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbTitle)
+                                    .addComponent(reTypePasswordLabel)
+                                    .addComponent(passwordLabel)
+                                    .addComponent(cardNumberLabel)
+                                    .addComponent(createOrEditAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(firstNameLabel)
+                                    .addComponent(userIDLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lastNameLabel)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(tfLastName))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -330,13 +354,13 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
                 .addComponent(createOrEditAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
                 .addComponent(userIDLabel)
-                .addGap(7, 7, 7)
-                .addComponent(userID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
                 .addComponent(passwordLabel)
                 .addGap(5, 5, 5)
-                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(reTypePasswordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(passwordReType, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,16 +369,20 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
                     .addComponent(firstNameLabel)
                     .addComponent(lastNameLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tfLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(tfFirstName))
                 .addGap(13, 13, 13)
                 .addComponent(cardNumberLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbAddress)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submitButton)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -368,17 +396,19 @@ public class AddOrEditUserFrame extends javax.swing.JFrame
     private javax.swing.JFormattedTextField cardNumber;
     private javax.swing.JLabel cardNumberLabel;
     private javax.swing.JLabel createOrEditAccountLabel;
-    private javax.swing.JFormattedTextField firstName;
     private javax.swing.JLabel firstNameLabel;
-    private javax.swing.JFormattedTextField lastName;
     private javax.swing.JLabel lastNameLabel;
+    private javax.swing.JLabel lbAddress;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JPasswordField passwordReType;
     private javax.swing.JLabel reTypePasswordLabel;
     private javax.swing.JButton submitButton;
-    private javax.swing.JFormattedTextField userID;
+    private javax.swing.JTextField tfAddress;
+    private javax.swing.JTextField tfFirstName;
+    private javax.swing.JTextField tfLastName;
+    private javax.swing.JTextField tfUserID;
     private javax.swing.JLabel userIDLabel;
     // End of variables declaration//GEN-END:variables
 }
