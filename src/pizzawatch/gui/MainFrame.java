@@ -7,7 +7,6 @@
 package pizzawatch.gui;
 
 import javax.swing.JOptionPane;
-
 import pizzawatch.datamodels.User;
 import pizzawatch.gui.admin.ManageCancellationReqsFrame;
 import pizzawatch.gui.admin.MultipleUserPastOrdersFrame;
@@ -21,7 +20,7 @@ import pizzawatch.utils.UserUtils;
 public class MainFrame extends javax.swing.JFrame
 {
     private final LoginFrame lf;
-    public final User currentUser;
+    private final User currentUser;
     private final String[] currentUserIDArray;
 
     public MainFrame(LoginFrame lf, User user)
@@ -61,6 +60,7 @@ public class MainFrame extends javax.swing.JFrame
         btEditUserDetails = new javax.swing.JButton();
         lbSum = new javax.swing.JLabel();
         tfSum = new javax.swing.JTextField();
+        btUpdateLocation = new javax.swing.JButton();
         AdminPanel = new javax.swing.JPanel();
         btManageCancellationReqs = new javax.swing.JButton();
         btMultiplerUserPastOrders = new javax.swing.JButton();
@@ -126,17 +126,28 @@ public class MainFrame extends javax.swing.JFrame
 
         lbSum.setText("Sum:");
 
+        btUpdateLocation.setText("Update Location");
+        btUpdateLocation.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btUpdateLocationActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout UserPanelLayout = new javax.swing.GroupLayout(UserPanel);
         UserPanel.setLayout(UserPanelLayout);
         UserPanelLayout.setHorizontalGroup(
             UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UserPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btAddOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btViewPendingOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btViewPastOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btRequestCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btUpdateLocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btAddOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btViewPendingOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btViewPastOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btRequestCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btEditUserDetails)
@@ -162,6 +173,8 @@ public class MainFrame extends javax.swing.JFrame
                 .addComponent(btViewPastOrders)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRequestCancel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btUpdateLocation)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -190,12 +203,12 @@ public class MainFrame extends javax.swing.JFrame
         btHighestTotalOrders.setText("Find user with highest total orders");
         btHighestTotalOrders.addActionListener(new java.awt.event.ActionListener()
         {
-        	 public void actionPerformed(java.awt.event.ActionEvent evt)
-             {
-        		 btHighestTotalOrdersActionPerformed(evt);
-             }
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btHighestTotalOrdersActionPerformed(evt);
+            }
         });
-        
+
         javax.swing.GroupLayout AdminPanelLayout = new javax.swing.GroupLayout(AdminPanel);
         AdminPanel.setLayout(AdminPanelLayout);
         AdminPanelLayout.setHorizontalGroup(
@@ -265,7 +278,7 @@ public class MainFrame extends javax.swing.JFrame
 
     private void btRequestCancelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btRequestCancelActionPerformed
     {//GEN-HEADEREND:event_btRequestCancelActionPerformed
-        RequestCancellationFrame rcf = new RequestCancellationFrame();
+        RequestCancellationFrame rcf = new RequestCancellationFrame(currentUserIDArray);
         rcf.setVisible(true);
     }//GEN-LAST:event_btRequestCancelActionPerformed
 
@@ -298,12 +311,17 @@ public class MainFrame extends javax.swing.JFrame
         frame.setVisible(true);
     }//GEN-LAST:event_btMultiplerUserPastOrdersActionPerformed
 
-    private void btHighestTotalOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btMultiplerUserPastOrdersActionPerformed
+    private void btUpdateLocationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btUpdateLocationActionPerformed
+    {//GEN-HEADEREND:event_btUpdateLocationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btUpdateLocationActionPerformed
+
+    private void btHighestTotalOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btHighestTotalOrdersActionPerformed
     {//GEN-HEADEREND:event_btHighestTotalOrdersActionPerformed
-    	String[] highest_buying_user_total = UserUtils.punish(currentUser.isAdmin()).split(";");
+        String[] highest_buying_user_total = UserUtils.punish(currentUser.isAdmin()).split(";");
     	JOptionPane.showMessageDialog(this, highest_buying_user_total[0] + " is spending an IMMENSE amount of $ " + highest_buying_user_total[1]);
     }//GEN-LAST:event_btHighestTotalOrdersActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AdminPanel;
     private javax.swing.JPanel UserPanel;
@@ -314,6 +332,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JButton btMultiplerUserPastOrders;
     private javax.swing.JButton btMultiplerUserPendingOrders;
     private javax.swing.JButton btRequestCancel;
+    private javax.swing.JButton btUpdateLocation;
     private javax.swing.JButton btViewPastOrders;
     private javax.swing.JButton btViewPendingOrders;
     private javax.swing.JLabel lbSum;
