@@ -24,58 +24,49 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="cardNumber" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbTitle" min="-2" max="-2" attributes="0"/>
-                          <Component id="reTypePasswordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="passwordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cardNumberLabel" min="-2" max="-2" attributes="0"/>
-                          <Component id="createOrEditAccountLabel" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="firstNameLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="274" max="-2" attributes="0"/>
-                              <Component id="lastNameLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lbAddress" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="300" max="-2" attributes="0"/>
+                              <Component id="submitButton" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="285" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="295" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="cardNumber" max="32767" attributes="0"/>
                           <Component id="passwordReType" alignment="0" max="32767" attributes="0"/>
                           <Component id="password" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfAddress" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfUserID" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="userIDLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="tfFirstName" alignment="0" min="-2" pref="317" max="-2" attributes="0"/>
+                                  <Component id="lbTitle" min="-2" max="-2" attributes="0"/>
+                                  <Component id="reTypePasswordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="passwordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cardNumberLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="createOrEditAccountLabel" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
+                                  <Component id="firstNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="userIDLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lastNameLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="tfLastName" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="299" max="-2" attributes="0"/>
-              <Component id="submitButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="userID" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="firstName" min="-2" pref="317" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lastName" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -91,13 +82,13 @@
               <Component id="createOrEditAccountLabel" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Component id="userIDLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-              <Component id="userID" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="tfUserID" min="-2" pref="32" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Component id="passwordLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-              <Component id="password" min="-2" pref="27" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="password" min="-2" pref="32" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="reTypePasswordLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="passwordReType" min="-2" pref="29" max="-2" attributes="0"/>
@@ -107,17 +98,21 @@
                   <Component id="lastNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="firstName" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="lastName" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="tfLastName" pref="30" max="32767" attributes="0"/>
+                  <Component id="tfFirstName" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Component id="cardNumberLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="cardNumber" min="-2" pref="30" max="-2" attributes="0"/>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
-              <Component id="submitButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="lbAddress" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="tfAddress" min="-2" pref="32" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="submitButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -176,7 +171,7 @@
     <Component class="javax.swing.JFormattedTextField" name="cardNumber">
       <Properties>
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="getMaskFormatterFactory()" type="code"/>
+          <Connection code="getCreditCardMaskFormatterFactory()" type="code"/>
         </Property>
       </Properties>
     </Component>
@@ -188,26 +183,18 @@
         <Property name="text" type="java.lang.String" value="CREATE A NEW ACCOUNT"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="userID">
+    <Component class="javax.swing.JTextField" name="tfAddress">
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfLastName">
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfFirstName">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbAddress">
       <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-          <Format format="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" subtype="-1" type="5"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Address"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="firstName">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-          <Format format="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" subtype="-1" type="5"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="lastName">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-          <Format format="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" subtype="-1" type="5"/>
-        </Property>
-      </Properties>
+    <Component class="javax.swing.JTextField" name="tfUserID">
     </Component>
   </SubComponents>
 </Form>
