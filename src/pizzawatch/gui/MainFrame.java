@@ -6,6 +6,8 @@
 
 package pizzawatch.gui;
 
+import javax.swing.JOptionPane;
+
 import pizzawatch.datamodels.User;
 import pizzawatch.gui.admin.ManageCancellationReqsFrame;
 import pizzawatch.gui.admin.MultipleUserPastOrdersFrame;
@@ -186,7 +188,14 @@ public class MainFrame extends javax.swing.JFrame
         btMultiplerUserPendingOrders.setText("View Pending Orders (multiple users)");
 
         btHighestTotalOrders.setText("Find user with highest total orders");
-
+        btHighestTotalOrders.addActionListener(new java.awt.event.ActionListener()
+        {
+        	 public void actionPerformed(java.awt.event.ActionEvent evt)
+             {
+        		 btHighestTotalOrdersActionPerformed(evt);
+             }
+        });
+        
         javax.swing.GroupLayout AdminPanelLayout = new javax.swing.GroupLayout(AdminPanel);
         AdminPanel.setLayout(AdminPanelLayout);
         AdminPanelLayout.setHorizontalGroup(
@@ -289,6 +298,12 @@ public class MainFrame extends javax.swing.JFrame
         frame.setVisible(true);
     }//GEN-LAST:event_btMultiplerUserPastOrdersActionPerformed
 
+    private void btHighestTotalOrdersActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btMultiplerUserPastOrdersActionPerformed
+    {//GEN-HEADEREND:event_btHighestTotalOrdersActionPerformed
+    	String[] highest_buying_user_total = UserUtils.punish(currentUser.isAdmin()).split(";");
+    	JOptionPane.showMessageDialog(this, highest_buying_user_total[0] + " is spending and IMMENSE amount of $ " + highest_buying_user_total[1]);
+    }//GEN-LAST:event_btHighestTotalOrdersActionPerformed
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AdminPanel;
     private javax.swing.JPanel UserPanel;

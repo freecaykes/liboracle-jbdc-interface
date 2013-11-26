@@ -255,10 +255,10 @@ public class UserUtils
     {
         if(admin)
         {
-            String sum_query = "create view  user_total as" +
-            				   "select sum(p.price) as user_sum, u.userID" + 
-            				   "from Users u, PizzaOrder po, Pizza p" +
-            				   "where u.userID = po.userID and po.pizzaType = p.PizzaType" +    
+            String sum_query = "create view  user_total as " +
+            				   "select sum(p.price) as user_sum, u.userID " + 
+            				   "from Users u, PizzaOrder po, Pizza p " +
+            				   "where u.userID = po.userID and po.pizzaType = p.PizzaType " +    
             				   "group by u.userID";
             String max_query = "SELECT us.userId, us.user_sum from user_total us where us.user_sum = (select max(us2.user_sum) from user_total us2)";
             SQL_READER.insertUpdateCreateDelete(sum_query);
