@@ -363,14 +363,14 @@ public class UserUtils
         SQL_READER.insertUpdateCreateDelete("UPDATE User_IsIn SET address = '" + address + "' WHERE userID = '" + uid + "'");
     }
 
-    public static void updateCancellationOrder(String uid, int request)
+    public static void updateCancellationOrder(Object oid, int request)
     {
-    	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISCANCELLATIONREQUESTED = " + request +  " where oid = " + uid);
+    	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISCANCELLATIONREQUESTED = " + request +  " where oid = " + oid);
     }
 
-    public static void updateDelivered(String uid, int request)
+    public static void updateDelivered(String oid, int request)
     {
-    	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISDELIVERED = " + request +  " where oid = " + uid);
+    	SQL_READER.insertUpdateCreateDelete("update pizzaorder set ISDELIVERED = " + request +  " where oid = " + oid);
     }
 
     private UserUtils() {}

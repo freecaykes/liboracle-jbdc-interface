@@ -141,8 +141,9 @@ public class ManageCancellationReqsFrame extends javax.swing.JFrame
         int selectedRow = jtCancellationReqs.getSelectedRow();
         if(selectedRow != -1 && tableModelOrderIDColumnNum != -1)
         {
-            //tm.getValueAt(selectedRow, tableModelOrderIDColumnNum); //Order ID
-            ((DefaultTableModel)tm).removeRow(selectedRow); //Remove the row from the table //TODO Casting fragility?
+            UserUtils.updateCancellationOrder(tm.getValueAt(selectedRow, tableModelOrderIDColumnNum), 0);
+            //Set the model again to update the table
+            jtCancellationReqs.setModel(UserUtils.getCancelRequestedOrdersAllUsersTableModel());
         }
     }//GEN-LAST:event_btRejectActionPerformed
 
