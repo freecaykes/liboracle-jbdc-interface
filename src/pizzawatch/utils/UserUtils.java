@@ -20,7 +20,7 @@ public class UserUtils
 
     private enum OrdersTableModelMode
     {
-        PENDING, PAST, CANCEL_REQUESTED;
+        PENDING, PAST, CANCEL_REQUESTED, NOT_CANCEL_REQUESTED;
     }
 
     private static final SqlScriptReader SQL_READER = SqlScriptReader.getInstance();
@@ -211,7 +211,12 @@ public class UserUtils
             }
             case CANCEL_REQUESTED:
             {
-                queryString += ") AND po.isCancellationRequested = 1";
+                queryString += ") AND po.isDelivered = 0 AND po.isCancellationRequested = 1";
+                break;
+            }
+            case NOT_CANCEL_REQUESTED:
+            {
+                queryString += ") AND po.isDelivered = 0 AND po.isCancellationRequested = 0";
                 break;
             }
             default:
@@ -230,6 +235,16 @@ public class UserUtils
         }
 
         return tableModel;
+    }
+
+    /**
+     * Returns a TableModel containing the Not Cancel Requested Orders for the given users
+     * @param userIDs An array containing the user IDs
+     * @return A TableModel for use by the RequestCancellationFrame etc JTables
+     */
+    public static TableModel getNotCancelRequestedOrdersTableModel(String[] userIDs)
+    {
+        return getOrdersTableModel(userIDs, OrdersTableModelMode.NOT_CANCEL_REQUESTED);
     }
 
     /**
