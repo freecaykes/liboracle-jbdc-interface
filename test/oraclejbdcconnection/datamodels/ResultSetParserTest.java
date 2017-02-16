@@ -35,7 +35,7 @@ class ResultSetParserTest {
         sqlr.run("resources/SQL_Scripts_test/create_table_test.sql");
         sqlr.run("resources/SQL_Scripts_test/insert_test.sql");
 
-        ArrayList<LinkedList<String>> results = ResultSetParser.parseResultSetIntoArray(sqlr.query("resources/SQL_Scripts_test/select_test.sql"), "FirstName");
+        ArrayList<LinkedList<String>> results = ResultSetParser.parseResultSetIntoArray(sqlr.run("resources/SQL_Scripts_test/select_test.sql"), "FirstName");
 
         if (results == null) {
             fail("Empty query");
