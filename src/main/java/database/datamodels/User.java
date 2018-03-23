@@ -7,6 +7,7 @@ public class User {
 
     private String userID;
 
+
     public enum T {String, Integer, Double, Float, Currency, Date, Byte}
 
     private HashMap<String, T> attributeMap = new HashMap();
@@ -22,6 +23,7 @@ public class User {
         for(int i = 0; i< attributes.length; i++){
             attributeMap.put(attributes[i], attributeValues.get(i));
         }
+
     }
 
     public String getUserID() {
@@ -31,4 +33,5 @@ public class User {
     public T getAtrribute(String key){
         return attributeMap.get(key);
     }
+
 }
