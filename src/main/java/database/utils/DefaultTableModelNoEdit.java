@@ -1,4 +1,4 @@
-package oraclejbdcconnection.utils;
+package database.utils;
 
 import javax.swing.table.DefaultTableModel;
 

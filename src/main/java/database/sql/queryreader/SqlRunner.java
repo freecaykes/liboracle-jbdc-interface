@@ -1,4 +1,4 @@
-package oraclejbdcconnection.sql.sqlreader;
+package database.sql.queryreader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-public class SqlRunner {
+public class SqlRunner implements QueryRunner{
     private static final String DELIMITER = ";";
     private Connection connection;
     private final static Charset ENCODING = StandardCharsets.UTF_8;
@@ -30,8 +30,28 @@ public class SqlRunner {
         return sqlReaderInstance;
     }
 
-    public static void read(File sql_file) {
+    private SqlRunner() {}
 
+    /**
+     * return ResultSet from Query String
+     *
+     * @param query - Query in statement to execute
+     * @return
+     */
+    @Override
+    public PreparedStatement runquery(String query) {
+        PreparedStatement currStatement;
+        try {
+            if (this.connection == null) {
+                throw new SQLException("[E]: Driver Manager connection is null");
+            }
+            currStatement = this.connection.prepareStatement(query);
+            return currStatement;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
@@ -40,7 +60,8 @@ public class SqlRunner {
      * @param source
      * @throws SQLException
      */
-    private PreparedStatement runFromFile(String source) throws SQLException {
+    @Override
+    public PreparedStatement runfromfile(String source) throws SQLException {
         try {
             if (this.connection == null) {
                 throw new SQLException("[E]: Driver Manager connection is null");
@@ -68,27 +89,6 @@ public class SqlRunner {
     }
 
     /**
-     * return ResultSet from Query String
-     *
-     * @param sqlquery
-     * @return
-     */
-    private PreparedStatement runSqlQuery(String sqlquery) {
-        PreparedStatement currStatement;
-        try {
-            if (this.connection == null) {
-                throw new SQLException("[E]: Driver Manager connection is null");
-            }
-            currStatement = this.connection.prepareStatement(sqlquery);
-            return currStatement;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
      * runFromFile insert, create or delete operation on
      *
      * @param source
@@ -97,9 +97,9 @@ public class SqlRunner {
         PreparedStatement currStatement;
         try {
             if (source.contains(".sql")) {
-                currStatement = runFromFile(source);
+                currStatement = runfromfile(source);
             } else {
-                currStatement = runSqlQuery(source);
+                currStatement = runquery(source);
             }
             if (currStatement != null) {
                 currStatement.executeUpdate();
@@ -108,11 +108,10 @@ public class SqlRunner {
         } catch (SQLException e) {
             System.out.print(e.getMessage() + "\n");
         }
-
     }
 
     /**
-     * same as runscript but enter SQL as String
+     * same as run enter query as String
      *
      * @param source
      * @return
@@ -122,9 +121,9 @@ public class SqlRunner {
         PreparedStatement currStatement;
         try {
             if (source.contains(".sql"))
-                currStatement = runFromFile(source);
+                currStatement = runfromfile(source);
             else
-                currStatement = runSqlQuery(source);
+                currStatement = runquery(source);
             results = currStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -134,24 +133,25 @@ public class SqlRunner {
     }
 
     /**
-     * calls JBDCSQLConnection class to connect to Oracle
+     * calls JBDCConnection class to connect to Oracle
      *
      * @param connection
      */
+    @Override
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
+    @Override
     public List<String> readTextFile(String aFileName) throws IOException {
         Path path = Paths.get(aFileName);
         return Files.readAllLines(path, ENCODING);
     }
 
+    @Override
     public void writeTextFile(List<String> aLines, String aFileName) throws IOException {
         Path path = Paths.get(aFileName);
         Files.write(path, aLines, ENCODING);
     }
 
-    private SqlRunner() {
-    }
 }

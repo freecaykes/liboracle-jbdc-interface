@@ -1,21 +1,22 @@
-package oraclejbdcconnection.sql.sqlreader;
+package database.sql.sqlreader;
 
-import oraclejbdcconnection.sql.connection.JBDCSQLConnection;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import database.sql.connection.JBDCConnection;
+import database.sql.queryreader.SqlRunner;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by who cares on 2/13/2017.
  */
 class SqlRunnerTest {
 
-    private static JBDCSQLConnection oraclecon;
+    private static JBDCConnection oraclecon;
 
-    @BeforeAll
+    @Before
     public static void setup() {
-        oraclecon = new JBDCSQLConnection();
+        oraclecon = new JBDCConnection();
         oraclecon.setPort(1521);
         oraclecon.setSid("orcl");
         boolean pass = oraclecon.createOracleConnection("localhost", "test1", "pass1");

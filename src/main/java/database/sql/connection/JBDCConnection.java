@@ -1,10 +1,10 @@
-package oraclejbdcconnection.sql.connection;
+package database.sql.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class JBDCSQLConnection {
+public class JBDCConnection {
     private final static int MAX_RETRY = 5;
 
     private String dbConnectionUrl = ""; /*form jdbc:oracle:thin:@host_name:port_number:sid*/
@@ -24,11 +24,11 @@ public class JBDCSQLConnection {
         this.sid = sid;
     }
 
-    private String createUrl(String hostName, int port, String sid) throws SQLException {
+    private String createOracleUrl(String hostName, int port, String sid) throws SQLException {
         if (sid.length() < 1 || sid == null) {
             sid = this.sid;
         }
-        if (0 < port && port < 65535) {
+        if (400 < port && port < 65535) {
             /*form jdbc:oracle:thin:@host_name:port_number:sid*/
             return new StringBuilder().append("jdbc:oracle:thin:@").append(hostName).append(":").append(port).append(":").append(sid).toString();
         } else {
@@ -45,13 +45,21 @@ public class JBDCSQLConnection {
      * @return Whether the connection succeeded or not
      */
     public boolean createOracleConnection(String db_host, String userName, String userPass) {
+        System.out.println("--------------------- Starting Oracle connection ---------------------");
+        return createConnection("oracle.jdbc.driver.OracleDriver", db_host, userName, userPass);
+    }
 
+    public boolean createMySQLConnection(String db_host, String userName, String userPass) {
+        System.out.println("--------------------- Starting MySQL connection ---------------------");
+        return createConnection("org.gjt.mm.mysql.Driver", db_host, userName, userPass);
+    }
+
+    private boolean createConnection(String driverName, String hostUrl, String userName, String password){
         int retry = MAX_RETRY;
 
-        System.out.println("--------------------- Starting Oracle connection ---------------------");
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            this.dbConnectionUrl = this.createUrl(db_host, this.port, this.sid);
+            Class.forName(driverName);
+            this.dbConnectionUrl = this.createOracleUrl(hostUrl, this.port, this.sid);
             System.out.println(this.dbConnectionUrl);
         } catch (ClassNotFoundException e) {
             System.out.println("JBDC Driver Not Found");
@@ -62,11 +70,11 @@ public class JBDCSQLConnection {
             return false;
         }
 
-        System.out.println("Oracle driver is found");
-        Connection con = startConnection(this.dbConnectionUrl, userName, userPass);
+        System.out.println("Driver found");
+        Connection con = startConnection(this.dbConnectionUrl, userName, password);
 
         while (con == null && retry > 0) {
-            con = startConnection(this.dbConnectionUrl, userName, userPass);
+            con = startConnection(this.dbConnectionUrl, userName, password);
             retry--;
         }
 
@@ -100,7 +108,7 @@ public class JBDCSQLConnection {
         try {
             if (this.connection != null) {
                 this.connection.close();
-                System.out.println("--------------------- Closed Oracle connection ---------------------");
+                System.out.println("--------------------- Closed connection ---------------------");
             }
         } catch (Exception e) {
             return false;
